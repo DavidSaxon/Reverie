@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(TestRun)
+project(Reverie)
 
 set(SRCS
 
@@ -102,9 +102,9 @@ include_directories("${BASEPATH}" ${INCLUDE_DIRECTORIES} ${FREETYPE_INCLUDE_DIRS
 
 link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
 
-add_executable(TestRun ${SRCS})
+add_executable(Reverie ${SRCS})
 
-target_link_libraries(TestRun
+target_link_libraries(Reverie
 
     ${Boost_LIBRARIES}
     -lboost_system
