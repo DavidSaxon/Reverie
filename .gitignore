@@ -3,3 +3,9 @@ CMakeFiles/
 Makefile
 Reverie
 cmake_install.cmake
+Release/
+Reverie.exe
+Reverie.pdb
+Reverie.vcxproj
+Reverie.vcxproj.filters
+Reverie.vcxproj.user
