@@ -13,6 +13,15 @@ void buildAllPack()
         "res/gfx/shader/omicron/default_vertex.glsl",
         "res/gfx/shader/omicron/default_fragment.glsl"
     );
+
+    //-----------------------------------FONT-----------------------------------
+
+    // the title font of the reverie
+    omi::ResourceManager::addFont(
+        "title_font",
+        resource_group::ALL,
+        "res/gfx/fonts/poison_ivy.otf"
+    );
 }
 
 } // namespace pack

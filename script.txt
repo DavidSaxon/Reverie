@@ -1,0 +1,91 @@
+/++++++++\
+| Script |
+\++++++++/
+
+Player has to go through different areas collecting different curses while being
+stalked by Phobetor. The player needs 3 curses to advance to the next floor.
+
+Curses:
+----
+
++ Curse of Madness (camera):
+    - noise ( start with)
+    - black and white
+    - artifacts
+    - artistic shapes
+
+    SIGIL: Abyss Lord of Chaos
+    +
+    O
+
++ Curse of the [Lost] [Disorientation] (finding way round level):
+    - Path behind you sometimes changes
+    - Path behind you always changes
+    - Random level reshuffle
+    - inverse controls
+
+    SIGIL: Digdin the disordered
+    /_\
+
+
++ Curse of the Hunted (effects Phobetor)
+    + Crawling
+    + glitching
+    + running
+    + faster running? or chance of appearing behind you? or move through walls
+
+    SIGIL: Adnachiel the hunter demon
+    /^
+
++ Curse of Blindness (darkness)
+    + level darkens
+    + darkens and torch/flare is needed
+    + darkness with only small area of visibility
+    + near pitch black? or wall lines? flashing light/strobe??? <<----
+
+    SIGIL: Aciel the god burner
+    D-o
+
+
+Areas:
+---
+
++ Facility
+    - metal walls
+    - square lights
+    - cross beams
+    - pipes
+
++ House
+    - sunlight
+
++ Cellar
+    - Stone or wood?
+    - candles, or sunlight holes, or laterns?
+
++ Tunnels
+    - tight brick
+    - small light bulbs
+
+
+- secret areas?:
+    - woods
+    - hell?
+    - heaven?
+    ???
+
+
+Trailer Dialog:
+
+++++
+I am evil (ancient)
+I am eternal
+I do not sleep
+I do not rest
+
+I am that which is unkillable
+that which is undefeatable
+that which strikes fear into the hearts of men
+
+
+Let us find out how this ends

@@ -2,138 +2,32 @@
 | TODO |
 \++++++/
 
-FIX THE TODO: ADD SCRIPT ASWELL
+- Loading screen
 
-//------------------------------------------------------------------------------
-- new formatting guide!!
-//------------------------------------------------------------------------------
+- Gameplay Scene
 
-- when sorting layers need to throw away elements that are not visible
+- delete test scene
+- delete test entities
+- delete test resources
 
---------------------------------------------------------------------------------
-
-- compile sfml or use different window library (glfw? qt? (probs not though))
-
-- better obj loading
+- Player animation
 {
-    - can be done backwards ( faces first ) for less lookups?
+    - check for curses on arm
+    - has body that casts shadows
+    - can see body
 }
 
-- shadows are slow?
-
---------------------------------------------------------------------------------
-
-- evil
+- Level generation
 {
-    - should use a different mesh for visibility checking, just a box?
-}
-
-- evil distortion
-{
-    - find evil position in pixels
-    - black noise which has higher alpha the closer to him it is, plus random
-        component
-    - should it use depth testing?
-}
-
-- flare lighting ( and shadows?? )
-
-
-- rooms
-{
-    -intro
+    - Factory to make blocks
+    - Way to control blocks
     {
-        - doorway?
-        - text?
-    }
-
-    - facility?
-    {
-        - metal walls ( could be stone )
-        - blood on walls
-        {
-            - nice for specular map??
-        }
-        - evil casts black light?
-    }
-    - cellar
-    {
-        - wooden walls ( could be stone )
-        - almost pitch black
-        - have shitty light source, i.e. rechargeable flare
-    }
-    - house
-    {
-        - camera distorts closer to evil
-        - evil moves faster??
-    }
-    - tunnels
-    {
-        - very dark but player doesn't have light source
-        - music plays and distorts closer to evil
-        - evil glitches
-    }
-    - outdoor
-    {
-        - evil drops from the sky
-        - has black noise style distortion
-        - ground distorts??
-        - super intense dissonant music
-    }
-
-    - outro
-    {
-        - white light
-        - piano music
-        - something happens?
+        - figure out what needs to be generated
+        - hide what's behind the player
     }
 }
 
-
-++++
-I am evil
-I am eternal
-I do not sleep
-I do not rest
-
-I am that which is unkillable
-that which is undefeatable
-that which strikes fear into the hearts of men
-
-So if I was you, I'd start running
-
-
-Let us find out how this ends
-
-
---------------------------------------------------------------------------------
-
-
-
-/++++++++++++++\
-| NEXT VERSION |
-\++++++++++++++/
-
-- camera does need to apply every time, just calculate what's changed
-
-- renderer
+-Phobetor
 {
-    - renderlists can be pulled in to renderer
-    - colour mapping can be done once before rendering
-    - maybe only render one colour pass with everything in it
-    {
-        - this means we can do proper colour picking with obstructions??
-        - but affects using different renderables for visibility checking
-    }
+
 }
-
-- shadows
-{
-    - smooth shadows
-}
-
-- normal maps
-
-- anti-aliasing?
-
-- rigging

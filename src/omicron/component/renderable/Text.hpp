@@ -95,7 +95,7 @@ protected:
     // TODO: render selectable
 
     /** #Override */
-    void setShader( const LightData& lightData );
+    void setShader( const LightData& lightData, Camera* camera );
 
     /** #Override */
     void draw();

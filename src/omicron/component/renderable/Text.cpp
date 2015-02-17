@@ -82,7 +82,7 @@ void Text::render(
     {
         // set the current character
         m_char = m_str[ i ];
-        setShader( lightData );
+        setShader( lightData, camera );
 
         // get the positioning data in pixels
         float left   = cursorPosX + (*m_font)->glyph->bitmap_left;
@@ -196,7 +196,7 @@ void Text::setVertCentred( bool state )
 //                           PROTECTED MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
 
-void Text::setShader( const LightData& lightData )
+void Text::setShader( const LightData& lightData, Camera* camera )
 {
     // get the OpenGL program
     GLuint program = m_material.shader.getProgram();
@@ -245,6 +245,12 @@ void Text::setShader( const LightData& lightData )
           GL_ALPHA,
           GL_UNSIGNED_BYTE,
           (*m_font)->glyph->bitmap.buffer
+    );
+
+    // pass in camera exposure
+    glUniform1f(
+        glGetUniformLocation( program, "u_exposure" ),
+        camera->getExposure()
     );
 
     // TODO: this can be moved into a common function

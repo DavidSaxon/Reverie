@@ -7,7 +7,8 @@ enum ResourceGroup {
 
     ALL,
     START_UP,
-    TEST
+    LOADING,
+    TEST // TODO: REMOVE
 };
 
 } // namespace resource_group

@@ -20,6 +20,8 @@ void buildAllPack();
 
 void buildStartUpPack();
 
+void buildLoadingPack();
+
 void buildTestPack();
 
 //------------------------------------------------------------------------------
@@ -31,6 +33,8 @@ inline void build()
 {
     buildAllPack();
     buildStartUpPack();
+    buildLoadingPack();
+
     buildTestPack();
 }
 

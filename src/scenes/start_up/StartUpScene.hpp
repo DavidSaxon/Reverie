@@ -1,10 +1,10 @@
-#ifndef OMICRON_SCENES_STARTUPSCENE_H_
-#   define OMICRON_SCENES_STARTUPSCENE_H_
+#ifndef REVERIE_SCENES_STARTUPSCENE_H_
+#   define REVERIE_SCENES_STARTUPSCENE_H_
 
 #include "src/omicron/scene/Scene.hpp"
 
 #include "src/entities/start_up/OmicronLogo.hpp"
-#include "src/scenes/test/TestScene.hpp"
+#include "src/scenes/loading/LoadingScene.hpp"
 
 /*************************************************************\
 | Loads the initial resources and displays start up graphics. |
