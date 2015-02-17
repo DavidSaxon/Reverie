@@ -17,14 +17,6 @@ void LoadingSplash::init()
     omi::Camera* camera = new omi::Camera( "", omi::cam::PERSPECTIVE, camT );
     m_components.add( camera );
 
-    // add the loading text
-    omi::Text* loadingText =
-            omi::ResourceManager::getText( "loading_text", "", NULL );
-    // loadingText->gui = true; // TODO: maybe not?
-    loadingText->setHorCentred( true );
-    loadingText->setVertCentred( true );
-    m_components.add( loadingText );
-
     // add point light to illuminate text
     omi::Transform* lightT = new omi::Transform(
             "",
@@ -42,6 +34,14 @@ void LoadingSplash::init()
             2.0f,
             1.4f
     ) );
+
+    // add the loading text
+    omi::Text* loadingText =
+            omi::ResourceManager::getText( "loading_text", "", NULL );
+    // loadingText->gui = true; // TODO: maybe not?
+    loadingText->setHorCentred( true );
+    loadingText->setVertCentred( true );
+    m_components.add( loadingText );
 }
 
 void LoadingSplash::update()

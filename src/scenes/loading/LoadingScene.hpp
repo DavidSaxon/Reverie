@@ -21,6 +21,17 @@ public:
 
     /** #Override */
     virtual omi::Scene* nextScene();
+
+private:
+
+    //--------------------------------------------------------------------------
+    //                                 VARIABLES
+    //--------------------------------------------------------------------------
+
+    // stops from loading on the first update cycle
+    bool m_firstUpdate;
+    // is true once loading is complete
+    bool m_loadingDone;
 };
 
 #endif

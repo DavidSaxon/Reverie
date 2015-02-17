@@ -31,8 +31,6 @@ Text::Text(
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    calculateOffset();
 }
 
 //------------------------------------------------------------------------------
@@ -165,31 +163,26 @@ bool Text::getVertCentred() const
 void Text::setFont( Font* font )
 {
     m_font = font;
-    calculateOffset();
 }
 
 void Text::setString( const std::string& str )
 {
     m_str = str;
-    calculateOffset();
 }
 
 void Text::setSize( float size )
 {
     m_size = size;
-    calculateOffset();
 }
 
 void Text::setHorCentred( bool state )
 {
     m_horCentred = state;
-    calculateOffset();
 }
 
 void Text::setVertCentred( bool state )
 {
     m_vertCentred = state;
-    calculateOffset();
 }
 
 //------------------------------------------------------------------------------
@@ -393,20 +386,19 @@ void Text::calculateOffset()
     {
         // calculate the length of the text
         float length = 0.0f;
-        for ( unsigned i = 0; i < m_str.length() - 1; ++i )
+        for ( unsigned i = 0; i < m_str.length(); ++i )
         {
             char c = m_str[ i ];
 
             // load character
-            FT_Load_Char( *m_font, m_char, FT_LOAD_RENDER );
+            FT_Load_Char( *m_font, c, FT_LOAD_RENDER );
 
-            length += static_cast<float>( (*m_font)->glyph->bitmap.width );
             length += static_cast<float>( (*m_font)->glyph->advance.x >> 6 );
         }
 
         // calculate offset
         length /= unitDim;
-        m_offset.x = -( length / 4.0f );
+        m_offset.x = -( length / 2.0f );
     }
 
     // vertical centering

@@ -27,6 +27,14 @@ Curses:
     SIGIL: Digdin the disordered
     /_\
 
++ Curse of Blindness (darkness)
+    + level darkens
+    + darkens and torch/flare is needed
+    + darkness with only small area of visibility
+    + near pitch black? or wall lines? flashing light/strobe??? <<----
+
+    SIGIL: Aciel the god burner
+    D-o
 
 + Curse of the Hunted (effects Phobetor)
     + Crawling
@@ -36,15 +44,6 @@ Curses:
 
     SIGIL: Adnachiel the hunter demon
     /^
-
-+ Curse of Blindness (darkness)
-    + level darkens
-    + darkens and torch/flare is needed
-    + darkness with only small area of visibility
-    + near pitch black? or wall lines? flashing light/strobe??? <<----
-
-    SIGIL: Aciel the god burner
-    D-o
 
 
 Areas:
