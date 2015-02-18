@@ -11,18 +11,20 @@ void buildPlayerPack()
         "default_shader",
         "res/gfx/texture/player/player_right_arm.png",
         "res/gfx/geometry/player/player_right_arm.obj",
-        1
+        0
     );
 
     // curse text
     omi::ResourceManager::addMaterialText(
-        "loading_text", resource_group::LOADING,
+        "curse_text",
+        resource_group::PLAYER,
         "default_shader",
-        glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
-        2,
+        glm::vec4( 0.7f, 0.1f, 0.1f, 1.0f ),
+        0,
         "title_font",
-        "Loading",
-        0.25f
+        "Curse of Madness",
+        0.13f,
+        omi::material::SHADELESS
     );
 }
 

@@ -7,6 +7,14 @@
     - should be a layer like gui with perspective camera and own ambient light
       shomehow, maybe has shader?
     - dim other layers
+
+    -overlay lights
+
+    - add over stuff to omicron
+    {
+        - render lists
+        - rendererable
+    }
 }
 
 - player
@@ -25,7 +33,13 @@
             {
                 -wait till scar animations are done
             }
+
+            - arm needs to fit for different aspect ratios?
+            {
+                ? use field of view
+            }
         }
+
         ? has body that casts shadows
         ? can see body
     }

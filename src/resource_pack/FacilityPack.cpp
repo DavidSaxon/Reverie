@@ -16,7 +16,7 @@ void buildFacilityPack()
         "default_shader",
         "res/gfx/texture/facility/floor.png",
         "res/gfx/geometry/facility/floor.obj",
-        1
+        0
     );
 }
 

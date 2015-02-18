@@ -18,7 +18,7 @@ Curses:
     +
     O
 
-+ Curse of the [Lost] [Disorientation] (finding way round level):
++ Curse of Disorder [the Lost] [Disorientation] (finding way round level):
     - Path behind you sometimes changes
     - Path behind you always changes
     - Random level reshuffle
