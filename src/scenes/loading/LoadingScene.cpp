@@ -1,10 +1,7 @@
 #include "LoadingScene.hpp"
 
-// TODO: REMOVE ME
-#include "src/omicron/input/Input.hpp"
 
 #include "src/entities/loading/LoadingSplash.hpp"
-
 #include "src/scenes/gameplay/GameplayScene.hpp"
 
 //------------------------------------------------------------------------------
@@ -27,18 +24,16 @@ bool LoadingScene::update()
     // start loading on the second update
     if ( !m_firstUpdate && !m_loadingDone )
     {
+        omi::ResourceManager::load( resource_group::PLAYER );
         omi::ResourceManager::load( resource_group::FACILITY );
         m_loadingDone = true;
+
+        // loading is finished go to the next scene
+        return true;
     }
     else if ( m_firstUpdate )
     {
         m_firstUpdate = false;
-    }
-
-    // TODO: REMOVE ME
-    if ( omi::input::isKeyPressed( omi::input::key::ESCAPE ) )
-    {
-        return true;
     }
 
     return false;

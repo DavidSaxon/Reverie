@@ -4,6 +4,12 @@ namespace pack {
 
 void buildFacilityPack()
 {
+    // floor tile
+    omi::ResourceManager::addTexture(
+            "facility_floor_spec",
+            resource_group::FACILITY,
+            "res/gfx/texture/facility/floor_spec.png"
+    );
     omi::ResourceManager::addTextureMaterialGeometryMesh(
         "facility_floor",
         resource_group::FACILITY,

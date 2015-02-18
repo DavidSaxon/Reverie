@@ -1,7 +1,6 @@
 #ifndef REVERIE_SCENES_GAMEPLAYSCENE_HPP_
 #   define REVERIE_SCENES_GAMEPLAYSCENE_HPP_
 
-#include "src/omicron/input/Input.hpp"
 #include "src/omicron/scene/Scene.hpp"
 
 /****************************************************\

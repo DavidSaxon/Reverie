@@ -2,19 +2,67 @@
 | TODO |
 \++++++/
 
-- Loading screen
-
-- Gameplay Scene
-
-- delete test scene
-- delete test entities
-- delete test resources
-
-- Player animation
+- overlay
 {
-    - check for curses on arm
-    - has body that casts shadows
-    - can see body
+    - should be a layer like gui with perspective camera and own ambient light
+      shomehow, maybe has shader?
+    - dim other layers
+}
+
+- player
+{
+    - mesh
+    {
+        - check for curses on arm
+        {
+            - need 5 textures
+            - blow up texture arm section
+            -- then:
+            - half skin texture
+            - double curse texture?
+
+            - can delete faces off back of arm
+            {
+                -wait till scar animations are done
+            }
+        }
+        ? has body that casts shadows
+        ? can see body
+    }
+
+
+    - better movement
+    {
+        - fix release when holding two keys
+        - diagonal movement
+        - run
+        - animation (bobbing)
+    }
+}
+
+- pausing
+{
+    - pausuable element ?
+}
+
+- pause menu
+{
+    - resume
+    - settings
+    - exit
+}
+
+- settings
+{
+    - config file
+
+    - graphics settings
+
+    - system settings??
+
+    - audio settings
+
+    - key bindings
 }
 
 - Level generation

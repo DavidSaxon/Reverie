@@ -79,6 +79,8 @@ set(SRCS
     src/entities/start_up/OmicronLogo.cpp
 
     src/entities/loading/LoadingSplash.cpp
+
+    src/entities/gameplay/Player.cpp
 )
 
 find_package(Boost)

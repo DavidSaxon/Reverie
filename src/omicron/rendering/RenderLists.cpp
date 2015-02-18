@@ -57,6 +57,7 @@ void RenderLists::render( Camera* camera )
     // iterate over all renderables and group them into a map by layer and
     // separate gui renderables
     t_RenderableMap renderLayers;
+    t_RenderableMap overlayLayers;
     t_RenderableMap guiLayers;
     for ( std::vector<Renderable*>::iterator renderable = m_renderables.begin();
           renderable != m_renderables.end(); ++ renderable )
@@ -66,6 +67,10 @@ void RenderLists::render( Camera* camera )
         if ( ( *renderable )->gui )
         {
             currentList = &guiLayers;
+        }
+        else if ( ( *renderable )->overlay )
+        {
+            currentList = &overlayLayers;
         }
 
         // get the layer
@@ -382,7 +387,33 @@ void RenderLists::render( Camera* camera )
     // render the results of the render texture
     m_finalRenTex.render();
 
+    // TODO: make render texture for and do before final texture
+
+    //---------------------------------OVERLAY----------------------------------
+
+    // create a camera for rendering overlay
+    Camera overlayCamera( "", omi::cam::PERSPECTIVE, NULL );
+    overlayCamera.apply();
+
+    // overlay light data (empty)
+
+    for ( t_RenderableMap::iterator it = overlayLayers.begin();
+          it != overlayLayers.end(); ++it )
+    {
+        // iterate over the renderables in this layer and render them
+        for ( std::vector<Renderable*>::iterator itr = it->second.begin();
+              itr != it->second.end(); ++itr)
+        {
+            // TODO: NULL shadow camera
+            // TODO: overlay camera
+            // TODO: NULL light data
+            ( *itr )->render( &overlayCamera, shadowCamera, lightData );
+        }
+    }
+
     //-----------------------------------GUI------------------------------------
+
+    // TODO: to render texture
 
     // disable depth testing
     glDisable( GL_DEPTH_TEST );
@@ -394,6 +425,8 @@ void RenderLists::render( Camera* camera )
         for ( std::vector<Renderable*>::iterator itr = it->second.begin();
               itr != it->second.end(); ++itr)
         {
+            // TODO: NULL Shadow cam
+            // TODO: NULL light data
             ( *itr )->render( &guiCamera, shadowCamera, lightData );
         }
     }
@@ -452,6 +485,7 @@ void RenderLists::render( Camera* camera )
 void RenderLists::clear()
 {
     m_renderables.clear();
+    m_lights.clear();
 }
 
 void RenderLists::addRenderable( Renderable* renderable )
