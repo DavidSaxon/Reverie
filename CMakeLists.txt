@@ -70,6 +70,7 @@ set(SRCS
     src/resource_pack/AllPack.cpp
     src/resource_pack/StartUpPack.cpp
     src/resource_pack/LoadingPack.cpp
+    src/resource_pack/PlayerPack.cpp
     src/resource_pack/FacilityPack.cpp
 
     src/scenes/start_up/StartUpScene.cpp
@@ -81,6 +82,7 @@ set(SRCS
     src/entities/loading/LoadingSplash.cpp
 
     src/entities/gameplay/Player.cpp
+    src/entities/gameplay/TestEntity.cpp
 )
 
 find_package(Boost)
