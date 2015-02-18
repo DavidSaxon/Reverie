@@ -69,13 +69,18 @@ set(SRCS
 
     src/resource_pack/AllPack.cpp
     src/resource_pack/StartUpPack.cpp
+    src/resource_pack/LoadingPack.cpp
+    src/resource_pack/FacilityPack.cpp
     src/resource_pack/TestPack.cpp
 
     src/scenes/start_up/StartUpScene.cpp
+    src/scenes/loading/LoadingScene.cpp
+    src/scenes/gameplay/GameplayScene.cpp
+    src/scenes/test/TestScene.cpp
 
     src/entities/start_up/OmicronLogo.cpp
 
-    src/scenes/test/TestScene.cpp
+    src/entities/loading/LoadingSplash.cpp
 
     src/entities/test/GlowCube.cpp
     src/entities/test/Human.cpp
