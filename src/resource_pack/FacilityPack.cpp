@@ -4,8 +4,6 @@ namespace pack {
 
 void buildFacilityPack()
 {
-    std::cout << "what the fuck?" << std::endl;
-
     omi::ResourceManager::addTextureMaterialGeometryMesh(
         "facility_floor",
         resource_group::FACILITY,

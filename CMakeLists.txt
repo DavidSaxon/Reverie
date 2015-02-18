@@ -71,27 +71,14 @@ set(SRCS
     src/resource_pack/StartUpPack.cpp
     src/resource_pack/LoadingPack.cpp
     src/resource_pack/FacilityPack.cpp
-    src/resource_pack/TestPack.cpp
 
     src/scenes/start_up/StartUpScene.cpp
     src/scenes/loading/LoadingScene.cpp
     src/scenes/gameplay/GameplayScene.cpp
-    src/scenes/test/TestScene.cpp
 
     src/entities/start_up/OmicronLogo.cpp
 
     src/entities/loading/LoadingSplash.cpp
-
-    src/entities/test/GlowCube.cpp
-    src/entities/test/Human.cpp
-    src/entities/test/MapCube.cpp
-    src/entities/test/Monkey.cpp
-    src/entities/test/TestEnvironment.cpp
-    src/entities/test/TestEvil.cpp
-    src/entities/test/TestFps.cpp
-    src/entities/test/TestPlayer.cpp
-    src/entities/test/TestSun.cpp
-
 )
 
 find_package(Boost)

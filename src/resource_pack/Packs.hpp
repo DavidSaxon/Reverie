@@ -24,8 +24,6 @@ void buildLoadingPack();
 
 void buildFacilityPack();
 
-void buildTestPack();
-
 //------------------------------------------------------------------------------
 //                                   FUNCTIONS
 //------------------------------------------------------------------------------
@@ -37,8 +35,6 @@ inline void build()
     buildStartUpPack();
     buildLoadingPack();
     buildFacilityPack();
-
-    buildTestPack();
 }
 
 } // namespace pack

@@ -8,8 +8,7 @@ enum ResourceGroup {
     ALL,
     START_UP,
     LOADING,
-    FACILITY,
-    TEST // TODO: REMOVE
+    FACILITY
 };
 
 } // namespace resource_group
