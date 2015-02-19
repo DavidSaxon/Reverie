@@ -407,7 +407,7 @@ void RenderLists::render( Camera* camera )
             // TODO: NULL shadow camera
             // TODO: overlay camera
             // TODO: NULL light data
-            ( *itr )->render( &overlayCamera, shadowCamera, lightData );
+            ( *itr )->render( &overlayCamera, NULL, lightData );
         }
     }
 

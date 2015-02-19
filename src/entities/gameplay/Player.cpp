@@ -46,9 +46,14 @@ void Player::init()
 
     // the players right right arm
     m_rightArm =
-        omi::ResourceManager::getMesh( "player_right_arm", "", NULL );
+        omi::ResourceManager::getMesh( "player_flare_arm", "", NULL );
     m_rightArm->overlay = true;
     m_components.add( m_rightArm );
+
+    omi::Mesh* flare =
+        omi::ResourceManager::getMesh( "flare", "", NULL );
+    flare->overlay = true;
+    m_components.add( flare );
 
     // add curse text
     // omi::Transform* m_t1 = new omi::Transform(
