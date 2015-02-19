@@ -44,45 +44,12 @@ void Player::init()
     camera->setExposure( 0.85f );
     m_components.add( camera );
 
-    // the players right right arm
-    m_rightArm =
-        omi::ResourceManager::getMesh( "player_flare_arm", "", NULL );
-    m_rightArm->overlay = true;
-    m_components.add( m_rightArm );
-
+    // TODO: fix
+    // the flare light source
     omi::Mesh* flare =
         omi::ResourceManager::getMesh( "flare", "", NULL );
     flare->overlay = true;
     m_components.add( flare );
-
-    // add curse text
-    // omi::Transform* m_t1 = new omi::Transform(
-    //         "",
-    //         glm::vec3( 0.0f, 0.1f, -0.25f ),
-    //         glm::vec3( 0.0, 0.45f, 30.0f ),
-    //         glm::vec3( 0.18f, 0.18f, 0.18f )
-    // );
-    // m_components.add( m_t1 );
-    // omi::Text* curseOfMadnessText =
-    //         omi::ResourceManager::getText( "curse_text", "", m_t1 );
-    // // curseOfMadnessText->overlay = true;
-    // curseOfMadnessText->setString( "Curse of Madness IV" );
-    // curseOfMadnessText->setVertCentred( true );
-    // m_components.add( curseOfMadnessText );
-
-    // omi::Transform* m_t2 = new omi::Transform(
-    //         "",
-    //         glm::vec3( 0.0f, -0.1f, -0.25f ),
-    //         glm::vec3( 0.0f, 0.15f, 0.0f ),
-    //         glm::vec3( 0.18f, 0.18f, 0.18f )
-    // );
-    // m_components.add( m_t2 );
-    // omi::Text* curseOfDisorderText =
-    //         omi::ResourceManager::getText( "curse_text", "", m_t2 );
-    // curseOfDisorderText->overlay = true;
-    // curseOfDisorderText->setString( "Curse of Disorder IV" );
-    // curseOfDisorderText->setVertCentred( true );
-    // m_components.add( curseOfDisorderText );
 }
 
 void Player::update()

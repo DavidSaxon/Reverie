@@ -2,6 +2,10 @@
 | TODO |
 \++++++/
 
+- Debug FPS
+
+- text caching is probably needed
+
 - overlay
 {
     - should be a layer like gui with perspective camera and own ambient light

@@ -2,6 +2,7 @@
 
 #include "src/omicron/input/Input.hpp"
 
+#include "src/entities/gameplay/menu/PauseMenu.hpp"
 #include "src/entities/gameplay/Player.hpp"
 // TODO: REMOVE ME:
 #include "src/entities/gameplay/TestEntity.hpp"
@@ -24,6 +25,7 @@ void GameplayScene::init()
 
     // add the initial entities
     addEntity( new Player() );
+    addEntity( new PauseMenu() );
     // TODO: REMOVE ME:
     addEntity( new TestEntity() );
 }
@@ -31,7 +33,7 @@ void GameplayScene::init()
 bool GameplayScene::update()
 {
     // exit if the escape key has been pressed
-    if ( omi::input::isKeyPressed( omi::input::key::ESCAPE ) )
+    if ( omi::input::isKeyPressed( omi::input::key::TAB ) )
     {
         // TODO: go to menu
         return true;

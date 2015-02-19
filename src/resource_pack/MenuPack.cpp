@@ -2,7 +2,7 @@
 
 namespace pack {
 
-void buildPlayerPack()
+void buildMenuPack()
 {
     // TODO: fix
     // flare
@@ -15,15 +15,15 @@ void buildPlayerPack()
         0
     );
 
-    // curse text
+    // pause main item text
     omi::ResourceManager::addMaterialText(
-        "curse_text",
-        resource_group::PLAYER,
+        "pause_main_item_text",
+        resource_group::MENU,
         "default_shader",
-        glm::vec4( 0.8f, 0.8f, 0.8f, 1.0f ),
+        glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
         0,
         "title_font",
-        "Curse of Madness",
+        "",
         0.25f,
         omi::material::SHADELESS
     );

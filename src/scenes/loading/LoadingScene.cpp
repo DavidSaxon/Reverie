@@ -24,6 +24,7 @@ bool LoadingScene::update()
     // start loading on the second update
     if ( !m_firstUpdate && !m_loadingDone )
     {
+        omi::ResourceManager::load( resource_group::MENU );
         omi::ResourceManager::load( resource_group::PLAYER );
         omi::ResourceManager::load( resource_group::FACILITY );
         m_loadingDone = true;

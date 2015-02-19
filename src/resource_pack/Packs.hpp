@@ -22,6 +22,8 @@ void buildStartUpPack();
 
 void buildLoadingPack();
 
+void buildMenuPack();
+
 void buildPlayerPack();
 
 void buildFacilityPack();
@@ -36,6 +38,7 @@ inline void build()
     buildAllPack();
     buildStartUpPack();
     buildLoadingPack();
+    buildMenuPack();
     buildPlayerPack();
     buildFacilityPack();
 }

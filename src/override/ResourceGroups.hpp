@@ -8,6 +8,7 @@ enum ResourceGroup {
     ALL,
     START_UP,
     LOADING,
+    MENU,
     PLAYER,
     FACILITY
 };
