@@ -4,6 +4,8 @@
 
 - pause menu
 {
+    - sprite layers
+
     - clean up
 
     - sub menu handling

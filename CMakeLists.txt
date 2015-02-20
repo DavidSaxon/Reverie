@@ -67,6 +67,8 @@ set(SRCS
     src/omicron/system/System.cpp
     src/override/StartUp.cpp
 
+    src/data/Globals.cpp
+
     src/resource_pack/AllPack.cpp
     src/resource_pack/DebugPack.cpp
     src/resource_pack/StartUpPack.cpp
