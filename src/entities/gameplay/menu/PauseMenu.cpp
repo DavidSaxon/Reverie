@@ -1,5 +1,6 @@
 #include "PauseMenu.hpp"
 
+#include "src/data/Globals.hpp"
 #include "src/omicron/input/Input.hpp"
 
 //------------------------------------------------------------------------------
@@ -90,8 +91,12 @@ void PauseMenu::update()
     // check for escape key press
     if ( omi::input::isKeyPressed( omi::input::key::ESCAPE ) && !m_escDown )
     {
+        // set states
         m_escDown = true;
         m_active = !m_active;
+        global::pause = m_active;
+
+        // update the UI
         show( m_active );
     }
     // check for escape key release

@@ -1,5 +1,6 @@
 #include "Player.hpp"
 
+#include "src/data/Globals.hpp"
 #include "src/omicron/input/Input.hpp"
 
 namespace {
@@ -54,6 +55,13 @@ void Player::init()
 
 void Player::update()
 {
+    // skip if omicron is paused
+    if ( global::pause )
+    {
+        return;
+    }
+
+    // don't perform key presses if omicron doesn't have focus
     if ( omi::omi_hasFocus )
     {
         look();
