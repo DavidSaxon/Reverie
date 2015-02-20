@@ -1,15 +1,25 @@
 #ifndef OMICRON_COMPONENT_RENDERABLE_TEXT_HPP_
 #   define OMICRON_COMPONENT_RENDERABLE_TEXT_HPP_
 
+#include <map>
+
 #include "src/omicron/component/renderable/Renderable.hpp"
 #include "src/omicron/rendering/shading/Font.hpp"
 
 namespace omi {
 
-//------------------------------------------------------------------------------
-//                                   FUNCTIONS
-//------------------------------------------------------------------------------
-
+/**********************************************************\
+| Structure for storing the cached text glyph information. |
+\**********************************************************/
+struct CachedGlyph {
+    GLuint textureId;
+    float left;
+    float top;
+    float width;
+    float rows;
+    float advanceX;
+    float advanceY;
+};
 
 /*******************************\
 | Renders a string using a font |
@@ -103,6 +113,10 @@ protected:
     /** Calculate the offset of the text */
     void calculateOffset();
 
+    /** @returns a cached glyph for the given character */
+    CachedGlyph* getGlyph( char c );
+
+
 private:
 
     //--------------------------------------------------------------------------
@@ -122,11 +136,13 @@ private:
     // the offset of the text
     glm::vec2 m_offset;
 
-
     // the current character to render
     char m_char;
-    // the texture to use for rendering the font to
-    GLuint m_texture;
+    // the current glyph we are using
+    CachedGlyph* m_glyph;
+
+    // a map from characters to caches
+    std::map<char, CachedGlyph> m_cache;
 };
 
 } // namespace omi

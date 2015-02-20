@@ -22,15 +22,8 @@ Text::Text(
     m_horCentred ( false ),
     m_vertCentred( false ),
     m_char       ( ' ' ),
-    m_texture    ( 0 )
+    m_glyph      ( NULL )
 {
-    // create the texture
-    glGenTextures( 1, &m_texture );
-    glBindTexture( GL_TEXTURE_2D, m_texture );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 //------------------------------------------------------------------------------
@@ -78,15 +71,17 @@ void Text::render(
     // iterate over each letter and render
     for ( unsigned i = 0; i < m_str.length(); ++i )
     {
-        // set the current character
+        // set the current character and get the glyph
         m_char = m_str[ i ];
+        m_glyph = getGlyph( m_char );
+
         setShader( lightData, camera );
 
         // get the positioning data in pixels
-        float left   = cursorPosX + (*m_font)->glyph->bitmap_left;
-        float top    = cursorPosY + (*m_font)->glyph->bitmap_top;
-        float width  = static_cast<float>( (*m_font)->glyph->bitmap.width );
-        float height = static_cast<float>( (*m_font)->glyph->bitmap.rows );
+        float left   = cursorPosX + m_glyph->left;
+        float top    = cursorPosY + m_glyph->top;
+        float width  = m_glyph->width;
+        float height = m_glyph->rows;
         // convert to world space co-ordinates
         left  =  left / unitDim;
         top   =  top / unitDim;
@@ -124,8 +119,8 @@ void Text::render(
         glEnd();
 
         // move the cursor
-        cursorPosX += static_cast<float>( (*m_font)->glyph->advance.x >> 6 );
-        cursorPosY += static_cast<float>( (*m_font)->glyph->advance.y >> 6 );
+        cursorPosX += m_glyph->advanceX;
+        cursorPosY += m_glyph->advanceY;
     }
 
     unsetShader();
@@ -224,21 +219,8 @@ void Text::setShader( const LightData& lightData, Camera* camera )
 
     // font texture
     glUniform1i( glGetUniformLocation( program, "u_hasTexture" ), 1 );
-    glBindTexture( GL_TEXTURE_2D, m_texture );
+    glBindTexture( GL_TEXTURE_2D, m_glyph->textureId );
     glUniform1i( glGetUniformLocation( program, "u_invertTexCol" ), 1 );
-    // load character
-    FT_Load_Char( *m_font, m_char, FT_LOAD_RENDER );
-    glTexImage2D(
-          GL_TEXTURE_2D,
-          0,
-          GL_ALPHA,
-          (*m_font)->glyph->bitmap.width,
-          (*m_font)->glyph->bitmap.rows,
-          0,
-          GL_ALPHA,
-          GL_UNSIGNED_BYTE,
-          (*m_font)->glyph->bitmap.buffer
-    );
 
     // pass in camera exposure
     glUniform1f(
@@ -390,10 +372,10 @@ void Text::calculateOffset()
         {
             char c = m_str[ i ];
 
-            // load character
-            FT_Load_Char( *m_font, c, FT_LOAD_RENDER );
+            // get the character
+            CachedGlyph* glyph = getGlyph( c );
 
-            length += static_cast<float>( (*m_font)->glyph->advance.x >> 6 );
+            length += glyph->advanceX;
         }
 
         // calculate offset
@@ -404,11 +386,61 @@ void Text::calculateOffset()
     // vertical centering
     if ( m_vertCentred )
     {
-        m_offset.y = static_cast<float>(
-                (*m_font)->glyph->bitmap.rows ) / unitDim;
+        // get the character
+        CachedGlyph* glyph = getGlyph( m_str[ 0 ] );
+
+        m_offset.y = glyph->rows / unitDim;
         m_offset.y /= 2.0f;
         m_offset.y = -m_offset.y;
     }
+}
+
+CachedGlyph* Text::getGlyph( char c )
+{
+    // check if the glyph is in the cache
+    if ( m_cache.find( c ) != m_cache.end() )
+    {
+        // return from the cache
+        return &m_cache[ c ];
+    }
+
+    // create the cachable glyph
+    CachedGlyph glyph;
+
+    // create an OpenGL texture
+    glGenTextures  ( 1, &glyph.textureId );
+    glBindTexture  ( GL_TEXTURE_2D, glyph.textureId );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // load the free type glyph as a texture
+    FT_Load_Char( *m_font, c, FT_LOAD_RENDER );
+    glTexImage2D(
+          GL_TEXTURE_2D,
+          0,
+          GL_ALPHA,
+          (*m_font)->glyph->bitmap.width,
+          (*m_font)->glyph->bitmap.rows,
+          0,
+          GL_ALPHA,
+          GL_UNSIGNED_BYTE,
+          (*m_font)->glyph->bitmap.buffer
+    );
+
+    // store the other glyph data we need
+    glyph.left     = static_cast<float>( (*m_font)->glyph->bitmap_left  );
+    glyph.top      = static_cast<float>( (*m_font)->glyph->bitmap_top   );
+    glyph.width    = static_cast<float>( (*m_font)->glyph->bitmap.width );
+    glyph.rows     = static_cast<float>( (*m_font)->glyph->bitmap.rows );
+    glyph.advanceX = static_cast<float>( (*m_font)->glyph->advance.x >> 6 );
+    glyph.advanceY = static_cast<float>( (*m_font)->glyph->advance.y >> 6 );
+
+    // add to the cache
+    m_cache.insert( std::make_pair( c, glyph ) );
+
+    return &m_cache[ c ];
 }
 
 } // namespace omi
