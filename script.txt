@@ -46,8 +46,16 @@ Curses:
     /^
 
 
+Pick up one curse in intro, then 3 per floor ( 4 - 5 floors )
+
 Areas:
 ---
+
++ Intro
+    - white walls
+    - black outline
+    - glowing walls
+    - text explaining what to do
 
 + Facility
     - metal walls

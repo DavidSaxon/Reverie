@@ -10,6 +10,18 @@ class PauseMenu : public omi::Entity {
 public:
 
     //--------------------------------------------------------------------------
+    //                                ENUMERATORS
+    //--------------------------------------------------------------------------
+
+    enum MainMenuItem
+    {
+        MAIN_RESUME = 0,
+        MAIN_SETTINGS,
+        MAIN_EXIT,
+        MAIN_COUNT
+    };
+
+    //--------------------------------------------------------------------------
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
@@ -34,8 +46,13 @@ private:
     // is true if the pause menu is currently active
     bool m_active;
 
+    // the currently selected main menu item
+    MainMenuItem m_mainMenuItem;
+
     // is true if the escape key is down
     bool m_escDown;
+    // is true if an arrow key is down
+    bool m_arrowDown;
 
     // the transparent overlay for the menu
     omi::Sprite* m_overlay;
@@ -51,6 +68,9 @@ private:
 
     /** Shows or hides the pause menu */
     void show( bool state );
+
+    /** Updates menu logics */
+    void updateMenu();
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "PauseMenu.hpp"
 
 #include "src/data/Globals.hpp"
+#include "src/omicron/Omicron.hpp"
 #include "src/omicron/input/Input.hpp"
 
 //------------------------------------------------------------------------------
@@ -10,7 +11,9 @@
 PauseMenu::PauseMenu()
     :
     m_active      ( false ),
+    m_mainMenuItem( MAIN_RESUME ),
     m_escDown     ( false ),
+    m_arrowDown   ( false ),
     m_overlay     ( NULL ),
     m_resumeText  ( NULL ),
     m_settingsText( NULL ),
@@ -100,10 +103,16 @@ void PauseMenu::update()
         show( m_active );
     }
     // check for escape key release
-    else if ( m_escDown                                            &&
-              !omi::input::isKeyPressed( omi::input::key::ESCAPE )    )
+    else if ( !omi::input::isKeyPressed( omi::input::key::ESCAPE ) &&
+               m_escDown                                               )
     {
         m_escDown = false;
+    }
+
+    // only do menu logic if we're paused
+    if ( m_active )
+    {
+        updateMenu();
     }
 }
 
@@ -117,4 +126,84 @@ void PauseMenu::show( bool state )
     m_resumeText->  visible = state;
     m_settingsText->visible = state;
     m_exitText->    visible = state;
+}
+
+void PauseMenu::updateMenu()
+{
+    // move selection
+    int mainMenuItemInt = static_cast<int>( m_mainMenuItem );
+    if ( omi::input::isKeyPressed( omi::input::key::DOWN ) && !m_arrowDown )
+    {
+        m_arrowDown = true;
+        ++mainMenuItemInt;
+    }
+    else if ( omi::input::isKeyPressed( omi::input::key::UP ) && !m_arrowDown )
+    {
+        m_arrowDown = true;
+        --mainMenuItemInt;
+    }
+    else if ( !omi::input::isKeyPressed( omi::input::key::UP )   &&
+              !omi::input::isKeyPressed( omi::input::key::DOWN ) &&
+               m_arrowDown                                          )
+    {
+        m_arrowDown = false;
+    }
+
+    // work out the new selection
+    int itemCount = static_cast<int>( MAIN_COUNT );
+    if ( mainMenuItemInt < 0 )
+    {
+        mainMenuItemInt = itemCount - 1;
+    }
+    else if ( mainMenuItemInt >= itemCount )
+    {
+        mainMenuItemInt = 0;
+    }
+    m_mainMenuItem = static_cast<MainMenuItem>( mainMenuItemInt );
+
+    // update selection colour
+    m_resumeText->getMaterial().colour =
+            global::MENU_ITEM_NON_SELECTED_COLOUR;
+    m_settingsText->getMaterial().colour =
+            global::MENU_ITEM_NON_SELECTED_COLOUR;
+    m_exitText->getMaterial().colour =
+            global::MENU_ITEM_NON_SELECTED_COLOUR;
+
+    if ( m_mainMenuItem == MAIN_RESUME )
+    {
+        m_resumeText->getMaterial().colour =
+                global::MENU_ITEM_SELECTED_COLOUR;
+    }
+    else if ( m_mainMenuItem == MAIN_SETTINGS )
+    {
+        m_settingsText->getMaterial().colour =
+                global::MENU_ITEM_SELECTED_COLOUR;
+    }
+    else
+    {
+        m_exitText->getMaterial().colour =
+                global::MENU_ITEM_SELECTED_COLOUR;
+    }
+
+    // perform action
+    if ( omi::input::isKeyPressed( omi::input::key::RETURN ) )
+    {
+        if ( m_mainMenuItem == MAIN_RESUME )
+        {
+            // TODO: make a function for this
+            m_active = !m_active;
+            global::pause = m_active;
+            // update the UI
+            show( m_active );
+        }
+        else if ( m_mainMenuItem == MAIN_SETTINGS )
+        {
+            // TODO:
+        }
+        else
+        {
+            // TODO: are you sure?
+            omi::omi_running = false;
+        }
+    }
 }

@@ -2,9 +2,22 @@
 | TODO |
 \++++++/
 
-- Debug FPS
+- pause menu
+{
+    - clean up
 
-- text caching is probably needed
+    - sub menu handling
+    {
+            - are you sure you want to exit?
+
+        - settings
+        {
+            - need handling for enum text
+
+            - config file to store and reload settings
+        }
+    }
+}
 
 - overlay
 {
@@ -56,31 +69,6 @@
         - run
         - animation (bobbing)
     }
-}
-
-- pausing
-{
-    - pausuable element ?
-}
-
-- pause menu
-{
-    - resume
-    - settings
-    - exit
-}
-
-- settings
-{
-    - config file
-
-    - graphics settings
-
-    - system settings??
-
-    - audio settings
-
-    - key bindings
 }
 
 - Level generation
