@@ -2,6 +2,8 @@
 
 #include "src/omicron/input/Input.hpp"
 
+#include "src/entities/debug/FPSCounter.hpp"
+
 #include "src/entities/gameplay/menu/PauseMenu.hpp"
 #include "src/entities/gameplay/Player.hpp"
 // TODO: REMOVE ME:
@@ -23,6 +25,9 @@ void GameplayScene::init()
     omi::renderSettings.setAmbientStrength( 0.25f );
     omi::renderSettings.setAmbientColour( glm::vec3( 1.0f, 1.0f, 1.0f ) );
 
+    // TODO: REMOVE ME
+    addEntity( new FPSCounter() );
+
     // add the initial entities
     addEntity( new Player() );
     addEntity( new PauseMenu() );
@@ -32,8 +37,8 @@ void GameplayScene::init()
 
 bool GameplayScene::update()
 {
-    // exit if the escape key has been pressed
-    if ( omi::input::isKeyPressed( omi::input::key::TAB ) )
+    // TODO: REMOVE ME
+    if ( omi::input::isKeyPressed( omi::input::key::F7 ) )
     {
         // TODO: go to menu
         return true;

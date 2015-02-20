@@ -16,6 +16,7 @@ void StartUpScene::init()
 
     // load the needed resources
     omi::ResourceManager::load( resource_group::ALL );
+    omi::ResourceManager::load( resource_group::DEBUG );
     omi::ResourceManager::load( resource_group::START_UP );
 
     // add entities

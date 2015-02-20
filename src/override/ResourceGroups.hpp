@@ -6,6 +6,7 @@ namespace resource_group {
 enum ResourceGroup {
 
     ALL,
+    DEBUG,
     START_UP,
     LOADING,
     MENU,

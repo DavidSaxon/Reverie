@@ -18,6 +18,8 @@ namespace pack {
 
 void buildAllPack();
 
+void buildDebugPack();
+
 void buildStartUpPack();
 
 void buildLoadingPack();
@@ -36,6 +38,7 @@ void buildFacilityPack();
 inline void build()
 {
     buildAllPack();
+    buildDebugPack();
     buildStartUpPack();
     buildLoadingPack();
     buildMenuPack();

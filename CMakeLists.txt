@@ -68,6 +68,7 @@ set(SRCS
     src/override/StartUp.cpp
 
     src/resource_pack/AllPack.cpp
+    src/resource_pack/DebugPack.cpp
     src/resource_pack/StartUpPack.cpp
     src/resource_pack/LoadingPack.cpp
     src/resource_pack/MenuPack.cpp
@@ -77,6 +78,8 @@ set(SRCS
     src/scenes/start_up/StartUpScene.cpp
     src/scenes/loading/LoadingScene.cpp
     src/scenes/gameplay/GameplayScene.cpp
+
+    src/entities/debug/FPSCounter.cpp
 
     src/entities/start_up/OmicronLogo.cpp
 
