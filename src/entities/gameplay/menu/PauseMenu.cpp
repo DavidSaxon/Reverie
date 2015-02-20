@@ -10,6 +10,7 @@ PauseMenu::PauseMenu()
     :
     m_active      ( false ),
     m_escDown     ( false ),
+    m_overlay     ( NULL ),
     m_resumeText  ( NULL ),
     m_settingsText( NULL ),
     m_exitText    ( NULL )
@@ -22,7 +23,15 @@ PauseMenu::PauseMenu()
 
 void PauseMenu::init()
 {
-    // TODO: background
+    // overlay background
+    m_overlay = omi::ResourceManager::getSprite(
+            "pause_menu_overlay",
+            "",
+            NULL
+    );
+    m_overlay->gui = true;
+    m_overlay->visible = false;
+    m_components.add( m_overlay );
 
     // resume text
     omi::Transform* textT1 = new omi::Transform(
@@ -99,6 +108,7 @@ void PauseMenu::update()
 
 void PauseMenu::show( bool state )
 {
+    m_overlay->     visible = state;
     m_resumeText->  visible = state;
     m_settingsText->visible = state;
     m_exitText->    visible = state;

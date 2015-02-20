@@ -37,6 +37,9 @@ private:
     // is true if the escape key is down
     bool m_escDown;
 
+    // the transparent overlay for the menu
+    omi::Sprite* m_overlay;
+
     // the text of the options on the menu
     omi::Text* m_resumeText;
     omi::Text* m_settingsText;

@@ -4,15 +4,19 @@ namespace pack {
 
 void buildMenuPack()
 {
-    // TODO: fix
-    // flare
-    omi::ResourceManager::addMaterialGeometryMesh(
-        "flare",
-        resource_group::PLAYER,
-        "default_shader",
-        glm::vec4( 0.8f, 0.1f, 0.1f, 1.0f ),
-        "res/gfx/geometry/player/flare.obj",
-        0
+    // TODO: menu layers
+
+    // pause menu overlay
+    omi::ResourceManager::addMaterialSprite(
+            "pause_menu_overlay",
+            resource_group::MENU,
+            "default_shader",
+            glm::vec4( 0.0f, 0.0f, 0.0f, 0.75f ),
+            0,
+            glm::vec2( 10.0f, 10.0f ),
+            glm::vec2( 1.0f, 1.0f ),
+            glm::vec2( 0.0f, 0.0f ),
+            omi::material::SHADELESS
     );
 
     // pause main item text
@@ -21,7 +25,7 @@ void buildMenuPack()
         resource_group::MENU,
         "default_shader",
         glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
-        0,
+        1,
         "title_font",
         "",
         0.25f,
