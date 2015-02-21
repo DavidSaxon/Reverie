@@ -31,6 +31,19 @@ void buildMenuPack()
         0.25f,
         omi::material::SHADELESS
     );
+
+    // pause second item text
+    omi::ResourceManager::addMaterialText(
+        "pause_secondary_item_text",
+        resource_group::MENU,
+        "default_shader",
+        glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
+        layer::gui::MAIN_MENU_ITEM,
+        "title_font",
+        "",
+        0.125f,
+        omi::material::SHADELESS
+    );
 }
 
 } // namespace pack

@@ -8,24 +8,52 @@ void TestEntity::init()
 {
     //----------------------------------LIGHTS----------------------------------
 
+    omi::Transform* dir = new omi::Transform(
+                "",
+                glm::vec3( 1.0f, 0.5f, 0.0f ),
+                glm::vec3(),
+                glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( dir );
+    omi::DirectionalLight* light = new omi::DirectionalLight(
+            "", dir, 0.8f, glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    light->setCastShadow( true );
+    m_components.add( light );
+
+    {
+        // omi::Transform* transform = new omi::Transform(
+        //         "",
+        //         glm::vec3( 0.0f, 2.0f, 0.0f ),
+        //         glm::vec3(),
+        //         glm::vec3( 1.0f, 1.0f, 1.0f )
+        // );
+        // m_components.add( transform );
+        // omi::PointLight* pointLight = new omi::PointLight(
+        //         "",
+        //         transform,
+        //         1.0f,
+        //         glm::vec3( 1.0f, 1.0f, 1.0f ),
+        //         0.05f,
+        //         0.2f,
+        //         0.00005f
+        // );
+        // m_components.add( pointLight );
+    }
+
+    //------------------------------SHADOW CASTER-------------------------------
+
     {
         omi::Transform* transform = new omi::Transform(
                 "",
-                glm::vec3( 0.0f, 2.0f, 0.0f ),
+                glm::vec3( 0.0f, 0.75f, 0.0f ),
                 glm::vec3(),
-                glm::vec3( 1.0f, 1.0f, 1.0f )
+                glm::vec3( 3.0f, 3.0f, 3.0f )
         );
         m_components.add( transform );
-        omi::PointLight* pointLight = new omi::PointLight(
-                "",
-                transform,
-                1.0f,
-                glm::vec3( 1.0f, 1.0f, 1.0f ),
-                0.05f,
-                0.2f,
-                0.00005f
-        );
-        m_components.add( pointLight );
+        omi::Mesh* caster =
+                    omi::ResourceManager::getMesh( "flare", "", transform );
+        m_components.add( caster );
     }
 
     //----------------------------------FLOOR-----------------------------------
