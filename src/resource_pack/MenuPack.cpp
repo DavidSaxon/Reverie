@@ -1,18 +1,18 @@
 #include "Packs.hpp"
 
+#include "src/data/layers/GUILayers.hpp"
+
 namespace pack {
 
 void buildMenuPack()
 {
-    // TODO: menu layers
-
     // pause menu overlay
     omi::ResourceManager::addMaterialSprite(
             "pause_menu_overlay",
             resource_group::MENU,
             "default_shader",
             glm::vec4( 0.0f, 0.0f, 0.0f, 0.75f ),
-            0,
+            layer::gui::PAUSE_OVERLAY,
             glm::vec2( 10.0f, 10.0f ),
             glm::vec2( 1.0f, 1.0f ),
             glm::vec2( 0.0f, 0.0f ),
@@ -25,7 +25,7 @@ void buildMenuPack()
         resource_group::MENU,
         "default_shader",
         glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
-        1,
+        layer::gui::MAIN_MENU_ITEM,
         "title_font",
         "",
         0.25f,

@@ -4,8 +4,6 @@
 
 - pause menu
 {
-    - sprite layers
-
     - clean up
 
     - sub menu handling
@@ -19,6 +17,8 @@
             - config file to store and reload settings
         }
     }
+
+    - if the pause menu ends up doing all menu handling then move up sub folder
 }
 
 - overlay

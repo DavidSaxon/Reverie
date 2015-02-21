@@ -1,6 +1,8 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_MENU_PAUSE_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_MENU_PAUSE_HPP_
 
+#include <vector>
+
 #include "src/omicron/entity/Entity.hpp"
 
 /*****************************************\
@@ -13,12 +15,23 @@ public:
     //                                ENUMERATORS
     //--------------------------------------------------------------------------
 
+    // the different menu
+    enum MenuType
+    {
+        TYPE_MAIN = 0,
+        TYPE_CHECK_EXIT,
+        TYPE_SETTINGS,
+        TYPE_GRAPHICS_SETTINGS,
+        TYPE_AUDIO_SETTINGS,
+        TYPE_INPUT_SETTINGS
+    };
+
+    // the items on the main menu
     enum MainMenuItem
     {
         MAIN_RESUME = 0,
         MAIN_SETTINGS,
-        MAIN_EXIT,
-        MAIN_COUNT
+        MAIN_EXIT
     };
 
     //--------------------------------------------------------------------------
@@ -43,34 +56,51 @@ private:
     //                                 VARIABLES
     //--------------------------------------------------------------------------
 
-    // is true if the pause menu is currently active
-    bool m_active;
+    // the current menu
+    MenuType m_currentMenu;
 
-    // the currently selected main menu item
-    MainMenuItem m_mainMenuItem;
-
-    // is true if the escape key is down
+    // is true if the scape key is currently down
     bool m_escDown;
-    // is true if an arrow key is down
-    bool m_arrowDown;
 
-    // the transparent overlay for the menu
+    // the sprite for the menu overlay
     omi::Sprite* m_overlay;
+    // the list of renderable text for the main menu
+    std::vector<omi::Text*> m_mainText;
 
-    // the text of the options on the menu
-    omi::Text* m_resumeText;
-    omi::Text* m_settingsText;
-    omi::Text* m_exitText;
+    // the index of the currently selected menu item
+    int m_currentIndex;
+    // the list of items currently on the menu
+    std::vector<omi::Text*> m_currentItems;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS
     //--------------------------------------------------------------------------
 
-    /** Shows or hides the pause menu */
-    void show( bool state );
+    /** Updates the menu to reflect a state change */
+    void updateMenuState();
 
-    /** Updates menu logics */
-    void updateMenu();
+    /** Updates logic for when the menu is open */
+    void updateMenuLogic();
+
+    /** Sets the colour of the current menu items */
+    void setItemColours();
+
+    //--------------------------------VISIBILITY--------------------------------
+
+    /** Sets the visibility of the given text list */
+    void setTextListVisibility(
+            std::vector<omi::Text*>& textList, bool visible );
+
+    /** Hides all aspects of the menu */
+    void hideAll();
+
+    //------------------------------INITIALISATION------------------------------
+
+    /** Initialises the components of the pause menu */
+    void initComponents();
+
+    /** Initialises the main menu components */
+    void initMainMenuComponents();
 };
 
 #endif
