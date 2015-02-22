@@ -4,8 +4,8 @@
 
 #include "src/entities/debug/FPSCounter.hpp"
 
-#include "src/entities/gameplay/menu/PauseMenu.hpp"
 #include "src/entities/gameplay/Player.hpp"
+#include "src/entities/menu/PauseMenu.hpp"
 // TODO: REMOVE ME:
 #include "src/entities/gameplay/TestEntity.hpp"
 

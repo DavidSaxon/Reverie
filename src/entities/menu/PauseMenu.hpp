@@ -1,9 +1,11 @@
-#ifndef REVERIE_ENTITIES_GAMEPLAY_MENU_PAUSE_HPP_
-#   define REVERIE_ENTITIES_GAMEPLAY_MENU_PAUSE_HPP_
+#ifndef REVERIE_ENTITIES_MENU_PAUSE_HPP_
+#   define REVERIE_ENTITIES_MENU_PAUSE_HPP_
 
 #include <vector>
 
 #include "src/omicron/entity/Entity.hpp"
+
+#include "src/entities/menu/setting_widget/EnumWidget.hpp"
 
 /*****************************************\
 | Handles the in-game pause overlay menu. |
@@ -111,6 +113,8 @@ private:
     // TODO: audio list
     // the list of renderable text on the graphics settings menu
     std::vector<omi::Text*> m_graphicsText;
+    // the list of widgets for the graphics settings menu
+    std::vector<SettingWidget*> m_graphicsWidgets;
 
     // the index of the currently selected menu item
     int m_currentIndex;

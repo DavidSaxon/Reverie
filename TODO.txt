@@ -4,8 +4,6 @@
 
 - pause menu
 {
-    - clean up
-
     - sub menu handling
     {
             - are you sure you want to exit?
@@ -18,7 +16,7 @@
         }
     }
 
-    - if the pause menu ends up doing all menu handling then move up sub folder
+    - show controls at bottom of menu
 }
 
 - overlay

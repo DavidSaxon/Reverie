@@ -20,7 +20,7 @@ void buildAllPack()
     omi::ResourceManager::addFont(
         "title_font",
         resource_group::ALL,
-        "res/gfx/fonts/samhain.ttf"
+        "res/gfx/fonts/poison_ivy.otf"
     );
 }
 

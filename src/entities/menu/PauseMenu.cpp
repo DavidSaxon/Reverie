@@ -332,7 +332,7 @@ void PauseMenu::acceptGraphicsMenu()
         case GRAPHICS_BACK:
         {
             // return to the main menu
-            m_currentMenu = TYPE_GRAPHICS_SETTINGS;
+            m_currentMenu = TYPE_SETTINGS;
             updateMenuState();
             break;
         }
@@ -616,7 +616,7 @@ void PauseMenu::initSettingsMenuComponents()
 
 void PauseMenu::initGraphicsMenuComponents()
 {
-    // resolution text
+    // resolution
     {
 
     omi::Transform* t = new omi::Transform(
@@ -635,6 +635,24 @@ void PauseMenu::initGraphicsMenuComponents()
     m_components.add( text );
 
     m_graphicsText.push_back( text );
+
+    // add widget
+    SettingWidget* widget = new EnumWidget( glm::vec3( 1.0f, 0.3125f, 0.0f ) );
+    m_graphicsWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+    // resolution widget
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( 1.0f, 0.3125f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+
 
     }
 

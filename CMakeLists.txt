@@ -89,7 +89,8 @@ set(SRCS
 
     src/entities/gameplay/Player.cpp
     src/entities/gameplay/TestEntity.cpp
-    src/entities/gameplay/menu/PauseMenu.cpp
+
+    src/entities/menu/PauseMenu.cpp
 )
 
 find_package(Boost)
