@@ -91,6 +91,8 @@ set(SRCS
     src/entities/gameplay/TestEntity.cpp
 
     src/entities/menu/PauseMenu.cpp
+    src/entities/menu/setting_widget/EnumWidget.cpp
+    src/entities/menu/setting_widget/SettingWidget.cpp
 )
 
 find_package(Boost)
