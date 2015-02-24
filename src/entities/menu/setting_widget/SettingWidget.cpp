@@ -6,8 +6,9 @@
 
 SettingWidget::SettingWidget( const glm::vec3& position )
     :
-    m_active  ( false ),
-    m_position( position )
+    m_active   ( false ),
+    m_position ( position ),
+    m_arrowDown( false )
 {
 }
 

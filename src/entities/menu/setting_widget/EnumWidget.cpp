@@ -13,7 +13,8 @@ EnumWidget::EnumWidget(
     :
     SettingWidget ( position ),
     m_values      ( values ),
-    m_defaultValue( defaultValue )
+    m_defaultValue( defaultValue ),
+    m_currentIndex( static_cast<int>( defaultValue ) )
 {
 }
 
@@ -48,7 +49,44 @@ void EnumWidget::update()
     // do nothing if the widget is not active
     if ( !m_active )
     {
+        m_arrowDown = false;
         return;
+    }
+
+    if ( omi::input::isKeyPressed( omi::input::key::RIGHT ) &&
+         !m_arrowDown                                          )
+    {
+        m_arrowDown = true;
+        ++m_currentIndex;
+    }
+    else if (
+        omi::input::isKeyPressed( omi::input::key::LEFT ) &&
+        !m_arrowDown                                         )
+    {
+        m_arrowDown = true;
+        --m_currentIndex;
+    }
+    else if ( !omi::input::isKeyPressed( omi::input::key::RIGHT ) &&
+              !omi::input::isKeyPressed( omi::input::key::LEFT )  &&
+               m_arrowDown                                           )
+    {
+        m_arrowDown = false;
+    }
+
+    // clamp the index
+    if ( m_currentIndex < 0 )
+    {
+        m_currentIndex = m_values.size() - 1;
+    }
+    else if ( m_currentIndex >= static_cast<int>( m_values.size() ) )
+    {
+        m_currentIndex = 0;
+    }
+
+    // update the text
+    if ( m_arrowDown )
+    {
+        m_text->setString( m_values[ m_currentIndex ] );
     }
 }
 

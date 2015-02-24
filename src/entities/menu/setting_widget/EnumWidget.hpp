@@ -45,6 +45,8 @@ private:
     std::vector<std::string> m_values;
     // the index of the default value to show
     unsigned m_defaultValue;
+    // the current index
+    int m_currentIndex;
 
     // the text of the widget
     omi::Text* m_text;

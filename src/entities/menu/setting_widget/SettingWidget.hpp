@@ -45,6 +45,9 @@ protected:
 
     // the position of the widget
     glm::vec3 m_position;
+
+    // is true if an arrow key is down
+    bool m_arrowDown;
 };
 
 #endif
