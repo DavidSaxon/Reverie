@@ -10,7 +10,14 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    EnumWidget( const glm::vec3& position );
+    /** Creates a new enumerator setting widget
+    @param position the position to display the widget at
+    @param values the possible values of the widget
+    @param defaultValue the index of the value to first display on the widget */
+    EnumWidget(
+            const glm::vec3& position,
+            std::vector<std::string> values,
+            unsigned defaultValue );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -33,6 +40,11 @@ private:
     //--------------------------------------------------------------------------
     //                                 VARIABLES
     //--------------------------------------------------------------------------
+
+    // the list of possible values of the widget
+    std::vector<std::string> m_values;
+    // the index of the default value to show
+    unsigned m_defaultValue;
 
     // the text of the widget
     omi::Text* m_text;

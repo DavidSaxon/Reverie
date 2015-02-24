@@ -120,6 +120,8 @@ private:
     int m_currentIndex;
     // the list of items currently on the menu
     std::vector<omi::Text*> m_currentItems;
+    // the list of widgets currently on the menu
+    std::vector<SettingWidget*> m_currentWidgets;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS
@@ -133,6 +135,9 @@ private:
 
     /** Sets the colour of the current menu items */
     void setItemColours();
+
+    /** Sets the colour of the current widgets */
+    void setWidgetColours();
 
     /** Updates the menu to reflect a state change */
     void updateMenuState();
@@ -159,6 +164,10 @@ private:
     /** Sets the visibility of the given text list */
     void setTextListVisibility(
             std::vector<omi::Text*>& textList, bool visible );
+
+    /** Sets the visibility of the given widget list */
+    void setWidgetVisibility(
+            std::vector<SettingWidget*> widgetList, bool visible );
 
     /** Hides all aspects of the menu */
     void hideAll();

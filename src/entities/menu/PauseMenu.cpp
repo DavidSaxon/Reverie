@@ -111,6 +111,7 @@ void PauseMenu::updateMenuLogic()
 
     // update colour
     setItemColours();
+    setWidgetColours();
 }
 
 void PauseMenu::back()
@@ -154,7 +155,8 @@ void PauseMenu::setItemColours()
 {
     // reset to unselected first
     for ( std::vector<omi::Text*>::iterator it = m_currentItems.begin();
-          it != m_currentItems.end(); ++it )
+          it != m_currentItems.end();
+          ++it )
     {
         ( *it )->getMaterial().colour = global::MENU_ITEM_NON_SELECTED_COLOUR;
     }
@@ -162,6 +164,23 @@ void PauseMenu::setItemColours()
     // colour the selected item
     m_currentItems[ m_currentIndex ]->getMaterial().colour =
             global::MENU_ITEM_SELECTED_COLOUR;
+}
+
+void PauseMenu::setWidgetColours()
+{
+    // reset to non-active first
+    for ( std::vector<SettingWidget*>::iterator it = m_currentWidgets.begin();
+          it != m_currentWidgets.end();
+          ++it )
+    {
+        ( *it )->setActive( false );
+    }
+
+    // activate the selected widget
+    if ( m_currentIndex < static_cast<int>( m_currentWidgets.size() ) )
+    {
+        m_currentWidgets[ m_currentIndex ]->setActive( true );
+    }
 }
 
 void PauseMenu::updateMenuState()
@@ -183,6 +202,7 @@ void PauseMenu::updateMenuState()
             case TYPE_MAIN:
             {
                 m_currentItems = m_mainText;
+                m_currentWidgets.clear();
                 setTextListVisibility( m_mainText, true );
                 break;
             }
@@ -190,19 +210,23 @@ void PauseMenu::updateMenuState()
             {
                 m_exitCheckText->visible = true;
                 m_currentItems = m_exitText;
+                m_currentWidgets.clear();
                 setTextListVisibility( m_exitText, true );
                 break;
             }
             case TYPE_SETTINGS:
             {
                 m_currentItems = m_settingsText;
+                m_currentWidgets.clear();
                 setTextListVisibility( m_settingsText, true );
                 break;
             }
             case TYPE_GRAPHICS_SETTINGS:
             {
                 m_currentItems = m_graphicsText;
+                m_currentWidgets = m_graphicsWidgets;
                 setTextListVisibility( m_graphicsText, true );
+                setWidgetVisibility( m_graphicsWidgets, true );
                 break;
             }
         }
@@ -341,16 +365,6 @@ void PauseMenu::acceptGraphicsMenu()
 
 //----------------------------------VISIBILITY----------------------------------
 
-void PauseMenu::hideAll()
-{
-    m_overlay->visible = false;
-    setTextListVisibility( m_mainText, false );
-    m_exitCheckText->visible = false;
-    setTextListVisibility( m_exitText, false );
-    setTextListVisibility( m_settingsText, false );
-    setTextListVisibility( m_graphicsText, false );
-}
-
 void PauseMenu::setTextListVisibility(
         std::vector<omi::Text*>& textList, bool visible )
 {
@@ -360,6 +374,28 @@ void PauseMenu::setTextListVisibility(
     {
         ( *it )->visible = visible;
     }
+}
+
+void PauseMenu::setWidgetVisibility(
+        std::vector<SettingWidget*> widgetList, bool visible )
+{
+    for ( std::vector<SettingWidget*>::iterator it = widgetList.begin();
+          it != widgetList.end();
+          ++it )
+    {
+        ( *it )->setVisible( visible );
+    }
+}
+
+void PauseMenu::hideAll()
+{
+    m_overlay->visible = false;
+    setTextListVisibility( m_mainText, false );
+    m_exitCheckText->visible = false;
+    setTextListVisibility( m_exitText, false );
+    setTextListVisibility( m_settingsText, false );
+    setTextListVisibility( m_graphicsText, false );
+    setWidgetVisibility( m_graphicsWidgets, false );
 }
 
 //--------------------------------INITIALISATION--------------------------------
@@ -636,23 +672,20 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
+    // TODO:
     // add widget
-    SettingWidget* widget = new EnumWidget( glm::vec3( 1.0f, 0.3125f, 0.0f ) );
+    std::vector<std::string> values;
+    values.push_back( "25%" );
+    values.push_back( "50%" );
+    values.push_back( "75%" );
+    values.push_back( "Full" );
+    SettingWidget* widget = new EnumWidget(
+            glm::vec3( 0.5f, 0.3125f, 0.0f ),
+            values,
+            3
+    );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );
-
-    }
-    // resolution widget
-    {
-
-    omi::Transform* t = new omi::Transform(
-            "",
-            glm::vec3( 1.0f, 0.3125f, 0.0f ),
-            glm::vec3(),
-            glm::vec3( 1.0f, 1.0f, 1.0f )
-    );
-    m_components.add( t );
-
 
     }
 
@@ -676,6 +709,19 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
+    // TODO:
+    // add widget
+    std::vector<std::string> values;
+    values.push_back( "No" );
+    values.push_back( "Yes" );
+    SettingWidget* widget = new EnumWidget(
+            glm::vec3( 0.5f, 0.1875, 0.0f ),
+            values,
+            1
+    );
+    m_graphicsWidgets.push_back( widget );
+    addEntity( widget );
+
     }
 
     // gamma text
@@ -698,6 +744,19 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
+    // TODO:
+    // add widget
+    std::vector<std::string> values;
+    values.push_back( "0" );
+    values.push_back( "1" );
+    SettingWidget* widget = new EnumWidget(
+            glm::vec3( 0.5f, 0.0625f, 0.0f ),
+            values,
+            1
+    );
+    m_graphicsWidgets.push_back( widget );
+    addEntity( widget );
+
     }
 
     // shadows text
@@ -719,6 +778,22 @@ void PauseMenu::initGraphicsMenuComponents()
     m_components.add( text );
 
     m_graphicsText.push_back( text );
+
+    // TODO:
+    // add widget
+    std::vector<std::string> values;
+    values.push_back( "Off" );
+    values.push_back( "Low" );
+    values.push_back( "Medium" );
+    values.push_back( "High" );
+    values.push_back( "Ultra" );
+    SettingWidget* widget = new EnumWidget(
+            glm::vec3( 0.5f, -0.0625f, 0.0f ),
+            values,
+            3
+    );
+    m_graphicsWidgets.push_back( widget );
+    addEntity( widget );
 
     }
 
