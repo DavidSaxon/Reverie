@@ -675,10 +675,10 @@ void PauseMenu::initGraphicsMenuComponents()
     // TODO:
     // add widget
     std::vector<std::string> values;
-    values.push_back( "25%" );
-    values.push_back( "50%" );
-    values.push_back( "75%" );
-    values.push_back( "Full" );
+    values.push_back( "480x270" );
+    values.push_back( "960x540" );
+    values.push_back( "1440x810" );
+    values.push_back( "1920x1080" );
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, 0.3125f, 0.0f ),
             values,

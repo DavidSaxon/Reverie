@@ -22,6 +22,7 @@
 #include "src/omicron/rendering/render_texture/GlowBlurVertRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/GlowCollateRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/GlowFirstPassRenderTexture.hpp"
+#include "src/omicron/rendering/render_texture/StdRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/VisCheckRenderTexture.hpp"
 
 
@@ -134,7 +135,13 @@ private:
     GlowBlurHorRenderTexture m_glowBlurHorRenTex;
     GlowBlurVertRenderTexture m_glowBlurVertRenTex;
     GlowCollateRenderTexture m_glowCollateRenTex;
-    // the final render texture
+    // the standard render texture
+    StdRenderTexture m_stdRenderTexture;
+    // the overlay render texture
+    StdRenderTexture m_overlayRenderTexture;
+    // the gui render texture
+    StdRenderTexture m_guiRenderTexture;
+    // the final render texture for post effects
     FinalRenderTexture m_finalRenTex;
 
     // the depth sorter

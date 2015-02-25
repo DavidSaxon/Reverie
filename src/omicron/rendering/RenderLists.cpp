@@ -358,10 +358,8 @@ void RenderLists::render( Camera* camera )
 
     //-----------------------------MAIN RENDER PASS-----------------------------
 
-    // bind final pass render texture
-    m_finalRenTex.bind();
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // bind the standard render texture
+    m_stdRenderTexture.bind();
 
     // iterate over the layers
     for ( t_RenderableMap::iterator it = renderLayers.begin();
@@ -382,14 +380,14 @@ void RenderLists::render( Camera* camera )
     // revert normal blending mode
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
-    // unbind final pass
-    m_finalRenTex.unbind();
-    // render the results of the render texture
-    m_finalRenTex.render();
+    // unbind the std render texture
+    m_stdRenderTexture.unbind();
 
-    // TODO: make render texture for and do before final texture
 
     //---------------------------------OVERLAY----------------------------------
+
+    // bind the overlay render texture
+    m_overlayRenderTexture.bind();
 
     // create a camera for rendering overlay
     Camera overlayCamera( "", omi::cam::PERSPECTIVE, NULL );
@@ -411,9 +409,29 @@ void RenderLists::render( Camera* camera )
         }
     }
 
+    // unbind the final render texture
+    m_overlayRenderTexture.unbind();
+
+    //-----------------------------POST PROCESSING------------------------------
+
+
+    // bind the final render texture
+    m_finalRenTex.bind();
+
+    // // render the standard and overlay render textures
+    m_stdRenderTexture.render();
+    m_overlayRenderTexture.render();
+
+    // // render the results of the render texture
+    m_finalRenTex.unbind();
+
+
     //-----------------------------------GUI------------------------------------
 
-    // TODO: to render texture
+    // bind the gui render texture
+    m_guiRenderTexture.bind();
+
+    m_finalRenTex.render();
 
     // disable depth testing
     glDisable( GL_DEPTH_TEST );
@@ -436,6 +454,10 @@ void RenderLists::render( Camera* camera )
     {
         glEnable( GL_DEPTH_TEST );
     }
+
+    // unbind and render the gui texture
+    m_guiRenderTexture.unbind();
+    m_guiRenderTexture.render();
 
     //---------------------------VISIBLE THREAD JOIN----------------------------
 

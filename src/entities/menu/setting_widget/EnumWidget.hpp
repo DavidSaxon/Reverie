@@ -3,6 +3,22 @@
 
 #include "SettingWidget.hpp"
 
+#include "src/omicron/Omicron.hpp"
+
+namespace setting_function {
+
+/** Changes resolution */
+inline void resolution( const std::string& value )
+{
+    omi::renderSettings.setResolution( glm::vec2( 192, 108 ) );
+}
+
+} // namespace setting_function
+
+
+/*******************************************************\
+| A widget that can be used to change a discreet value. |
+\*******************************************************/
 class EnumWidget : public SettingWidget {
 public:
 

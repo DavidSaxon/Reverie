@@ -53,10 +53,12 @@ void EnumWidget::update()
         return;
     }
 
+    bool changed = false;
     if ( omi::input::isKeyPressed( omi::input::key::RIGHT ) &&
          !m_arrowDown                                          )
     {
         m_arrowDown = true;
+        changed = true;
         ++m_currentIndex;
     }
     else if (
@@ -64,6 +66,7 @@ void EnumWidget::update()
         !m_arrowDown                                         )
     {
         m_arrowDown = true;
+        changed = true;
         --m_currentIndex;
     }
     else if ( !omi::input::isKeyPressed( omi::input::key::RIGHT ) &&
@@ -83,9 +86,12 @@ void EnumWidget::update()
         m_currentIndex = 0;
     }
 
-    // update the text
-    if ( m_arrowDown )
+    // the value has changed
+    if ( changed )
     {
+        // call change function
+        setting_function::resolution( m_values[ m_currentIndex ] );
+        // update the text
         m_text->setString( m_values[ m_currentIndex ] );
     }
 }
