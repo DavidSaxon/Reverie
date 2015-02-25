@@ -10,7 +10,17 @@ namespace setting_function {
 /** Changes resolution */
 inline void resolution( const std::string& value )
 {
-    omi::renderSettings.setResolution( glm::vec2( 192, 108 ) );
+    std::cout << "value: " << value << std::endl;
+
+    // parse the value
+    unsigned p = value.find( 'x' );
+    std::cout << "side a: " << value.substr( 0, p ) << std::endl;
+    std::cout << "side b: " << value.substr( p, value.length() ) << std::endl;
+
+    omi::renderSettings.setResolution( glm::vec2(
+            atoi( value.substr( 0, p ).c_str() ),
+            atoi( value.substr( p + 1, value.length() ).c_str() )
+    ) );
 }
 
 } // namespace setting_function
