@@ -28,7 +28,7 @@ void buildMenuPack()
         layer::gui::MAIN_MENU_ITEM,
         "title_font",
         "",
-        0.25f,
+        0.2f,
         omi::material::SHADELESS
     );
 
@@ -41,7 +41,7 @@ void buildMenuPack()
         layer::gui::MAIN_MENU_ITEM,
         "title_font",
         "",
-        0.125f,
+        0.1f,
         omi::material::SHADELESS
     );
 }

@@ -10,7 +10,8 @@ GlowCollateRenderTexture::GlowCollateRenderTexture() :
     RenderTexture(
         "res/gfx/shader/omicron/render_texture_vertex.glsl",
         "res/gfx/shader/omicron/glow_collate_render_texture_fragment.glsl",
-        0.2f
+        0.2f,
+        GL_LINEAR
     )
 {
 }

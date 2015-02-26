@@ -53,6 +53,8 @@ void TestEntity::init()
         m_components.add( transform );
         omi::Mesh* caster =
                     omi::ResourceManager::getMesh( "flare", "", transform );
+        caster->getMaterial().glow =
+                new omi::Glow( glm::vec3( 1.0f, 0.25f, 0.25f ), 1.0f );
         m_components.add( caster );
     }
 

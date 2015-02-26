@@ -9,14 +9,16 @@ namespace omi {
 RenderTexture::RenderTexture(
         const std::string& vertexShader,
         const std::string& fragmentShader,
-        float resScale )
+        float resScale,
+        GLuint filter )
     :
     m_frameBuffer      ( 0 ),
     m_depthRenderBuffer( 0 ),
     m_texture          ( 0 ),
     m_vertexShader     ( vertexShader ),
     m_fragmentShader   ( fragmentShader ),
-    m_resScale         ( resScale )
+    m_resScale         ( resScale ),
+    m_filter           ( filter )
 {
     // initialise
     init();
@@ -196,8 +198,8 @@ void RenderTexture::init()
         GL_UNSIGNED_BYTE,
         0
     );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filter );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_filter );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 

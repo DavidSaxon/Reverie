@@ -32,11 +32,13 @@ public:
     /** Super constructor
     @param vertexShader the path to the vertex shader to use
     @param fragmentShader the path to the fragment shader to use
-    @param resScale the scale of the resolution this texture should be */
+    @param resScale the scale of the resolution this texture should be
+    @param filter the filter to use on the texture */
     RenderTexture(
             const std::string& vertexShader,
             const std::string& fragmentShader,
-            float resScale = 1.0f );
+            float resScale = 1.0f,
+            GLuint filter = GL_NEAREST );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -80,6 +82,9 @@ protected:
     float m_resScale;
     // the current resolution of the texture
     glm::vec2 m_resolution;
+
+    // the filter to use on the texture
+    GLuint m_filter;
 
     //--------------------------------------------------------------------------
     //                         PROTECTED MEMBER FUNCTIONS

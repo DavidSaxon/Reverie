@@ -2,6 +2,12 @@
 | TODO |
 \++++++/
 
+- send glow fixes to Omicron
+{
+    - renderTexture.cpp and rendertexture.hpp
+    - All Glow render textures
+}
+
 - pause menu
 {
     - sub menu handling
