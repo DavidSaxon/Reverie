@@ -8,6 +8,8 @@
 
 #include "lib/glm/glm.hpp"
 
+#include "src/omicron/Omicron.hpp"
+
 namespace omi
 {
 

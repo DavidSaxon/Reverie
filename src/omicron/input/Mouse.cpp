@@ -29,6 +29,11 @@ glm::vec2 getMousePos()
 
 bool mousePressed( mouse_button::Type button )
 {
+    if ( !omi_hasFocus )
+    {
+        return false;
+    }
+
     return sf::Mouse::isButtonPressed( sf::Mouse::Button( button ) );
 }
 
