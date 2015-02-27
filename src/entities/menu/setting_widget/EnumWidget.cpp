@@ -90,7 +90,7 @@ void EnumWidget::update()
     if ( changed )
     {
         // call change function
-        setting_function::resolution( m_values[ m_currentIndex ] );
+        // setting_function::resolution( m_values[ m_currentIndex ] );
         // update the text
         m_text->setString( m_values[ m_currentIndex ] );
     }

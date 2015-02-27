@@ -8,6 +8,8 @@
     - All Glow render textures
 }
 
+- settings on disk
+
 - pause menu
 {
     - sub menu handling
