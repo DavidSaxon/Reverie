@@ -1,5 +1,7 @@
 #include "StartUpScene.hpp"
 
+#include "src/functions/settings/Config.hpp"
+
 //------------------------------------------------------------------------------
 //                            PUBLIC MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
@@ -13,6 +15,9 @@ void StartUpScene::init()
     // TODO: get value from settings file
     // set the resolution to fullscreen
     omi::renderSettings.setResolution( omi::displaySettings.getSize() );
+
+    // apply settings from config file
+    settings::config::applySettingsFromConfig();
 
     // load the needed resources
     omi::ResourceManager::load( resource_group::ALL );

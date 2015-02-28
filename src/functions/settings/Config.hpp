@@ -1,6 +1,8 @@
 #ifndef REVERIE_FUNCTIONS_SETTINGS_CONFIG_HPP_
 #   define REVERIE_FUNCTIONS_SETTINGS_CONFIG_HPP_
 
+#include <iostream>
+
 namespace settings {
 
 /*****************************************************************************\
@@ -14,7 +16,7 @@ namespace config {
 //------------------------------------------------------------------------------
 
 // the default template for the config file
-extern std::string& configDefaultTemplate;
+extern std::string configDefaultTemplate;
 
 //------------------------------------------------------------------------------
 //                                   FUNCTIONS

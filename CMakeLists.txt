@@ -70,6 +70,9 @@ set(SRCS
 
     src/data/Globals.cpp
 
+    src/functions/settings/ApplySettings.cpp
+    src/functions/settings/Config.cpp
+
     src/resource_pack/AllPack.cpp
     src/resource_pack/DebugPack.cpp
     src/resource_pack/StartUpPack.cpp
