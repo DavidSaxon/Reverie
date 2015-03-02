@@ -63,7 +63,7 @@ void applySettingsFromConfig()
     // TODO: file error
 
     // apply settings
-    apply::resolution( resolution );
+    // apply::resolution( resolution );
 
 }
 
