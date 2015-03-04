@@ -56,7 +56,7 @@ void applySettingsFromConfig()
         {
             // split out the resolution
             unsigned p = line.find( ' ' );
-            resolution = line.substr( p + 1, line.length() - ( p + 2 ) );
+            resolution = line.substr( p + 1, line.length() - p );
         }
     }
 
