@@ -2,11 +2,8 @@
 | TODO |
 \++++++/
 
-- send glow fixes to Omicron
-{
-    - renderTexture.cpp and rendertexture.hpp
-    - All Glow render textures
-}
+
+- send string util fixes to omicron
 
 - settings on disk
 

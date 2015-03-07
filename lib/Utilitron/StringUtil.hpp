@@ -86,6 +86,73 @@ inline bool endsWith( const std::string& a, const std::string& b )
     }
 }
 
+/** @return if the given string is an integer */
+inline bool isInt( const std::string& s )
+{
+    // TODO: trim string first
+
+    // iterate over each character and check if it's a digit, except for the
+    // first character which may be '-'
+    for ( unsigned i = 0; i < s.length(); ++i )
+    {
+        if ( i == 0 && s.at( i ) !=  '-' && !isdigit( s.at( i ) ) )
+        {
+            return false;
+        }
+        if ( i != 0 && !isdigit( s.at( i ) ) )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/** @return if the given string is an unsigned integer */
+inline bool isUInt( const std::string& s )
+{
+    // TODO: trim string first
+
+    // iterate over each character and check that it is a digit
+    for ( unsigned i = 0; i < s.length(); ++i )
+    {
+        if ( !isdigit( s.at( i ) ) )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/** @return true if the given string is a floating point number */
+inline bool isFloat( const std::string& s )
+{
+    // TODO: trim string first
+
+    bool pointFound = false;
+    // iterate over each character and check
+    for ( unsigned i = 0; i < s.length(); ++i )
+    {
+        if ( !isdigit( s.at( i ) ) )
+        {
+            if ( i == 0 && s.at( i ) == '-' )
+            {
+                continue;
+            }
+            if ( s.at( i ) == '.' && !pointFound )
+            {
+                pointFound = true;
+                continue;
+            }
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
 /** Splits a string into a vector by a given delimiter
 @param str the string to split
 @param delimiter the delimiter to split the string by
