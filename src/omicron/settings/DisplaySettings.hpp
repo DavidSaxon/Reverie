@@ -64,7 +64,7 @@ public:
     bool getVsync() const;
 
     /** @return the size of the screen */
-    const glm::vec2& getScreenSize();
+    const glm::vec2& getScreenSize() const;
 
     //---------------------------------SETTERS----------------------------------
 

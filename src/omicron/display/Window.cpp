@@ -59,7 +59,8 @@ Window::Window() :
     // set cursor visibility
     m_window->setMouseCursorVisible( m_cursorVisble );
     // lock framerate
-    m_window->setFramerateLimit( 60 );
+    // TODO: uncomment
+    // m_window->setFramerateLimit( 60 );
 }
 
 //------------------------------------------------------------------------------
@@ -80,7 +81,7 @@ void Window::update()
 
             unsigned flags = sf::Style::Default;
 
-            m_window->close();
+            // m_window->close();
             m_window->create(
                 sf::VideoMode(
                     static_cast<unsigned>( displaySettings.getSize().x ),
@@ -92,18 +93,26 @@ void Window::update()
             );
             m_renderer->applyGLState();
 
-            m_window->setSize( sf::Vector2u(
-                static_cast<unsigned>( displaySettings.getSize().x ),
-                static_cast<unsigned>( displaySettings.getSize().y ) )
-            );
-            m_window->setPosition( sf::Vector2i(
-                static_cast<int>( displaySettings.getPos().x ),
-                static_cast<int>( displaySettings.getPos().y ) )
-            );
+            // m_window->setSize( sf::Vector2u(
+            //     static_cast<unsigned>( displaySettings.getSize().x ),
+            //     static_cast<unsigned>( displaySettings.getSize().y ) )
+            // );
+            // m_window->setPosition( sf::Vector2i(
+            //     static_cast<int>( displaySettings.getPos().x ),
+            //     static_cast<int>( displaySettings.getPos().y ) )
+            // );
         }
         else
         {
+            unsigned flags = sf::Style::Fullscreen;
 
+            m_window->create(
+                sf::VideoMode::getDesktopMode(),
+                displaySettings.getTitle(),
+                flags,
+                m_contextSettings
+            );
+            m_renderer->applyGLState();
         }
 
         m_window->setTitle( displaySettings.getTitle() );
