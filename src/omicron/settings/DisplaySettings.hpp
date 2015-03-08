@@ -63,6 +63,9 @@ public:
     /** @return if vsync is enabled */
     bool getVsync() const;
 
+    /** @return the size of the screen */
+    const glm::vec2& getScreenSize();
+
     //---------------------------------SETTERS----------------------------------
 
     /** @param title the new title of the window */
@@ -79,6 +82,9 @@ public:
 
     /** @param vsync whether vsnyc should be enabled or not */
     void setVsync( bool vsnyc );
+
+    /** @param sets the size of the screen */
+    void setScreenSet( glm::vec2& screenSize );
 
 private:
 
@@ -101,6 +107,8 @@ private:
     bool m_fullscreen;
     // is true to enable vertical sync
     bool m_vsync;
+    // the size of the screen
+    glm::vec2 m_screenSize;
 };
 
 

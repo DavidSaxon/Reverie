@@ -12,6 +12,7 @@ class DisplaySettings;
 
 #include "src/omicron/Omicron.hpp"
 #include "src/omicron/input/Input.hpp"
+#include "src/omicron/rendering/Renderer.hpp"
 
 namespace omi {
 
@@ -46,6 +47,9 @@ public:
     settings. This is a back end class that should only be used by Omicron */
     void update();
 
+    /** @param passes in a pointer to the renderer */
+    void setRenderer( Renderer* renderer );
+
     /** @param visible whether the cursor is visible or not */
     void setCursorVisble( bool visible );
 
@@ -59,6 +63,10 @@ private:
     std::unique_ptr<sf::Window> m_window;
     // whether the cursor should be visible or not
     bool m_cursorVisble;
+    // the window context settings
+    sf::ContextSettings m_contextSettings;
+    // a pointer to the renderer
+    Renderer* m_renderer;
 };
 
 } // namespace omi

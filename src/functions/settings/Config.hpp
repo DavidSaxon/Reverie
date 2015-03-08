@@ -26,6 +26,9 @@ extern std::string configDefaultTemplate;
 corrupted or missing then it will be reinstated with the default template */
 void applySettingsFromConfig();
 
+/** Parse the value of a config file line into the output string */
+void parseConfigLine( const std::string& line, std::string& value );
+
 } // namespace config
 
 } // namespace settings

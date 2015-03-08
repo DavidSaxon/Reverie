@@ -13,7 +13,8 @@ DisplaySettings::DisplaySettings() :
     m_pos       ( 0, 0 ),
     m_centre    ( 320, 240 ),
     m_fullscreen( false ),
-    m_vsync     ( false )
+    m_vsync     ( false ),
+    m_screenSize( 1920, 1080 )
 {
 }
 
@@ -60,6 +61,11 @@ bool DisplaySettings::getVsync() const
     return m_vsync;
 }
 
+const glm::vec2& DisplaySettings::getScreenSize() const
+{
+    return m_screenSize;
+}
+
 //-----------------------------------SETTERS------------------------------------
 
 void DisplaySettings::setTitle( const std::string& title )
@@ -92,6 +98,11 @@ void DisplaySettings::setFullscreen( bool fullscreen )
 void DisplaySettings::setVsync( bool vsnyc )
 {
     m_vsync = vsnyc;
+}
+
+void DisplaySettings::setScreenSet( glm::vec2& screenSize )
+{
+    m_screenSize = screenSize;
 }
 
 } // namespace omi

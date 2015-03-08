@@ -33,6 +33,7 @@ void Renderer::render() {
     // clear the window
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // load the identity matrix
     glLoadIdentity();
 
     // render the render lists
@@ -82,6 +83,21 @@ void Renderer::removeLight( Light* light )
     m_renderLists->removeLight( light );
 }
 
+void Renderer::applyGLState()
+{
+    // apply the render settings
+    applySettings();
+
+    // apply non changeable settings
+    glEnable( GL_BLEND );
+    glBlendEquation( GL_FUNC_ADD );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glCullFace( GL_BACK );
+    glClearDepth( 1.0f );
+    glEnable( GL_TEXTURE_2D );
+    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+}
+
 //------------------------------------------------------------------------------
 //                            PRIVATE MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
@@ -108,17 +124,8 @@ void Renderer::applySettings() {
 
 void Renderer::init() {
 
-    // apply the render settings
-    applySettings();
-
-    // apply non changeable settings
-    glEnable(GL_BLEND);
-    glBlendEquation( GL_FUNC_ADD );
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glCullFace(GL_BACK);
-    glClearDepth( 1.0f );
-    glEnable(GL_TEXTURE_2D);
-    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+    // apply the OpenGL state
+    applyGLState();
 
     // initialise DevIL
     ilInit();

@@ -161,7 +161,7 @@ void execute() {
     if (systemSettings.check()) {
 
         // hide or show the mouse
-        window->setCursorVisble(!systemSettings.isCursorHidden());
+        window->setCursorVisble( !systemSettings.isCursorHidden() );
     }
 
     // sort the new components that have added or removed this cycle
@@ -196,7 +196,8 @@ void init() {
     glewInit();
 
     // create the renderer
-    renderer = std::unique_ptr<Renderer>(new Renderer());
+    renderer = std::unique_ptr<Renderer>( new Renderer() );
+    window->setRenderer( renderer.get() );
 
     // initialise the resource manager
     ResourceManager::init();

@@ -39,10 +39,9 @@ void applySettingsFromConfig()
         fileError = true;
     }
 
-    // TODO: file error
-
     // the settings values
-    std::string resolution = "corrupt";
+    std::string resolution = "undefined";
+    std::string fullscreen = "undefined";
 
     while ( file.good() )
     {
@@ -54,17 +53,34 @@ void applySettingsFromConfig()
         // read resolution
         if ( util::str::beginsWith( line, "resolution:" ) )
         {
-            // split out the resolution
-            unsigned p = line.find( ' ' );
-            resolution = line.substr( p + 1, line.length() - p );
+            parseConfigLine( line, resolution );
+        }
+        // read fullscreen
+        if ( util::str::beginsWith( line, "fullscreen:" ) )
+        {
+            parseConfigLine( line, fullscreen );
         }
     }
 
-    // TODO: file error
+    std::cout << "resolution: " << resolution << std::endl;
+    std::cout << "fullscreen: " << fullscreen << std::endl;
 
     // apply settings
     apply::resolution( resolution );
+    apply::fullscreen( fullscreen );
 
+    // TODO: write settings back to config file
+
+}
+
+void parseConfigLine( const std::string& line, std::string& value )
+{
+    // split at the first space
+    unsigned p = line.find( ' ' );
+    if ( p < line.length() )
+    {
+        value = line.substr( p + 1, line.length() - p );
+    }
 }
 
 } // namespace config

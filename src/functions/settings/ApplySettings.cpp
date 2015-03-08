@@ -12,22 +12,6 @@ namespace apply {
 
 void resolution( const std::string& value )
 {
-    // // use screen size if the value is undefined
-    // if ( value.compare( "undefined" ) == 0 )
-    // {
-
-    // }
-    // // use the value from the config file
-    // else
-    // {
-    //     unsigned p = value.find( 'x' );
-
-    //     omi::renderSettings.setResolution( glm::vec2(
-    //             atoi( value.substr( 0, p ).c_str() ),
-    //             atoi( value.substr( p + 1, value.length() ).c_str() )
-    //     ) );
-    // }
-
     // is true if the value cannot be read
     bool undefined = false;
 
@@ -64,9 +48,20 @@ void resolution( const std::string& value )
     {
         // get the screen resolution
         omi::renderSettings.setResolution( omi::displaySettings.getSize() );
+    }
+}
 
-        // write to config
-        // TODO:
+void fullscreen( const std::string& value )
+{
+    if ( value.compare( "no" ) == 0 )
+    {
+        std::cout << "off" << std::endl;
+        omi::displaySettings.setFullscreen( false );
+    }
+    else
+    {
+        std::cout << "on" << std::endl;
+        omi::displaySettings.setFullscreen( true );
     }
 }
 

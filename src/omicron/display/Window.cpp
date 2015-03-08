@@ -7,7 +7,8 @@ namespace omi {
 //------------------------------------------------------------------------------
 
 Window::Window() :
-    m_cursorVisble(true)
+    m_cursorVisble( true ),
+    m_renderer    ( NULL )
 {
     // set up flags
     unsigned flags = sf::Style::Default;
@@ -18,12 +19,11 @@ Window::Window() :
     }
 
     // set up for openGL
-    sf::ContextSettings settings;
-    settings.depthBits          = 24;
-    settings.stencilBits        = 8;
-    settings.antialiasingLevel  = 4;
-    settings.majorVersion       = 1;
-    settings.minorVersion       = 1;
+    m_contextSettings.depthBits          = 24;
+    m_contextSettings.stencilBits        = 8;
+    m_contextSettings.antialiasingLevel  = 4;
+    m_contextSettings.majorVersion       = 1;
+    m_contextSettings.minorVersion       = 1;
 
     // non-full screen mode
     if ( !displaySettings.getFullscreen() )
@@ -33,7 +33,7 @@ Window::Window() :
             sf::VideoMode(
                 static_cast<unsigned>( displaySettings.getSize().x ),
                 static_cast<unsigned>( displaySettings.getSize().y ) ),
-            displaySettings.getTitle(), flags, settings)
+            displaySettings.getTitle(), flags, m_contextSettings )
         );
         // set the position of the window
         m_window->setPosition( sf::Vector2i(
@@ -46,7 +46,7 @@ Window::Window() :
         // create the window using sfml
         m_window = std::unique_ptr<sf::Window>( new sf::Window(
             sf::VideoMode::getDesktopMode(),
-            displaySettings.getTitle(), flags, settings)
+            displaySettings.getTitle(), flags, m_contextSettings )
         );
         // update the display settings with the new resolution and position
         displaySettings.setSize( glm::vec2(
@@ -58,6 +58,8 @@ Window::Window() :
     m_window->setVerticalSyncEnabled( displaySettings.getVsync() );
     // set cursor visibility
     m_window->setMouseCursorVisible( m_cursorVisble );
+    // lock framerate
+    m_window->setFramerateLimit( 60 );
 }
 
 //------------------------------------------------------------------------------
@@ -71,7 +73,24 @@ void Window::update()
     // check if there has been a change in settings
     if ( displaySettings.check() )
     {
-        if ( !displaySettings.getFullscreen() ) {
+        // recreate the window to change the video mode
+        if ( !displaySettings.getFullscreen() )
+        {
+            std::cout << "apply" << std::endl;
+
+            unsigned flags = sf::Style::Default;
+
+            m_window->close();
+            m_window->create(
+                sf::VideoMode(
+                    static_cast<unsigned>( displaySettings.getSize().x ),
+                    static_cast<unsigned>( displaySettings.getSize().y )
+                ),
+                displaySettings.getTitle(),
+                flags,
+                m_contextSettings
+            );
+            m_renderer->applyGLState();
 
             m_window->setSize( sf::Vector2u(
                 static_cast<unsigned>( displaySettings.getSize().x ),
@@ -81,10 +100,13 @@ void Window::update()
                 static_cast<int>( displaySettings.getPos().x ),
                 static_cast<int>( displaySettings.getPos().y ) )
             );
-            m_window->setTitle( displaySettings.getTitle() );
+        }
+        else
+        {
+
         }
 
-        // TODO: full screen... tricky problem
+        m_window->setTitle( displaySettings.getTitle() );
     }
     // set cursor visibility
     if ( omi_hasFocus )
@@ -132,6 +154,11 @@ void Window::update()
 
     // redisplay the window
     m_window->display();
+}
+
+void Window::setRenderer( Renderer* renderer )
+{
+    m_renderer = renderer;
 }
 
 void Window::setCursorVisble( bool visible )

@@ -77,6 +77,9 @@ public:
     @param light  the light remove */
     void removeLight( Light* light );
 
+    /** Applies the OpenGL state */
+    void applyGLState();
+
 private:
 
     //--------------------------------------------------------------------------

@@ -2,8 +2,22 @@
 | TODO |
 \++++++/
 
-
 - send string util fixes to omicron
+
+- way to get screen size
+{
+    - use for default resolution
+    - use for applying fullscreen window size
+}
+
+- make frame-rate cap a display setting
+
+- send  fullscreen/screen size updates to Omicron
+{
+    - Window.cpp .hpp
+    - DisplaySettings .cpp .hpp
+    - Renderer .cpp .hpp
+}
 
 - settings on disk
 
