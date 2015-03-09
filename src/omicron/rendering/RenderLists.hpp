@@ -95,6 +95,9 @@ public:
     @param the camera to use for rendering */
     void render( Camera* camera );
 
+    /** Reloads the render textures being used */
+    void reloadRenderTextures();
+
     /** Removes all components from the render lists */
     void clear();
 

@@ -59,8 +59,8 @@ Window::Window() :
     // set cursor visibility
     m_window->setMouseCursorVisible( m_cursorVisble );
     // lock framerate
-    // TODO: uncomment
-    // m_window->setFramerateLimit( 60 );
+    // TODO: from seetting
+    m_window->setFramerateLimit( 60 );
 }
 
 //------------------------------------------------------------------------------
@@ -77,33 +77,44 @@ void Window::update()
         // recreate the window to change the video mode
         if ( !displaySettings.getFullscreen() )
         {
-            std::cout << "apply" << std::endl;
+            std::cout << "set off" << std::endl;
 
             unsigned flags = sf::Style::Default;
 
-            // m_window->close();
-            m_window->create(
+            m_window->close();
+            // m_window->create(
+            //     sf::VideoMode(
+            //         static_cast<unsigned>( displaySettings.getSize().x ),
+            //         static_cast<unsigned>( displaySettings.getSize().y )
+            //     ),
+            //     displaySettings.getTitle(),
+            //     flags,
+            //     m_contextSettings
+            // );
+            m_window = std::unique_ptr<sf::Window>( new sf::Window(
                 sf::VideoMode(
-                    static_cast<unsigned>( displaySettings.getSize().x ),
-                    static_cast<unsigned>( displaySettings.getSize().y )
-                ),
-                displaySettings.getTitle(),
-                flags,
-                m_contextSettings
+                    static_cast<unsigned>( 1920 ),
+                    static_cast<unsigned>( 1080 ) ),
+                displaySettings.getTitle(), flags, m_contextSettings )
             );
-            m_renderer->applyGLState();
 
-            // m_window->setSize( sf::Vector2u(
-            //     static_cast<unsigned>( displaySettings.getSize().x ),
-            //     static_cast<unsigned>( displaySettings.getSize().y ) )
-            // );
-            // m_window->setPosition( sf::Vector2i(
-            //     static_cast<int>( displaySettings.getPos().x ),
-            //     static_cast<int>( displaySettings.getPos().y ) )
-            // );
+            m_window->setSize( sf::Vector2u(
+                static_cast<unsigned>( displaySettings.getSize().x ),
+                static_cast<unsigned>( displaySettings.getSize().y ) )
+            );
+            m_window->setPosition( sf::Vector2i(
+                static_cast<int>( displaySettings.getPos().x ),
+                static_cast<int>( displaySettings.getPos().y ) )
+            );
+
+            glewInit();
+            m_renderer->applyGLState();
+            m_renderer->reloadRenderTextures();
         }
         else
         {
+            std::cout << "set on" << std::endl;
+
             unsigned flags = sf::Style::Fullscreen;
 
             m_window->create(
@@ -112,10 +123,17 @@ void Window::update()
                 flags,
                 m_contextSettings
             );
+
+            glewInit();
             m_renderer->applyGLState();
+            m_renderer->reloadRenderTextures();
         }
 
         m_window->setTitle( displaySettings.getTitle() );
+
+        m_window->setVerticalSyncEnabled( displaySettings.getVsync() );
+        // TODO: from seetting
+        m_window->setFramerateLimit( 60 );
     }
     // set cursor visibility
     if ( omi_hasFocus )

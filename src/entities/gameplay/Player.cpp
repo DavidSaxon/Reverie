@@ -12,7 +12,7 @@ namespace {
 // the base speed at which the player moves
 static const float MOVE_BASE_SPEED = 0.075f;
 // the base speed at which the player can look around
-static const float LOOK_BASE_SPEED = 0.075f;
+static const float LOOK_BASE_SPEED = 0.055f;
 
 } // namespace anonymous
 
@@ -78,10 +78,10 @@ void Player::look()
     // rotate the camera based on how far the mouse has moved
     m_camT->rotation.x +=
         ( omi::displaySettings.getCentre().y - omi::input::getMousePos().y ) *
-          MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
+        LOOK_BASE_SPEED;
     m_transform->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
-          MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
+        LOOK_BASE_SPEED;
 }
 
 void Player::move()
@@ -89,6 +89,8 @@ void Player::move()
     // calculate the distance the player is being asked to move
     glm::vec3 moveDis;
     float moveSpeed = MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
+
+    std::cout << omi::fpsManager.getTimeScale() << std::endl;
 
     // forward
     if ( omi::input::isKeyPressed( omi::input::key::W ) )

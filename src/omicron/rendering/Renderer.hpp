@@ -80,6 +80,9 @@ public:
     /** Applies the OpenGL state */
     void applyGLState();
 
+    /** Reloads the render textures begin used */
+    void reloadRenderTextures();
+
 private:
 
     //--------------------------------------------------------------------------

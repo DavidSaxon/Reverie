@@ -20,6 +20,14 @@
 }
 
 - settings on disk
+{
+    - fullscreen
+    - add vsync
+    - gamma
+    - shadows
+}
+
+- higher res glow texture?
 
 - pause menu
 {

@@ -67,7 +67,7 @@ void applySettingsFromConfig()
 
     // apply settings
     apply::resolution( resolution );
-    apply::fullscreen( fullscreen );
+    // apply::fullscreen( fullscreen );
 
     // TODO: write settings back to config file
 

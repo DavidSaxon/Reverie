@@ -504,6 +504,19 @@ void RenderLists::render( Camera* camera )
     // // vis_check::buffer = NULL;
 }
 
+void RenderLists::reloadRenderTextures()
+{
+    m_visCheckRenTex.reload();
+    m_glowFirstPassRenTex.reload();
+    m_glowBlurHorRenTex.reload();
+    m_glowBlurVertRenTex.reload();
+    m_glowCollateRenTex.reload();
+    m_stdRenderTexture.reload();
+    m_overlayRenderTexture.reload();
+    m_guiRenderTexture.reload();
+    m_finalRenTex.reload();
+}
+
 void RenderLists::clear()
 {
     m_renderables.clear();

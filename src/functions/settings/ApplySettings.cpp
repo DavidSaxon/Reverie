@@ -56,7 +56,7 @@ void fullscreen( const std::string& value )
     if ( value.compare( "no" ) == 0 )
     {
         std::cout << "off" << std::endl;
-        // omi::displaySettings.setFullscreen( false );
+        omi::displaySettings.setFullscreen( false );
     }
     else
     {

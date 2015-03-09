@@ -9,7 +9,7 @@
 void StartUpScene::init()
 {
     // apply settings
-    omi::systemSettings.setCursorHidden( true );
+    // omi::systemSettings.setCursorHidden( true );
     omi::renderSettings.setDepthTest( false );
 
     // TODO: get value from settings file

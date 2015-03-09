@@ -98,6 +98,11 @@ void Renderer::applyGLState()
     glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 }
 
+void Renderer::reloadRenderTextures()
+{
+    m_renderLists->reloadRenderTextures();
+}
+
 //------------------------------------------------------------------------------
 //                            PRIVATE MEMBER FUNCTIONS
 //------------------------------------------------------------------------------

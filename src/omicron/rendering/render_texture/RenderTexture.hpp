@@ -53,6 +53,9 @@ public:
     /** Renders this texture to a quad in front of the screen */
     void render();
 
+    /** Reloads the render texture */
+    void reload();
+
     /** @return the OpenGL texture id */
     GLuint getTextureId() const;
 
