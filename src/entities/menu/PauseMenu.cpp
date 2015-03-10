@@ -33,9 +33,6 @@ void PauseMenu::update()
     // check for escape key press
     if ( omi::input::isKeyPressed( omi::input::key::ESCAPE ) && !m_escDown )
     {
-        omi::displaySettings.setFullscreen(
-                !omi::displaySettings.getFullscreen() );
-
         m_escDown = true;
 
         // if currently in-game, pause and bring up the menu

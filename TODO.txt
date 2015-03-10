@@ -2,21 +2,13 @@
 | TODO |
 \++++++/
 
-- send string util fixes to omicron
-
-- way to get screen size
-{
-    - use for default resolution
-    - use for applying fullscreen window size
-}
-
-- make frame-rate cap a display setting
-
 - send  fullscreen/screen size updates to Omicron
 {
     - Window.cpp .hpp
     - DisplaySettings .cpp .hpp
     - Renderer .cpp .hpp
+    - RenderLists
+    - system
 }
 
 - settings on disk
@@ -26,6 +18,8 @@
     - gamma
     - shadows
 }
+
+- settings should be applied in start up script!
 
 - higher res glow texture?
 
@@ -37,6 +31,8 @@
 
         - settings
         {
+            - populate resolutions with sfml::videomode full screen modes
+
             - need handling for enum text
 
             - config file to store and reload settings

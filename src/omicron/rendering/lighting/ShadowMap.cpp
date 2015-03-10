@@ -52,6 +52,11 @@ void ShadowMap::unbind()
     );
 }
 
+void ShadowMap::reload()
+{
+    init();
+}
+
 GLuint ShadowMap::getTexture() const
 {
     return m_texture;

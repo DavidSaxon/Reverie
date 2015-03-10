@@ -43,6 +43,10 @@ public:
     Checks if a change has been made to the settings */
     bool check();
 
+    /** #Hidden
+    Checks if a change has been made to the windowing mode */
+    bool checkMode();
+
     //---------------------------------GETTERS----------------------------------
 
     /** @return the title of the window */
@@ -59,6 +63,9 @@ public:
 
     /** @return if the window is in fullscreen */
     bool getFullscreen() const;
+
+    /** @return the current frame-rate cap */
+    unsigned getFrameRateCap() const;
 
     /** @return if vsync is enabled */
     bool getVsync() const;
@@ -80,11 +87,14 @@ public:
     /** @param fullscreen the new fullscreen mode of the window */
     void setFullscreen( bool fullscreen );
 
+    /** @param set the frame-rate cap */
+    void setFrameRateCap( unsigned cap );
+
     /** @param vsync whether vsnyc should be enabled or not */
     void setVsync( bool vsnyc );
 
     /** @param sets the size of the screen */
-    void setScreenSet( glm::vec2& screenSize );
+    void setScreenSize( glm::vec2& screenSize );
 
 private:
 
@@ -94,6 +104,8 @@ private:
 
     // if a setting has changed
     bool m_change;
+    // if windowing mode has changed
+    bool m_modeChange;
 
     // the title of the window
     std::string m_title;
@@ -105,6 +117,8 @@ private:
     glm::vec2 m_centre;
     // is true if the window is in fullscreen
     bool m_fullscreen;
+    // the frame-rate cap
+    unsigned m_frameRateCap;
     // is true to enable vertical sync
     bool m_vsync;
     // the size of the screen

@@ -7,14 +7,16 @@ namespace omi {
 //------------------------------------------------------------------------------
 
 DisplaySettings::DisplaySettings() :
-    m_change    ( true ),
-    m_title     ( "Omicron" ),
-    m_size      ( 640, 480 ),
-    m_pos       ( 0, 0 ),
-    m_centre    ( 320, 240 ),
-    m_fullscreen( false ),
-    m_vsync     ( false ),
-    m_screenSize( 1920, 1080 )
+    m_change      ( true ),
+    m_modeChange  ( false ),
+    m_title       ( "Omicron" ),
+    m_size        ( 640, 480 ),
+    m_pos         ( 0, 0 ),
+    m_centre      ( 320, 240 ),
+    m_fullscreen  ( false ),
+    m_frameRateCap( 60 ),
+    m_vsync       ( false ),
+    m_screenSize  ( 1920, 1080 )
 {
 }
 
@@ -26,6 +28,13 @@ bool DisplaySettings::check()
 {
     bool temp = m_change;
     m_change = false;
+    return temp;
+}
+
+bool DisplaySettings::checkMode()
+{
+    bool temp = m_modeChange;
+    m_modeChange = false;
     return temp;
 }
 
@@ -54,6 +63,11 @@ const glm::vec2& DisplaySettings::getCentre() const
 bool DisplaySettings::getFullscreen() const
 {
     return m_fullscreen;
+}
+
+unsigned DisplaySettings::getFrameRateCap() const
+{
+    return m_frameRateCap;
 }
 
 bool DisplaySettings::getVsync() const
@@ -91,6 +105,10 @@ void DisplaySettings::setPos( const glm::vec2& pos )
 
 void DisplaySettings::setFullscreen( bool fullscreen )
 {
+    if ( m_fullscreen != fullscreen )
+    {
+        m_modeChange = true;
+    }
     m_fullscreen = fullscreen;
     m_change = true;
 }
@@ -98,9 +116,16 @@ void DisplaySettings::setFullscreen( bool fullscreen )
 void DisplaySettings::setVsync( bool vsnyc )
 {
     m_vsync = vsnyc;
+    m_change = true;
 }
 
-void DisplaySettings::setScreenSet( glm::vec2& screenSize )
+void DisplaySettings::setFrameRateCap( unsigned cap )
+{
+    m_frameRateCap = cap;
+    m_change = true;
+}
+
+void DisplaySettings::setScreenSize( glm::vec2& screenSize )
 {
     m_screenSize = screenSize;
 }

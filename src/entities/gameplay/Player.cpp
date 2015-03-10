@@ -90,8 +90,6 @@ void Player::move()
     glm::vec3 moveDis;
     float moveSpeed = MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
 
-    std::cout << omi::fpsManager.getTimeScale() << std::endl;
-
     // forward
     if ( omi::input::isKeyPressed( omi::input::key::W ) )
     {

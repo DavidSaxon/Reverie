@@ -58,9 +58,8 @@ Window::Window() :
     m_window->setVerticalSyncEnabled( displaySettings.getVsync() );
     // set cursor visibility
     m_window->setMouseCursorVisible( m_cursorVisble );
-    // lock framerate
-    // TODO: from seetting
-    m_window->setFramerateLimit( 60 );
+    // set frame-rate cap
+    m_window->setFramerateLimit( displaySettings.getFrameRateCap() );
 }
 
 //------------------------------------------------------------------------------
@@ -74,66 +73,68 @@ void Window::update()
     // check if there has been a change in settings
     if ( displaySettings.check() )
     {
-        // recreate the window to change the video mode
-        if ( !displaySettings.getFullscreen() )
+        // check if the windowing mode has changed
+        if ( displaySettings.checkMode() )
         {
-            std::cout << "set off" << std::endl;
+            // windowed mode
+            if ( !displaySettings.getFullscreen() )
+            {
+                // create a new window
+                unsigned flags = sf::Style::Default;
+                m_window->create(
+                    sf::VideoMode(
+                        static_cast<unsigned>( displaySettings.getSize().x ),
+                        static_cast<unsigned>( displaySettings.getSize().y )
+                    ),
+                    displaySettings.getTitle(),
+                    flags,
+                    m_contextSettings
+                );
+            }
+            // fullscreen mode
+            else
+            {
+                // create a new window
+                unsigned flags = sf::Style::Fullscreen;
+                m_window->create(
+                    sf::VideoMode::getDesktopMode(),
+                    displaySettings.getTitle(),
+                    flags,
+                    m_contextSettings
+                );
 
-            unsigned flags = sf::Style::Default;
+                // update the display settings with the new resolution and
+                // position
+                displaySettings.setSize( glm::vec2(
+                     m_window->getSize().x,
+                     m_window->getSize().y
+                ) );
+                displaySettings.setPos( glm::vec2( 0 ) );
+            }
 
-            m_window->close();
-            // m_window->create(
-            //     sf::VideoMode(
-            //         static_cast<unsigned>( displaySettings.getSize().x ),
-            //         static_cast<unsigned>( displaySettings.getSize().y )
-            //     ),
-            //     displaySettings.getTitle(),
-            //     flags,
-            //     m_contextSettings
-            // );
-            m_window = std::unique_ptr<sf::Window>( new sf::Window(
-                sf::VideoMode(
-                    static_cast<unsigned>( 1920 ),
-                    static_cast<unsigned>( 1080 ) ),
-                displaySettings.getTitle(), flags, m_contextSettings )
-            );
+            // reapply the GL context
+            glewInit();
+            m_renderer->applyGLState();
+            m_renderer->reloadRenderTextures();
+        }
 
-            m_window->setSize( sf::Vector2u(
+        // set the size of the window
+        m_window->setSize( sf::Vector2u(
                 static_cast<unsigned>( displaySettings.getSize().x ),
-                static_cast<unsigned>( displaySettings.getSize().y ) )
-            );
-            m_window->setPosition( sf::Vector2i(
-                static_cast<int>( displaySettings.getPos().x ),
-                static_cast<int>( displaySettings.getPos().y ) )
-            );
-
-            glewInit();
-            m_renderer->applyGLState();
-            m_renderer->reloadRenderTextures();
-        }
-        else
-        {
-            std::cout << "set on" << std::endl;
-
-            unsigned flags = sf::Style::Fullscreen;
-
-            m_window->create(
-                sf::VideoMode::getDesktopMode(),
-                displaySettings.getTitle(),
-                flags,
-                m_contextSettings
-            );
-
-            glewInit();
-            m_renderer->applyGLState();
-            m_renderer->reloadRenderTextures();
-        }
-
+                static_cast<unsigned>( displaySettings.getSize().y )
+        ) );
+        // set the position of the window
+        m_window->setPosition( sf::Vector2i(
+            static_cast<int>( displaySettings.getPos().x ),
+            static_cast<int>( displaySettings.getPos().y )
+        ) );
+        //  set title
         m_window->setTitle( displaySettings.getTitle() );
-
+        // set vertical sync
         m_window->setVerticalSyncEnabled( displaySettings.getVsync() );
-        // TODO: from seetting
-        m_window->setFramerateLimit( 60 );
+        // set framerate cap
+        // TODO: from setting
+        m_window->setFramerateLimit( displaySettings.getFrameRateCap() );
     }
     // set cursor visibility
     if ( omi_hasFocus )

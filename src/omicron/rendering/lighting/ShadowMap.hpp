@@ -39,6 +39,9 @@ public:
     /** Reverts OpenGL to default to-screen rendering */
     void unbind();
 
+    /** Reloads the shadow map */
+    void reload();
+
     /** @return the texture the shadow map has been rendered to */
     GLuint getTexture() const;
 

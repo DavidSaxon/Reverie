@@ -44,18 +44,9 @@ void RenderTexture::bind()
     glBindFramebuffer( GL_FRAMEBUFFER, m_frameBuffer );
     // bind the depth buffer
     glBindRenderbuffer( GL_RENDERBUFFER, m_depthRenderBuffer );
-    // set frame buffer texture
-    glFramebufferTexture2D(
-        GL_FRAMEBUFFER,
-        GL_COLOR_ATTACHMENT0,
-        GL_TEXTURE_2D,
-        m_texture,
-        0
-    );
     // colour attachment
     GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers( 1, drawBuffers );
-    glActiveTexture( GL_TEXTURE0 );
     // clear the render buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     // set the view port to the size of the render texture

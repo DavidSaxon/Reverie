@@ -183,6 +183,12 @@ void init() {
     // seed random number generators
     srand( static_cast<unsigned>( time ( NULL ) ) );
 
+    // get and store the screen size
+    displaySettings.setScreenSize( glm::vec2(
+            static_cast<float>( sf::VideoMode::getDesktopMode().width  ),
+            static_cast<float>( sf::VideoMode::getDesktopMode().height )
+    ) );
+
     // initialise the resource server
     ResourceServer::init();
 

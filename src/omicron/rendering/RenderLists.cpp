@@ -506,6 +506,7 @@ void RenderLists::render( Camera* camera )
 
 void RenderLists::reloadRenderTextures()
 {
+    m_shadowMap.reload();
     m_visCheckRenTex.reload();
     m_glowFirstPassRenTex.reload();
     m_glowBlurHorRenTex.reload();

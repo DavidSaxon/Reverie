@@ -13,6 +13,7 @@ omi::Scene* init() {
 
     // system settings
     omi::systemSettings.enableForcedLag( false );
+    omi::systemSettings.setCursorHidden( true );
 
     // display settings
     // omi::displaySettings.setSize( glm::vec2( 960, 540 ) );
@@ -20,6 +21,7 @@ omi::Scene* init() {
     // omi::displaySettings.setSize( glm::vec2( 1920, 1080 ) );
     omi::displaySettings.setTitle( "Reverie" );
     omi::displaySettings.setFullscreen( true );
+    omi::displaySettings.setFrameRateCap( 60 );
     omi::displaySettings.setVsync( true );
 
     // render settings
