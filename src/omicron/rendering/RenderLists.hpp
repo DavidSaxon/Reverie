@@ -22,6 +22,7 @@
 #include "src/omicron/rendering/render_texture/GlowBlurVertRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/GlowCollateRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/GlowFirstPassRenderTexture.hpp"
+#include "src/omicron/rendering/render_texture/GuiRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/StdRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/VisCheckRenderTexture.hpp"
 
@@ -143,7 +144,7 @@ private:
     // the overlay render texture
     StdRenderTexture m_overlayRenderTexture;
     // the gui render texture
-    StdRenderTexture m_guiRenderTexture;
+    GuiRenderTexture m_guiRenderTexture;
     // the final render texture for post effects
     FinalRenderTexture m_finalRenTex;
 

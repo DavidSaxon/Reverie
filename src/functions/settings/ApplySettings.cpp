@@ -64,6 +64,20 @@ void fullscreen( const std::string& value )
     }
 }
 
+void vsync( const std::string& value )
+{
+    if ( value.compare( "no" ) == 0 )
+    {
+        std::cout << "vsync off" << std::endl;
+        omi::displaySettings.setVsync( false );
+    }
+    else
+    {
+        std::cout << "vsync on" << std::endl;
+        omi::displaySettings.setVsync( true );
+    }
+}
+
 } // namespace apply
 
 } // namespace settings

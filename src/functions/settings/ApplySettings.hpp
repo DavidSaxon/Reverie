@@ -13,6 +13,9 @@ void resolution( const std::string& value );
 /** Applies the fullscreen mode from a string */
 void fullscreen( const std::string& value );
 
+/** Applies vertical sync mode from a string */
+void vsync( const std::string& value );
+
 } // namespace apply
 
 } // namespace settings

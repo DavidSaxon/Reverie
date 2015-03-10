@@ -2,26 +2,33 @@
 | TODO |
 \++++++/
 
-- send  fullscreen/screen size updates to Omicron
+- send gamma to omicron
 {
-    - Window.cpp .hpp
-    - DisplaySettings .cpp .hpp
-    - Renderer .cpp .hpp
-    - RenderLists
-    - system
+    - render lists
+    - gui render texture (add to Cmake lists)
+    - render settings
+    - gui_render_texture_fragment
+
+    - clean first
 }
 
 - settings on disk
 {
-    - fullscreen
-    - add vsync
     - gamma
     - shadows
 }
 
 - settings should be applied in start up script!
 
+- send settings functions to omicron
+{
+    - functions folder
+    - startup
+}
+
 - higher res glow texture?
+
+- send high res glow to omicron
 
 - pause menu
 {

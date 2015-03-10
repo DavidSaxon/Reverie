@@ -12,6 +12,7 @@ RenderSettings::RenderSettings() :
     m_backFaceCulling         ( true ),
     m_clearColour             ( 0.0f, 0.0f, 0.0f, 1.0f ),
     m_resolution              ( 1920, 1080 ),
+    m_gammaCorrection         ( 1.0f ),
     m_ambientStrength         ( 0.5f ),
     m_ambientColour           ( 1.0f, 1.0f, 1.0f ),
     m_shadows                 ( false ),
@@ -47,6 +48,11 @@ const glm::vec4& RenderSettings::getClearColour() const
 const glm::vec2& RenderSettings::getResolution() const
 {
     return m_resolution;
+}
+
+float RenderSettings::getGammaCorrection() const
+{
+    return m_gammaCorrection;
 }
 
 float RenderSettings::getAmbientStrength() const
@@ -115,6 +121,11 @@ void RenderSettings::setResolution( const glm::vec2& resolution )
     m_resolution = resolution;
 }
 
+void RenderSettings::setGammaCorrection( float gamma )
+{
+    m_change = true;
+    m_gammaCorrection = gamma;
+}
 
 void RenderSettings::setAmbientStrength( float strength )
 {

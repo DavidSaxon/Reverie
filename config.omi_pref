@@ -1,4 +1,5 @@
 resolution: undefined
 fullscreen: undefined
+vsync: undefined
 gamma: 22
 shadows: off

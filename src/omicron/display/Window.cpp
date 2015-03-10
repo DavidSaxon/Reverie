@@ -132,8 +132,7 @@ void Window::update()
         m_window->setTitle( displaySettings.getTitle() );
         // set vertical sync
         m_window->setVerticalSyncEnabled( displaySettings.getVsync() );
-        // set framerate cap
-        // TODO: from setting
+        // set frame-rate cap
         m_window->setFramerateLimit( displaySettings.getFrameRateCap() );
     }
     // set cursor visibility

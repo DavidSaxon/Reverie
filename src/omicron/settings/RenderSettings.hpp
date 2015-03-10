@@ -56,6 +56,9 @@ public:
     /** @return the resolution being rendered to */
     const glm::vec2& getResolution() const;
 
+    /** @return gamma correction value */
+    float getGammaCorrection() const;
+
     /** @return the strength of the ambient light */
     float getAmbientStrength() const;
 
@@ -93,6 +96,9 @@ public:
 
     /** @param resolution the new resolution to be rendered to */
     void setResolution( const glm::vec2& resolution );
+
+    /** @param gamma the new gamma correction value */
+    void setGammaCorrection( float gamma );
 
     /** @param strength the new strength of ambient light */
     void setAmbientStrength( float strength );
@@ -137,6 +143,9 @@ private:
 
     // the resolution being rendered to
     glm::vec2 m_resolution;
+
+    // the gamma correction value
+    float m_gammaCorrection;
 
     // the strength of ambient light
     float m_ambientStrength;
