@@ -94,7 +94,7 @@ public:
     void setVsync( bool vsnyc );
 
     /** @param sets the size of the screen */
-    void setScreenSize( glm::vec2& screenSize );
+    void setScreenSize( const glm::vec2& screenSize );
 
 private:
 

@@ -19,8 +19,8 @@ varying vec2 v_texCoord;
 void main()
 {
     // get texture rgb colour
-    vec3 output = texture2D( u_texture, v_texCoord ).rgb;
+    vec4 col = texture2D( u_texture, v_texCoord );
     // apply gamma correction
-    gl_FragColor.rgb = pow( output, vec3( 1.0 / u_gamma ) );
-    gl_FragColor.a = 1.0;
+    col = vec4( pow( col.rgb, vec3( 1.0 / u_gamma ) ), col.a );
+    gl_FragColor = col;
 }

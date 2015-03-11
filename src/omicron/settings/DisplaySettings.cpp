@@ -125,7 +125,7 @@ void DisplaySettings::setFrameRateCap( unsigned cap )
     m_change = true;
 }
 
-void DisplaySettings::setScreenSize( glm::vec2& screenSize )
+void DisplaySettings::setScreenSize( const glm::vec2& screenSize )
 {
     m_screenSize = screenSize;
 }
