@@ -16,6 +16,9 @@ void fullscreen( const std::string& value );
 /** Applies vertical sync mode from a string */
 void vsync( const std::string& value );
 
+/** Applies gamma correction from a string */
+void gamma( const std::string& value );
+
 } // namespace apply
 
 } // namespace settings

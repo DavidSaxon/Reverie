@@ -43,6 +43,7 @@ void applySettingsFromConfig()
     std::string resolution = "undefined";
     std::string fullscreen = "undefined";
     std::string vsync      = "undefined";
+    std::string gamma      = "undefined";
 
     while ( file.good() )
     {
@@ -66,16 +67,18 @@ void applySettingsFromConfig()
         {
             parseConfigLine( line, vsync );
         }
+        // read gamma
+        else if ( util::str::beginsWith( line, "gamma:" ) )
+        {
+            parseConfigLine( line, gamma );
+        }
     }
-
-    std::cout << "resolution: " << resolution << std::endl;
-    std::cout << "fullscreen: " << fullscreen << std::endl;
-    std::cout << "vsync:      " << vsync << std::endl;
 
     // apply settings
     apply::resolution( resolution );
     apply::fullscreen( fullscreen );
     apply::vsync     ( fullscreen );
+    apply::gamma     ( gamma );
 
     // TODO: write settings back to config file
 

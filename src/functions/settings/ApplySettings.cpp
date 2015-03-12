@@ -78,6 +78,20 @@ void vsync( const std::string& value )
     }
 }
 
+void gamma( const std::string& value )
+{
+    float gamma = 1.0f;
+    if ( util::str::isFloat( value )  )
+    {
+        float temp_val = static_cast<float>( atof( value.c_str() ) );
+        if ( temp_val >= 0.0f && temp_val <= 2.0f )
+        {
+            gamma = temp_val;
+        }
+    }
+    omi::renderSettings.setGammaCorrection( gamma );
+}
+
 } // namespace apply
 
 } // namespace settings

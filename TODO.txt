@@ -14,9 +14,29 @@
 
 - settings on disk
 {
-    - gamma
-    - shadows
+    - graphics
+    {
+        - shadows
+    }
+    - input
+    {
+        - look sensitivity
+        - controls
+        {
+            - forward
+            - back
+            - left
+            - right
+        }
+        - others?
+    }
+    - audio
+    {
+        - music volume
+        - sound fx volume
+    }
 }
+
 
 - settings should be applied in start up script!
 
