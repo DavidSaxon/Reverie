@@ -786,11 +786,10 @@ void PauseMenu::initGraphicsMenuComponents()
     values.push_back( "Low" );
     values.push_back( "Medium" );
     values.push_back( "High" );
-    values.push_back( "Ultra" );
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, -0.0625f, 0.0f ),
             values,
-            3
+            2
     );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );

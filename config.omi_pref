@@ -2,4 +2,4 @@ resolution: undefined
 fullscreen: undefined
 vsync: undefined
 gamma: undefined
-shadows: off
+shadows: undefined

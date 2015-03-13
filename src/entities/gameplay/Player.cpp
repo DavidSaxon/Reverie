@@ -50,6 +50,7 @@ void Player::init()
     omi::Mesh* flare =
         omi::ResourceManager::getMesh( "flare", "", NULL );
     flare->overlay = true;
+    flare->castShadow = false;
     m_components.add( flare );
 }
 

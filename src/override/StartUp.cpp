@@ -31,7 +31,7 @@ omi::Scene* init() {
     omi::renderSettings.setResolution( glm::vec2( 1920, 1080 ) );
     omi::renderSettings.setGammaCorrection( 1.0f );
     omi::renderSettings.setShadows( true );
-    omi::renderSettings.setShadowFrustumSize( 40.0f );
+    omi::renderSettings.setShadowFrustumSize( 20.0f );
     omi::renderSettings.setShadowMapResolutionScale( 4.0f );
     omi::renderSettings.setColourPicking( true );
     omi::renderSettings.setVisibilityChecking( false );

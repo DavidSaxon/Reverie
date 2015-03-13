@@ -12,6 +12,8 @@
     - clean first
 }
 
+- blur pause screen
+
 - settings on disk
 {
     - graphics

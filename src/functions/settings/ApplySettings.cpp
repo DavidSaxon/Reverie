@@ -92,6 +92,32 @@ void gamma( const std::string& value )
     omi::renderSettings.setGammaCorrection( gamma );
 }
 
+void shadows( const std::string& value )
+{
+    if ( value.compare( "off" ) == 0 )
+    {
+        omi::renderSettings.setShadows( false );
+    }
+    else if ( value.compare( "low" ) == 0 )
+    {
+        std::cout << "shadows low" << std::endl;
+        omi::renderSettings.setShadows( true );
+        omi::renderSettings.setShadowMapResolutionScale( 1.5f );
+    }
+    else if ( value.compare( "high" ) == 0 )
+    {
+        std::cout << "high" << std::endl;
+        omi::renderSettings.setShadows( true );
+        omi::renderSettings.setShadowMapResolutionScale( 4.0f );
+    }
+    else
+    {
+        std::cout << "medium" << std::endl;
+        omi::renderSettings.setShadows( true );
+        omi::renderSettings.setShadowMapResolutionScale( 3.0f );
+    }
+}
+
 } // namespace apply
 
 } // namespace settings

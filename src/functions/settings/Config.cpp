@@ -44,6 +44,7 @@ void applySettingsFromConfig()
     std::string fullscreen = "undefined";
     std::string vsync      = "undefined";
     std::string gamma      = "undefined";
+    std::string shadows    = "undefined";
 
     while ( file.good() )
     {
@@ -72,6 +73,11 @@ void applySettingsFromConfig()
         {
             parseConfigLine( line, gamma );
         }
+        // read shadows
+        else if ( util::str::beginsWith( line, "shadows:" ) )
+        {
+            parseConfigLine( line, shadows );
+        }
     }
 
     // apply settings
@@ -79,6 +85,7 @@ void applySettingsFromConfig()
     apply::fullscreen( fullscreen );
     apply::vsync     ( fullscreen );
     apply::gamma     ( gamma );
+    apply::shadows   ( shadows );
 
     // TODO: write settings back to config file
 
