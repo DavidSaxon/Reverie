@@ -45,6 +45,8 @@ void applySettingsFromConfig()
     std::string vsync      = "undefined";
     std::string gamma      = "undefined";
     std::string shadows    = "undefined";
+    std::string sound      = "undefined";
+    std::string music      = "undefined";
 
     while ( file.good() )
     {
@@ -78,6 +80,17 @@ void applySettingsFromConfig()
         {
             parseConfigLine( line, shadows );
         }
+        // read sound volume
+        else if ( util::str::beginsWith( line, "sound:" ) )
+        {
+            parseConfigLine( line, sound );
+        }
+        // read music volume
+        else if ( util::str::beginsWith( line, "music:" ) )
+        {
+            parseConfigLine( line, music );
+        }
+
     }
 
     // apply settings
@@ -86,6 +99,8 @@ void applySettingsFromConfig()
     apply::vsync     ( fullscreen );
     apply::gamma     ( gamma );
     apply::shadows   ( shadows );
+    apply::sound     ( sound );
+    apply::music     ( music );
 
     // TODO: write settings back to config file
 

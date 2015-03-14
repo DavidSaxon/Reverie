@@ -68,12 +68,10 @@ void vsync( const std::string& value )
 {
     if ( value.compare( "no" ) == 0 )
     {
-        std::cout << "vsync off" << std::endl;
         omi::displaySettings.setVsync( false );
     }
     else
     {
-        std::cout << "vsync on" << std::endl;
         omi::displaySettings.setVsync( true );
     }
 }
@@ -100,22 +98,47 @@ void shadows( const std::string& value )
     }
     else if ( value.compare( "low" ) == 0 )
     {
-        std::cout << "shadows low" << std::endl;
         omi::renderSettings.setShadows( true );
         omi::renderSettings.setShadowMapResolutionScale( 1.5f );
     }
     else if ( value.compare( "high" ) == 0 )
     {
-        std::cout << "high" << std::endl;
         omi::renderSettings.setShadows( true );
         omi::renderSettings.setShadowMapResolutionScale( 4.0f );
     }
     else
     {
-        std::cout << "medium" << std::endl;
         omi::renderSettings.setShadows( true );
         omi::renderSettings.setShadowMapResolutionScale( 3.0f );
     }
+}
+
+void sound( const std::string& value )
+{
+    float volume = 0.8f;
+    if ( util::str::isFloat( value )  )
+    {
+        float temp_val = static_cast<float>( atof( value.c_str() ) );
+        if ( temp_val >= 0.0f && temp_val <= 1.0f )
+        {
+            volume = temp_val;
+        }
+    }
+    omi::audioSettings.setSoundVolume( volume );
+}
+
+void music( const std::string& value )
+{
+    float volume = 0.8f;
+    if ( util::str::isFloat( value )  )
+    {
+        float temp_val = static_cast<float>( atof( value.c_str() ) );
+        if ( temp_val >= 0.0f && temp_val <= 1.0f )
+        {
+            volume = temp_val;
+        }
+    }
+    omi::audioSettings.setMusicVolume( volume );
 }
 
 } // namespace apply

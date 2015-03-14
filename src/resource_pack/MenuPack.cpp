@@ -11,7 +11,7 @@ void buildMenuPack()
             "pause_menu_overlay",
             resource_group::MENU,
             "default_shader",
-            glm::vec4( 0.0f, 0.0f, 0.0f, 0.75f ),
+            glm::vec4( 0.0f, 0.0f, 0.0f, 0.25f ),
             layer::gui::PAUSE_OVERLAY,
             glm::vec2( 10.0f, 10.0f ),
             glm::vec2( 1.0f, 1.0f ),

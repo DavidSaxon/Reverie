@@ -22,6 +22,12 @@ void gamma( const std::string& value );
 /** Applies shadow settings from a string */
 void shadows( const std::string& value );
 
+/** Applies sound volume from a string */
+void sound( const std::string& value );
+
+/** Applies music volume from a string */
+void music( const std::string& value );
+
 } // namespace apply
 
 } // namespace settings

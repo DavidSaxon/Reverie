@@ -12,13 +12,14 @@
     - clean first
 }
 
-- blur pause screen
+- blur pause screen?
 
 - settings on disk
 {
-    - graphics
+    - audio
     {
-        - shadows
+        - sound fx volume
+        - master volume?
     }
     - input
     {
@@ -31,11 +32,6 @@
             - right
         }
         - others?
-    }
-    - audio
-    {
-        - music volume
-        - sound fx volume
     }
 }
 
