@@ -3,4 +3,7 @@ fullscreen: undefined
 vsync: undefined
 gamma: undefined
 shadows: undefined
+master: undefined
+sound: undefined
 music: undefined
+look: undefined

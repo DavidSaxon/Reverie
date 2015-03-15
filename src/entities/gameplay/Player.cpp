@@ -1,6 +1,7 @@
 #include "Player.hpp"
 
 #include "src/data/Globals.hpp"
+#include "src/data/Settings.hpp"
 #include "src/omicron/input/Input.hpp"
 
 namespace {
@@ -79,10 +80,10 @@ void Player::look()
     // rotate the camera based on how far the mouse has moved
     m_camT->rotation.x +=
         ( omi::displaySettings.getCentre().y - omi::input::getMousePos().y ) *
-        LOOK_BASE_SPEED;
+        LOOK_BASE_SPEED * rev_settings::lookSensitivity;
     m_transform->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
-        LOOK_BASE_SPEED;
+        LOOK_BASE_SPEED * rev_settings::lookSensitivity;
 }
 
 void Player::move()

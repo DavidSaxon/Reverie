@@ -4,6 +4,7 @@
 
 #include "lib/Utilitron/StringUtil.hpp"
 
+#include "src/data/Settings.hpp"
 #include "src/omicron/Omicron.hpp"
 
 namespace settings {
@@ -113,6 +114,28 @@ void shadows( const std::string& value )
     }
 }
 
+void master( const std::string& value )
+{
+    float volume = 0.8f;
+    if ( util::str::isFloat( value )  )
+    {
+        float temp_val = static_cast<float>( atof( value.c_str() ) );
+        if ( temp_val >= 0.0f && temp_val <= 1.0f )
+        {
+            volume = temp_val;
+        }
+    }
+    rev_settings::masterVolume = volume;
+    omi::audioSettings.setSoundVolume(
+        omi::audioSettings.getSoundVolume() *
+        rev_settings::masterVolume
+    );
+    omi::audioSettings.setMusicVolume(
+        omi::audioSettings.getMusicVolume() *
+        rev_settings::masterVolume
+    );
+}
+
 void sound( const std::string& value )
 {
     float volume = 0.8f;
@@ -124,7 +147,7 @@ void sound( const std::string& value )
             volume = temp_val;
         }
     }
-    omi::audioSettings.setSoundVolume( volume );
+    omi::audioSettings.setSoundVolume( volume * rev_settings::masterVolume );
 }
 
 void music( const std::string& value )
@@ -138,7 +161,21 @@ void music( const std::string& value )
             volume = temp_val;
         }
     }
-    omi::audioSettings.setMusicVolume( volume );
+    omi::audioSettings.setMusicVolume( volume * rev_settings::masterVolume );
+}
+
+void look( const std::string& value )
+{
+    float look = 1.0f;
+    if ( util::str::isFloat( value )  )
+    {
+        float temp_val = static_cast<float>( atof( value.c_str() ) );
+        if ( temp_val >= 0.0f && temp_val <= 2.0f )
+        {
+            look = temp_val;
+        }
+    }
+    rev_settings::lookSensitivity = look;
 }
 
 } // namespace apply
