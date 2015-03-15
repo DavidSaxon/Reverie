@@ -93,25 +93,25 @@ void Player::move()
     float moveSpeed = MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
 
     // forward
-    if ( omi::input::isKeyPressed( omi::input::key::W ) )
+    if ( omi::input::isKeyPressed( rev_settings::keyForwards ) )
     {
         moveDis.z = -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
         moveDis.x = -util::math::sind( m_transform->rotation.y ) * moveSpeed;
     }
     // backwards
-    if ( omi::input::isKeyPressed( omi::input::key::S ) )
+    if ( omi::input::isKeyPressed( rev_settings::keyBackwards ) )
     {
         moveDis.z = util::math::cosd( m_transform->rotation.y ) * moveSpeed;
         moveDis.x = util::math::sind( m_transform->rotation.y ) * moveSpeed;
     }
     // left
-    if ( omi::input::isKeyPressed( omi::input::key::A ) )
+    if ( omi::input::isKeyPressed( rev_settings::keyLeft ) )
     {
         moveDis.z =  util::math::sind( m_transform->rotation.y ) * moveSpeed;
         moveDis.x = -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
     }
     // right
-    if ( omi::input::isKeyPressed( omi::input::key::D ) )
+    if ( omi::input::isKeyPressed( rev_settings::keyRight ) )
     {
         moveDis.z = -util::math::sind( m_transform->rotation.y ) * moveSpeed;
         moveDis.x =  util::math::cosd( m_transform->rotation.y ) * moveSpeed;

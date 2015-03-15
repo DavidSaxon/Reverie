@@ -7,3 +7,7 @@ master: undefined
 sound: undefined
 music: undefined
 look: undefined
+forwards: undefined
+backwards: undefined
+left: undefined
+right: undefined

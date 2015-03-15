@@ -49,6 +49,10 @@ void applySettingsFromConfig()
     std::string sound      = "undefined";
     std::string music      = "undefined";
     std::string look       = "undefined";
+    std::string forwards   = "undefined";
+    std::string backwards  = "undefined";
+    std::string left       = "undefined";
+    std::string right      = "undefined";
 
     while ( file.good() )
     {
@@ -101,6 +105,26 @@ void applySettingsFromConfig()
         else if ( util::str::beginsWith( line, "look:" ) )
         {
             parseConfigLine( line, look );
+        }
+        // read forwards key
+        else if ( util::str::beginsWith( line, "forwards:" ) )
+        {
+            parseConfigLine( line, forwards );
+        }
+        // read backwards key
+        else if ( util::str::beginsWith( line, "backwards:" ) )
+        {
+            parseConfigLine( line, backwards );
+        }
+        // read left key
+        else if ( util::str::beginsWith( line, "left:" ) )
+        {
+            parseConfigLine( line, left );
+        }
+        // read right key
+        else if ( util::str::beginsWith( line, "right:" ) )
+        {
+            parseConfigLine( line, right );
         }
 
     }
