@@ -139,6 +139,10 @@ void applySettingsFromConfig()
     apply::sound     ( sound );
     apply::music     ( music );
     apply::look      ( look );
+    apply::forwards  ( forwards );
+    apply::backwards ( backwards );
+    apply::left      ( left );
+    apply::right     ( right );
 
     // TODO: write settings back to config file
 

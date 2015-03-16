@@ -178,6 +178,46 @@ void look( const std::string& value )
     rev_settings::lookSensitivity = look;
 }
 
+void forwards( const std::string& value )
+{
+    int key = static_cast<int>( omi::input::key::W );
+    if ( util::str::isInt( value ) )
+    {
+        key = static_cast<int>( atoi( value.c_str() ) );
+    }
+    rev_settings::keyForwards = static_cast<omi::input::key::Type>( key );
+}
+
+void backwards( const std::string& value )
+{
+    int key = static_cast<int>( omi::input::key::W );
+    if ( util::str::isInt( value ) )
+    {
+        key = static_cast<int>( atoi( value.c_str() ) );
+    }
+    rev_settings::keyBackwards = static_cast<omi::input::key::Type>( key );
+}
+
+void left( const std::string& value )
+{
+    int key = static_cast<int>( omi::input::key::W );
+    if ( util::str::isInt( value ) )
+    {
+        key = static_cast<int>( atoi( value.c_str() ) );
+    }
+    rev_settings::keyLeft = static_cast<omi::input::key::Type>( key );
+}
+
+void right( const std::string& value )
+{
+    int key = static_cast<int>( omi::input::key::W );
+    if ( util::str::isInt( value ) )
+    {
+        key = static_cast<int>( atoi( value.c_str() ) );
+    }
+    rev_settings::keyRight = static_cast<omi::input::key::Type>( key );
+}
+
 } // namespace apply
 
 } // namespace settings
