@@ -55,7 +55,7 @@ void resolution( const std::string& value )
 
 void fullscreen( const std::string& value )
 {
-    if ( value.compare( "no" ) == 0 )
+    if ( value.compare( "off" ) == 0 )
     {
         omi::displaySettings.setFullscreen( false );
     }
@@ -67,7 +67,7 @@ void fullscreen( const std::string& value )
 
 void vsync( const std::string& value )
 {
-    if ( value.compare( "no" ) == 0 )
+    if ( value.compare( "off" ) == 0 )
     {
         omi::displaySettings.setVsync( false );
     }
@@ -116,7 +116,7 @@ void shadows( const std::string& value )
 
 void master( const std::string& value )
 {
-    float volume = 0.8f;
+    float volume = 1.0f;
     if ( util::str::isFloat( value )  )
     {
         float temp_val = static_cast<float>( atof( value.c_str() ) );
@@ -138,7 +138,7 @@ void master( const std::string& value )
 
 void sound( const std::string& value )
 {
-    float volume = 0.8f;
+    float volume = 1.0f;
     if ( util::str::isFloat( value )  )
     {
         float temp_val = static_cast<float>( atof( value.c_str() ) );
@@ -190,7 +190,7 @@ void forwards( const std::string& value )
 
 void backwards( const std::string& value )
 {
-    int key = static_cast<int>( omi::input::key::W );
+    int key = static_cast<int>( omi::input::key::S );
     if ( util::str::isInt( value ) )
     {
         key = static_cast<int>( atoi( value.c_str() ) );
@@ -200,7 +200,7 @@ void backwards( const std::string& value )
 
 void left( const std::string& value )
 {
-    int key = static_cast<int>( omi::input::key::W );
+    int key = static_cast<int>( omi::input::key::A );
     if ( util::str::isInt( value ) )
     {
         key = static_cast<int>( atoi( value.c_str() ) );
@@ -210,7 +210,7 @@ void left( const std::string& value )
 
 void right( const std::string& value )
 {
-    int key = static_cast<int>( omi::input::key::W );
+    int key = static_cast<int>( omi::input::key::D );
     if ( util::str::isInt( value ) )
     {
         key = static_cast<int>( atoi( value.c_str() ) );

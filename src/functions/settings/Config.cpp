@@ -4,21 +4,20 @@
 
 #include "lib/Utilitron/StringUtil.hpp"
 
+#include "src/data/Settings.hpp"
 #include "src/functions/settings/ApplySettings.hpp"
+#include "src/omicron/Omicron.hpp"
 
 namespace settings {
 
 namespace config {
 
 //------------------------------------------------------------------------------
-//                                   VARIABLES
+//                                   CONSTANTS
 //------------------------------------------------------------------------------
 
-std::string configDefaultTemplate =
-    "resolution: undefined\n"
-    "fullscreen: yes\n"
-    "gamma: 22\n" // TODO
-    "shadows: off\n";
+// the path to the config file
+static const std::string CONFIG_PATH = "config.omi_pref";
 
 //------------------------------------------------------------------------------
 //                                   FUNCTIONS
@@ -26,18 +25,8 @@ std::string configDefaultTemplate =
 
 void applySettingsFromConfig()
 {
-    // is true if the file is corrupt or missing
-    bool fileError = false;
-
     // open the file
-    std::ifstream file( "config.omi_pref" );
-
-    // check of the file exists
-    if ( !file.good() )
-    {
-        file.close();
-        fileError = true;
-    }
+    std::ifstream file( CONFIG_PATH.c_str() );
 
     // the settings values
     std::string resolution = "undefined";
@@ -54,6 +43,7 @@ void applySettingsFromConfig()
     std::string left       = "undefined";
     std::string right      = "undefined";
 
+    // read what we can from the config file
     while ( file.good() )
     {
         // get the current line as a string
@@ -144,8 +134,8 @@ void applySettingsFromConfig()
     apply::left      ( left );
     apply::right     ( right );
 
-    // TODO: write settings back to config file
-
+    // write settings back to the config file
+    writeConfig();
 }
 
 void parseConfigLine( const std::string& line, std::string& value )
@@ -156,6 +146,83 @@ void parseConfigLine( const std::string& line, std::string& value )
     {
         value = line.substr( p + 1, line.length() - p );
     }
+}
+
+void writeConfig()
+{
+    // open the config file
+    std::ofstream file( CONFIG_PATH.c_str() );
+
+    // write resolution
+    file << "resolution: "
+         << omi::renderSettings.getResolution().x << "x"
+         << omi::renderSettings.getResolution().y << std::endl;
+    // write fullscreen state
+    file << "fullscreen: ";
+    if ( omi::displaySettings.getFullscreen() )
+    {
+        file << "on" << std::endl;
+    }
+    else
+    {
+        file << "off" << std::endl;
+    }
+    // write vsync state
+    file << "vsync: ";
+    if ( omi::displaySettings.getVsync() )
+    {
+        file << "on" << std::endl;
+    }
+    else
+    {
+        file << "off" << std::endl;
+    }
+    // write gamma correction
+    file << "gamma: " << omi::renderSettings.getGammaCorrection() << std::endl;
+    // write shadows
+    file << "shadows: ";
+    if ( !omi::renderSettings.getShadows() )
+    {
+        file << "off" << std::endl;
+    }
+    else if ( omi::renderSettings.getShadowMapResolutionScale() < 2.0f )
+    {
+        file << "low" << std::endl;
+    }
+    else if ( omi::renderSettings.getShadowMapResolutionScale() < 3.5f )
+    {
+        file << "medium" << std::endl;
+    }
+    else
+    {
+        file << "high" << std::endl;
+    }
+    // write master volume
+    file << "master: " << rev_settings::masterVolume << std::endl;
+    // write sound volume
+    file << "sound: " << omi::audioSettings.getSoundVolume() /
+            rev_settings::masterVolume << std::endl;
+    // write music volume
+    file << "music: " << omi::audioSettings.getMusicVolume() /
+            rev_settings::masterVolume << std::endl;
+    // write look sensitivity
+    file << "look: " << rev_settings::lookSensitivity << std::endl;
+    // write forwards key binding
+    file << "forwards: "
+         << static_cast<int>( rev_settings::keyForwards ) << std::endl;
+    // write backwards key binding
+    file << "backwards: "
+         << static_cast<int>( rev_settings::keyBackwards ) << std::endl;
+    // write left key binding
+    file << "left: "
+         << static_cast<int>( rev_settings::keyLeft ) << std::endl;
+    // write right key binding
+    file << "right: "
+         << static_cast<int>( rev_settings::keyRight ) << std::endl;
+
+
+    // clean up
+    file.close();
 }
 
 } // namespace config

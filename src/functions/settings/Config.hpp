@@ -12,13 +12,6 @@ namespace settings {
 namespace config {
 
 //------------------------------------------------------------------------------
-//                                   VARIABLES
-//------------------------------------------------------------------------------
-
-// the default template for the config file
-extern std::string configDefaultTemplate;
-
-//------------------------------------------------------------------------------
 //                                   FUNCTIONS
 //------------------------------------------------------------------------------
 
@@ -28,6 +21,9 @@ void applySettingsFromConfig();
 
 /** Parse the value of a config file line into the output string */
 void parseConfigLine( const std::string& line, std::string& value );
+
+/** Writes the related settings to the config file */
+void writeConfig();
 
 } // namespace config
 
