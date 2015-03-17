@@ -1,5 +1,8 @@
 #include "PauseMenu.hpp"
 
+#include <algorithm>
+#include <sstream>
+
 #include "src/data/Globals.hpp"
 #include "src/omicron/Omicron.hpp"
 #include "src/omicron/input/Input.hpp"
@@ -657,7 +660,7 @@ void PauseMenu::initGraphicsMenuComponents()
 
     omi::Transform* t = new omi::Transform(
             "",
-            glm::vec3( -1.0f, 0.3125f, 0.0f ),
+            glm::vec3( -1.0f, 0.4375f, 0.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -672,17 +675,48 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
-    // TODO:
-    // add widget
+    // get valid resolutions
     std::vector<std::string> values;
-    values.push_back( "480x270" );
-    values.push_back( "960x540" );
-    values.push_back( "1440x810" );
-    values.push_back( "1920x1080" );
+    for ( std::vector<sf::VideoMode>::const_iterator it =
+            sf::VideoMode::getFullscreenModes().begin();
+         it != sf::VideoMode::getFullscreenModes().end();
+         ++it )
+    {
+        std::stringstream ss;
+        ss << it->width << "x" << it->height;
+        // check if the resolution is already in the list
+        if ( std::find( values.begin(), values.end(), ss.str() ) ==
+             values.end() )
+        {
+            values.push_back( ss.str() );
+        }
+    }
+
+    // get the current resolution as a string
+    std::stringstream ss;
+    ss << static_cast<unsigned>( omi::renderSettings.getResolution().x )
+       << "x"
+       << static_cast<unsigned>( omi::renderSettings.getResolution().y );
+
+    // reverse the values
+    std::vector<std::string> revValues;
+    unsigned counter = 0;
+    unsigned currentIndex = 0;
+    for ( int i = static_cast<int>( values.size() ) - 1; i >= 0; --i )
+    {
+        revValues.push_back( values[ i ] );
+        // find the index of the current resolution
+        if ( values[ i ].compare( ss.str() ) == 0 )
+        {
+            currentIndex = counter;
+        }
+        ++counter;
+    }
+
     SettingWidget* widget = new EnumWidget(
-            glm::vec3( 0.5f, 0.3125f, 0.0f ),
-            values,
-            3
+            glm::vec3( 0.5f, 0.4375f, 0.0f ),
+            revValues,
+            currentIndex
     );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );
@@ -694,7 +728,7 @@ void PauseMenu::initGraphicsMenuComponents()
 
     omi::Transform* t = new omi::Transform(
             "",
-            glm::vec3( -1.0f, 0.1875f, 0.0f ),
+            glm::vec3( -1.0f, 0.3125f, 0.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -709,13 +743,46 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
-    // TODO:
     // add widget
     std::vector<std::string> values;
-    values.push_back( "No" );
-    values.push_back( "Yes" );
+    values.push_back( "Off" );
+    values.push_back( "On" );
     SettingWidget* widget = new EnumWidget(
-            glm::vec3( 0.5f, 0.1875, 0.0f ),
+            glm::vec3( 0.5f, 0.3125f, 0.0f ),
+            values,
+            1
+    );
+    m_graphicsWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+
+    // vsync text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.1875f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Vertical Sync" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_graphicsText.push_back( text );
+
+    // add widget
+    std::vector<std::string> values;
+    values.push_back( "Off" );
+    values.push_back( "On" );
+    SettingWidget* widget = new EnumWidget(
+            glm::vec3( 0.5f, 0.1875f, 0.0f ),
             values,
             1
     );
@@ -744,7 +811,6 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
-    // TODO:
     // add widget
     std::vector<std::string> values;
     values.push_back( "0" );
@@ -779,7 +845,6 @@ void PauseMenu::initGraphicsMenuComponents()
 
     m_graphicsText.push_back( text );
 
-    // TODO:
     // add widget
     std::vector<std::string> values;
     values.push_back( "Off" );
@@ -818,12 +883,34 @@ void PauseMenu::initGraphicsMenuComponents()
 
     }
 
-    // back text
+    // apply text
     {
 
     omi::Transform* t = new omi::Transform(
             "",
             glm::vec3( -1.0f, -0.3125f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Apply" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_graphicsText.push_back( text );
+
+    }
+
+    // back text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, -0.4375f, 0.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );

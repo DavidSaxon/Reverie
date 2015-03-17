@@ -35,21 +35,6 @@ omi::Scene* init()
     // apply settings from disk
     settings::config::applySettingsFromConfig();
 
-    // display settings
-    // omi::displaySettings.setSize( glm::vec2( 960, 540 ) );
-    // omi::displaySettings.setPos( glm::vec2( 250, 330 ) );
-    // omi::displaySettings.setSize( glm::vec2( 1920, 1080 ) );
-    // omi::displaySettings.setFullscreen( true );
-    // omi::displaySettings.setVsync( true );
-
-    // omi::renderSettings.setResolution( glm::vec2( 1920, 1080 ) );
-    // omi::renderSettings.setGammaCorrection( 1.0f );
-    // omi::renderSettings.setShadows( true );
-    // omi::renderSettings.setShadowMapResolutionScale( 4.0f );
-
-    // omi::audioSettings.setSoundVolume( 1.0f );
-    // omi::audioSettings.setMusicVolume( 1.0f );
-
     return new StartUpScene();
 }
 
