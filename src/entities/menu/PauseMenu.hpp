@@ -6,6 +6,7 @@
 #include "src/omicron/entity/Entity.hpp"
 
 #include "src/entities/menu/setting_widget/EnumWidget.hpp"
+#include "src/entities/menu/setting_widget/SliderWidget.hpp"
 
 /*****************************************\
 | Handles the in-game pause overlay menu. |

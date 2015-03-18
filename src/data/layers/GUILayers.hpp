@@ -9,6 +9,7 @@ enum Layer
 {
     PAUSE_OVERLAY = 0,
     WIDGET_PRIMARY,
+    WIDGET_SECONDARY,
     MAIN_MENU_ITEM
 };
 

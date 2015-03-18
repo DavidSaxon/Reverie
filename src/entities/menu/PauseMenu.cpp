@@ -812,13 +812,10 @@ void PauseMenu::initGraphicsMenuComponents()
     m_graphicsText.push_back( text );
 
     // add widget
-    std::vector<std::string> values;
-    values.push_back( "0" );
-    values.push_back( "1" );
-    SettingWidget* widget = new EnumWidget(
+    SettingWidget* widget = new SliderWidget(
             glm::vec3( 0.5f, 0.0625f, 0.0f ),
-            values,
-            1
+            0.0f, 2.0f,
+            omi::renderSettings.getGammaCorrection()
     );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );

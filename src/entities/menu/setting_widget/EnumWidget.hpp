@@ -3,29 +3,6 @@
 
 #include "SettingWidget.hpp"
 
-#include "src/omicron/Omicron.hpp"
-
-namespace setting_function {
-
-/** Changes resolution */
-inline void resolution( const std::string& value )
-{
-    std::cout << "value: " << value << std::endl;
-
-    // parse the value
-    unsigned p = value.find( 'x' );
-    std::cout << "side a: " << value.substr( 0, p ) << std::endl;
-    std::cout << "side b: " << value.substr( p, value.length() ) << std::endl;
-
-    omi::renderSettings.setResolution( glm::vec2(
-            atoi( value.substr( 0, p ).c_str() ),
-            atoi( value.substr( p + 1, value.length() ).c_str() )
-    ) );
-}
-
-} // namespace setting_function
-
-
 /*******************************************************\
 | A widget that can be used to change a discreet value. |
 \*******************************************************/

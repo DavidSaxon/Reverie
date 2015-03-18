@@ -99,6 +99,7 @@ set(SRCS
     src/entities/menu/PauseMenu.cpp
     src/entities/menu/setting_widget/EnumWidget.cpp
     src/entities/menu/setting_widget/SettingWidget.cpp
+    src/entities/menu/setting_widget/SliderWidget.cpp
 )
 
 find_package(Boost)

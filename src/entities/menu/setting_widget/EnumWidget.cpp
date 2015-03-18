@@ -1,6 +1,7 @@
 #include "EnumWidget.hpp"
 
 #include "src/data/Globals.hpp"
+#include "src/omicron/Omicron.hpp"
 
 //------------------------------------------------------------------------------
 //                                  CONSTRUCTOR
@@ -41,7 +42,7 @@ void EnumWidget::init()
     m_text->visible = false;
     m_components.add( m_text );
 
-    // create left arrow
+    // create the left arrow
     omi::Transform* t1 = new omi::Transform(
         "",
         m_position + glm::vec3( 0.3f, 0.0f, 0.0f ),
@@ -54,7 +55,7 @@ void EnumWidget::init()
     m_leftArrow->visible = false;
     m_components.add( m_leftArrow );
 
-    // create right arrow
+    // create the right arrow
     omi::Transform* t2 = new omi::Transform(
         "",
         m_position + glm::vec3( -0.3f, 0.0f, 0.0f ),

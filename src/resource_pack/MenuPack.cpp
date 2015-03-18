@@ -58,6 +58,34 @@ void buildMenuPack()
         0,
         omi::material::SHADELESS
     );
+
+    // slider widget bar
+    omi::ResourceManager::addTextureMaterialSprite(
+        "slider_widget_bar",
+        resource_group::MENU,
+        "default_shader",
+        "res/gfx/texture/menu/slider_widget_bar.png",
+        layer::gui::WIDGET_PRIMARY,
+        glm::vec2( 0.65, 0.65 ),
+        glm::vec2( 1, 1 ),
+        glm::vec2( 0, 0 ),
+        0,
+        omi::material::SHADELESS
+    );
+
+    // slider widget arrow
+    omi::ResourceManager::addTextureMaterialSprite(
+        "slider_widget_arrow",
+        resource_group::MENU,
+        "default_shader",
+        "res/gfx/texture/menu/slider_widget_arrow.png",
+        layer::gui::WIDGET_SECONDARY,
+        glm::vec2( 0.08, 0.08 ),
+        glm::vec2( 1, 1 ),
+        glm::vec2( 0, 0 ),
+        0,
+        omi::material::SHADELESS
+    );
 }
 
 } // namespace pack
