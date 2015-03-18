@@ -69,13 +69,14 @@ private:
 
     // the list of possible values of the widget
     std::vector<std::string> m_values;
-    // the index of the default value to show
-    unsigned m_defaultValue;
     // the current index
     int m_currentIndex;
 
     // the text of the widget
     omi::Text* m_text;
+    // the arrows
+    omi::Sprite* m_leftArrow;
+    omi::Sprite* m_rightArrow;
 
     // TODO: arrows?? maybe should be in base class
 };

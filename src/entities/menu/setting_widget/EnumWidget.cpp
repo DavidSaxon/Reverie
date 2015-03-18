@@ -13,7 +13,6 @@ EnumWidget::EnumWidget(
     :
     SettingWidget ( position ),
     m_values      ( values ),
-    m_defaultValue( defaultValue ),
     m_currentIndex( static_cast<int>( defaultValue ) )
 {
 }
@@ -36,12 +35,37 @@ void EnumWidget::init()
             "pause_secondary_item_text", "", t
     );
     m_text->gui = true;
-    // TODO: set to current enum
-    m_text->setString( m_values[ m_defaultValue ] );
+    m_text->setString( m_values[ m_currentIndex ] );
     m_text->setHorCentred( true );
     m_text->setVertCentred( true );
     m_text->visible = false;
     m_components.add( m_text );
+
+    // create left arrow
+    omi::Transform* t1 = new omi::Transform(
+        "",
+        m_position + glm::vec3( 0.3f, 0.0f, 0.0f ),
+        glm::vec3( 0.0f, 0.0f, 180.0f ),
+        glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_leftArrow = omi::ResourceManager::getSprite(
+            "enum_widget_arrow", "", t1 );
+    m_leftArrow->gui = true;
+    m_leftArrow->visible = false;
+    m_components.add( m_leftArrow );
+
+    // create right arrow
+    omi::Transform* t2 = new omi::Transform(
+        "",
+        m_position + glm::vec3( -0.3f, 0.0f, 0.0f ),
+        glm::vec3(),
+        glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_rightArrow = omi::ResourceManager::getSprite(
+            "enum_widget_arrow", "", t2 );
+    m_rightArrow->gui = true;
+    m_rightArrow->visible = false;
+    m_components.add( m_rightArrow );
 }
 
 void EnumWidget::update()
@@ -105,14 +129,22 @@ void EnumWidget::setActive( bool state )
     if ( state )
     {
         m_text->getMaterial().colour = global::MENU_ITEM_SELECTED_COLOUR;
+        m_leftArrow->getMaterial().colour = global::MENU_ITEM_SELECTED_COLOUR;
+        m_rightArrow->getMaterial().colour = global::MENU_ITEM_SELECTED_COLOUR;
     }
     else
     {
         m_text->getMaterial().colour = global::MENU_ITEM_NON_SELECTED_COLOUR;
+        m_leftArrow->getMaterial().colour =
+                global::MENU_ITEM_NON_SELECTED_COLOUR;
+        m_rightArrow->getMaterial().colour =
+                global::MENU_ITEM_NON_SELECTED_COLOUR;
     }
 }
 
 void EnumWidget::setVisible( bool state )
 {
     m_text->visible = state;
+    m_leftArrow->visible = state;
+    m_rightArrow->visible = state;
 }

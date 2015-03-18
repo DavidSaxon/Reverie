@@ -32,7 +32,7 @@ void buildMenuPack()
         omi::material::SHADELESS
     );
 
-    // pause second item text
+    // pause secondary item text
     omi::ResourceManager::addMaterialText(
         "pause_secondary_item_text",
         resource_group::MENU,
@@ -42,6 +42,20 @@ void buildMenuPack()
         "title_font",
         "",
         0.1f,
+        omi::material::SHADELESS
+    );
+
+    // enum widget arrow
+    omi::ResourceManager::addTextureMaterialSprite(
+        "enum_widget_arrow",
+        resource_group::MENU,
+        "default_shader",
+        "res/gfx/texture/menu/enum_widget_arrow.png",
+        layer::gui::WIDGET_PRIMARY,
+        glm::vec2( 0.08, 0.08 ),
+        glm::vec2( 1, 1 ),
+        glm::vec2( 0, 0 ),
+        0,
         omi::material::SHADELESS
     );
 }

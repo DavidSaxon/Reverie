@@ -8,6 +8,7 @@ namespace gui {
 enum Layer
 {
     PAUSE_OVERLAY = 0,
+    WIDGET_PRIMARY,
     MAIN_MENU_ITEM
 };
 
