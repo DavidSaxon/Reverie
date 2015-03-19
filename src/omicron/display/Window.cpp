@@ -118,16 +118,19 @@ void Window::update()
             m_renderer->reloadRenderTextures();
         }
 
-        // set the size of the window
-        m_window->setSize( sf::Vector2u(
-                static_cast<unsigned>( displaySettings.getSize().x ),
-                static_cast<unsigned>( displaySettings.getSize().y )
-        ) );
-        // set the position of the window
-        m_window->setPosition( sf::Vector2i(
-            static_cast<int>( displaySettings.getPos().x ),
-            static_cast<int>( displaySettings.getPos().y )
-        ) );
+        if ( !displaySettings.getFullscreen() )
+        {
+            // set the size of the window
+            m_window->setSize( sf::Vector2u(
+                    static_cast<unsigned>( displaySettings.getSize().x ),
+                    static_cast<unsigned>( displaySettings.getSize().y )
+            ) );
+            // set the position of the window
+            m_window->setPosition( sf::Vector2i(
+                static_cast<int>( displaySettings.getPos().x ),
+                static_cast<int>( displaySettings.getPos().y )
+            ) );
+        }
         //  set title
         m_window->setTitle( displaySettings.getTitle() );
         // set vertical sync

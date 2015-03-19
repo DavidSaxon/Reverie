@@ -38,6 +38,9 @@ public:
     /** #Override */
     void setVisible( bool state );
 
+    /** @return the value of the widget */
+    const std::string& getValue() const;
+
 private:
 
     //--------------------------------------------------------------------------

@@ -51,6 +51,12 @@ void resolution( const std::string& value )
         omi::renderSettings.setResolution(
                 omi::displaySettings.getScreenSize() );
     }
+
+    // change window size if we're not in fullscreen mode
+    // if ( omi::displaySettings.getFullscreen() )
+    // {
+    //     omi::displaySettings.setSize( omi::renderSettings.getResolution() );
+    // }
 }
 
 void fullscreen( const std::string& value )
@@ -58,6 +64,7 @@ void fullscreen( const std::string& value )
     if ( value.compare( "off" ) == 0 )
     {
         omi::displaySettings.setFullscreen( false );
+        // omi::displaySettings.setSize( omi::renderSettings.getResolution() );
     }
     else
     {

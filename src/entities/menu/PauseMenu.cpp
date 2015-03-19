@@ -4,6 +4,8 @@
 #include <sstream>
 
 #include "src/data/Globals.hpp"
+#include "src/functions/settings/ApplySettings.hpp"
+#include "src/functions/settings/Config.hpp"
 #include "src/omicron/Omicron.hpp"
 #include "src/omicron/input/Input.hpp"
 
@@ -356,8 +358,26 @@ void PauseMenu::acceptGraphicsMenu()
             // TODO:
             break;
         }
+        case GRAPHICS_APPLY:
+        {
+            // apply resolution
+            EnumWidget* resW =
+                    static_cast<EnumWidget*>( m_graphicsWidgets[ 0 ] );
+            settings::apply::resolution( resW->getValue() );
+
+            // apply fullscreen
+            EnumWidget* fullW =
+                    static_cast<EnumWidget*>( m_graphicsWidgets[ 1 ] );
+            settings::apply::fullscreen( fullW->getValue() );
+
+            // write config file again
+            settings::config::writeConfig();
+
+            break;
+        }
         case GRAPHICS_BACK:
         {
+            // TODO: revert to previous values
             // return to the main menu
             m_currentMenu = TYPE_SETTINGS;
             updateMenuState();
@@ -745,12 +765,17 @@ void PauseMenu::initGraphicsMenuComponents()
 
     // add widget
     std::vector<std::string> values;
-    values.push_back( "Off" );
-    values.push_back( "On" );
+    values.push_back( "off" );
+    values.push_back( "on" );
+    unsigned currentIndex = 0;
+    if ( omi::displaySettings.getFullscreen() )
+    {
+        currentIndex = 1;
+    }
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, 0.3125f, 0.0f ),
             values,
-            1
+            currentIndex
     );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );
@@ -779,12 +804,17 @@ void PauseMenu::initGraphicsMenuComponents()
 
     // add widget
     std::vector<std::string> values;
-    values.push_back( "Off" );
-    values.push_back( "On" );
+    values.push_back( "off" );
+    values.push_back( "on" );
+    unsigned currentIndex = 0;
+    if ( omi::displaySettings.getVsync() )
+    {
+        currentIndex = 1;
+    }
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, 0.1875f, 0.0f ),
             values,
-            1
+            currentIndex
     );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );
@@ -844,14 +874,31 @@ void PauseMenu::initGraphicsMenuComponents()
 
     // add widget
     std::vector<std::string> values;
-    values.push_back( "Off" );
-    values.push_back( "Low" );
-    values.push_back( "Medium" );
-    values.push_back( "High" );
+    values.push_back( "off" );
+    values.push_back( "low" );
+    values.push_back( "medium" );
+    values.push_back( "high" );
+    unsigned currentIndex = 0;
+    if ( !omi::renderSettings.getShadows() )
+    {
+        currentIndex = 0;
+    }
+    else if ( omi::renderSettings.getShadowMapResolutionScale() < 2.0f )
+    {
+        currentIndex = 1;
+    }
+    else if ( omi::renderSettings.getShadowMapResolutionScale() < 3.5f )
+    {
+        currentIndex = 2;
+    }
+    else
+    {
+        currentIndex = 3;
+    }
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, -0.0625f, 0.0f ),
             values,
-            2
+            currentIndex
     );
     m_graphicsWidgets.push_back( widget );
     addEntity( widget );

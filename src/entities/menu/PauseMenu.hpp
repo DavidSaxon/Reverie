@@ -62,9 +62,11 @@ public:
     {
         GRAPHICS_RESOLUTION = 0,
         GRAPHICS_FULLSCREEN,
+        GRAPHICS_VSYNC,
         GRAPHICS_GAMMA,
         GRAPHICS_SHADOWS,
         GRAPHICS_RESET_DEFAULTS,
+        GRAPHICS_APPLY,
         GRAPHICS_BACK
     };
 

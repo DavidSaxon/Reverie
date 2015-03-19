@@ -1,5 +1,6 @@
 #include "SliderWidget.hpp"
 
+#include <iomanip>
 #include <sstream>
 
 #include "src/data/Globals.hpp"
@@ -68,7 +69,7 @@ void SliderWidget::init()
             "pause_secondary_item_text", "", t1 );
     m_text->gui = true;
     std::stringstream ss;
-    ss << m_current;
+    ss << std::fixed << std::setprecision( 2 ) << m_current;
     m_text->setString( ss.str() );
     m_text->setVertCentred( true );
     m_text->visible = false;
@@ -108,7 +109,7 @@ void SliderWidget::update()
 
     // update text
     std::stringstream ss;
-    ss << m_current;
+    ss << std::fixed << std::setprecision( 2 ) << m_current;
     m_text->setString( ss.str() );
 }
 

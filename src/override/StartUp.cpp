@@ -17,6 +17,7 @@ omi::Scene* init()
     omi::systemSettings.setCursorHidden( true );
 
     // display settings
+    omi::displaySettings.setSize( omi::displaySettings.getScreenSize() );
     omi::displaySettings.setTitle( "Reverie" );
     omi::displaySettings.setFrameRateCap( 60 );
 

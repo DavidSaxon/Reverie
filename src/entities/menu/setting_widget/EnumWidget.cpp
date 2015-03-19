@@ -114,8 +114,6 @@ void EnumWidget::update()
     // the value has changed
     if ( changed )
     {
-        // call change function
-        // setting_function::resolution( m_values[ m_currentIndex ] );
         // update the text
         m_text->setString( m_values[ m_currentIndex ] );
     }
@@ -148,4 +146,9 @@ void EnumWidget::setVisible( bool state )
     m_text->visible = state;
     m_leftArrow->visible = state;
     m_rightArrow->visible = state;
+}
+
+const std::string& EnumWidget::getValue() const
+{
+    return m_values[ m_currentIndex ];
 }
