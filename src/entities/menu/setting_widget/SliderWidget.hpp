@@ -45,8 +45,13 @@ public:
     /** #Override */
     void resetDefault();
 
+    /** #Override */
+    void revert();
+
     /** @return the current value of the slider */
     float getValue() const;
+
+private:
 
     //--------------------------------------------------------------------------
     //                                 VARIABLES
@@ -59,6 +64,8 @@ public:
     float m_default;
     // the current value of the slider
     float m_current;
+    // the value to revert to
+    float m_revert;
     // the speed of the slider
     float m_speed;
 
@@ -69,6 +76,13 @@ public:
     omi::Sprite* m_arrow;
     // the text of the slider's value
     omi::Text* m_text;
+
+    //--------------------------------------------------------------------------
+    //                          PRIVATE MEMBER FUNCTIONS
+    //--------------------------------------------------------------------------
+
+    /** Updates the UI */
+    void updateUI();
 };
 
 #endif

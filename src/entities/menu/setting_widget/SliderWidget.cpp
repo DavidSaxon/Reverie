@@ -20,7 +20,8 @@ SliderWidget::SliderWidget(
     m_low( low ),
     m_high( high ),
     m_default( defaultValue ),
-    m_current( currentValue )
+    m_current( currentValue ),
+    m_revert ( 0 )
 {
     m_speed = ( m_high - m_low ) * 0.007f;
 }
@@ -109,14 +110,7 @@ void SliderWidget::update()
         }
     }
 
-    // position the arrow based on the value
-    m_arrowPos->translation.x = m_position.x +
-            ( m_current - ( ( m_high - m_low ) / 2.0f ) ) * 0.285f;
-
-    // update text
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision( 2 ) << m_current;
-    m_text->setString( ss.str() );
+    updateUI();
 }
 
 void SliderWidget::setActive( bool state )
@@ -144,14 +138,39 @@ void SliderWidget::setVisible( bool state )
     m_bar->visible = state;
     m_arrow->visible = state;
     m_text->visible = state;
+
+    m_revert = m_current;
 }
 
 void SliderWidget::resetDefault()
 {
     m_current = m_default;
+    updateUI();
+}
+
+void SliderWidget::revert()
+{
+    m_current = m_revert;
+    updateUI();
 }
 
 float SliderWidget::getValue() const
 {
     return m_current;
+}
+
+//------------------------------------------------------------------------------
+//                            PRIVATE MEMBER FUNCTIONS
+//------------------------------------------------------------------------------
+
+void SliderWidget::updateUI()
+{
+    // position the arrow based on the value
+    m_arrowPos->translation.x = m_position.x +
+            ( m_current - ( ( m_high - m_low ) / 2.0f ) ) * 0.285f;
+
+    // update text
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision( 2 ) << m_current;
+    m_text->setString( ss.str() );
 }

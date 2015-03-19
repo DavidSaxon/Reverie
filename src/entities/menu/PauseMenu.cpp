@@ -362,7 +362,6 @@ void PauseMenu::acceptGraphicsMenu()
             {
                 ( *it )->resetDefault();
             }
-
             break;
         }
         case GRAPHICS_APPLY:
@@ -403,7 +402,14 @@ void PauseMenu::acceptGraphicsMenu()
         }
         case GRAPHICS_BACK:
         {
-            // TODO: revert to previous values
+            // revert to previous values
+            for ( std::vector<SettingWidget*>::iterator it =
+                        m_graphicsWidgets.begin();
+                  it != m_graphicsWidgets.end();
+                  ++it )
+            {
+                ( *it )->revert();
+            }
             // return to the main menu
             m_currentMenu = TYPE_SETTINGS;
             updateMenuState();

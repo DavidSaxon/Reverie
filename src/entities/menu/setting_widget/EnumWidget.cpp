@@ -16,7 +16,8 @@ EnumWidget::EnumWidget(
     SettingWidget ( position ),
     m_values      ( values ),
     m_defaultIndex( static_cast<int>( defaultValue ) ),
-    m_currentIndex( static_cast<int>( currentValue ) )
+    m_currentIndex( static_cast<int>( currentValue ) ),
+    m_revertIndex( 0 )
 {
 }
 
@@ -148,11 +149,20 @@ void EnumWidget::setVisible( bool state )
     m_text->visible = state;
     m_leftArrow->visible = state;
     m_rightArrow->visible = state;
+
+    m_revertIndex = m_currentIndex;
 }
 
 void EnumWidget::resetDefault()
 {
     m_currentIndex = m_defaultIndex;
+    // update the text
+    m_text->setString( m_values[ m_currentIndex ] );
+}
+
+void EnumWidget::revert()
+{
+    m_currentIndex = m_revertIndex;
     // update the text
     m_text->setString( m_values[ m_currentIndex ] );
 }

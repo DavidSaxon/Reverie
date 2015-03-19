@@ -37,6 +37,9 @@ public:
     /** Reset the widget to the default value */
     virtual void resetDefault() = 0;
 
+    /** @return reverts the widget to the previously applied value */
+    virtual void revert() = 0;
+
 protected:
 
     //--------------------------------------------------------------------------

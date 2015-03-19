@@ -43,6 +43,9 @@ public:
     /** #Override */
     void resetDefault();
 
+    /** #Override */
+    void revert();
+
     /** @return the value of the widget */
     const std::string& getValue() const;
 
@@ -58,6 +61,8 @@ private:
     int m_defaultIndex;
     // the current index
     int m_currentIndex;
+    // the index to revert to on reset
+    int m_revertIndex;
 
     // the text of the widget
     omi::Text* m_text;
