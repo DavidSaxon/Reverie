@@ -16,11 +16,13 @@ public:
     /** Creates a new enumerator setting widget
     @param position the position to display the widget at
     @param values the possible values of the widget
-    @param defaultValue the index of the value to first display on the widget */
+    @param defaultValue the index of the widget's default value
+    @param currentValue the index of the widget's current value */
     EnumWidget(
             const glm::vec3& position,
             std::vector<std::string> values,
-            unsigned defaultValue );
+            unsigned defaultValue,
+            unsigned currentValue );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -38,6 +40,9 @@ public:
     /** #Override */
     void setVisible( bool state );
 
+    /** #Override */
+    void resetDefault();
+
     /** @return the value of the widget */
     const std::string& getValue() const;
 
@@ -49,6 +54,8 @@ private:
 
     // the list of possible values of the widget
     std::vector<std::string> m_values;
+    // the index of the default value
+    int m_defaultIndex;
     // the current index
     int m_currentIndex;
 

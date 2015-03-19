@@ -355,7 +355,14 @@ void PauseMenu::acceptGraphicsMenu()
     {
         case GRAPHICS_RESET_DEFAULTS:
         {
-            // TODO:
+            for ( std::vector<SettingWidget*>::iterator it =
+                        m_graphicsWidgets.begin();
+                  it != m_graphicsWidgets.end();
+                  ++it )
+            {
+                ( *it )->resetDefault();
+            }
+
             break;
         }
         case GRAPHICS_APPLY:
@@ -370,8 +377,27 @@ void PauseMenu::acceptGraphicsMenu()
                     static_cast<EnumWidget*>( m_graphicsWidgets[ 1 ] );
             settings::apply::fullscreen( fullW->getValue() );
 
+            // apply vertical sync
+            EnumWidget* vsyncW =
+                    static_cast<EnumWidget*>( m_graphicsWidgets[ 2 ] );
+            settings::apply::vsync( vsyncW->getValue() );
+
+            // apply gamma correction
+            SliderWidget* gammaW =
+                    static_cast<SliderWidget*>( m_graphicsWidgets[ 3 ] );
+            omi::renderSettings.setGammaCorrection( gammaW->getValue() );
+
+            // apply shadows
+            EnumWidget* shadowsW =
+                    static_cast<EnumWidget*>( m_graphicsWidgets[ 4 ] );
+            settings::apply::shadows( shadowsW->getValue() );
+
             // write config file again
             settings::config::writeConfig();
+
+            // return to the main menu
+            m_currentMenu = TYPE_SETTINGS;
+            updateMenuState();
 
             break;
         }
@@ -717,14 +743,25 @@ void PauseMenu::initGraphicsMenuComponents()
     ss << static_cast<unsigned>( omi::renderSettings.getResolution().x )
        << "x"
        << static_cast<unsigned>( omi::renderSettings.getResolution().y );
+    // the screen size as a string
+    std::stringstream sr;
+    sr << static_cast<unsigned>( omi::displaySettings.getScreenSize().x )
+       << "x"
+       << static_cast<unsigned>( omi::displaySettings.getScreenSize().y );
 
     // reverse the values
     std::vector<std::string> revValues;
     unsigned counter = 0;
+    unsigned defaultIndex;
     unsigned currentIndex = 0;
     for ( int i = static_cast<int>( values.size() ) - 1; i >= 0; --i )
     {
         revValues.push_back( values[ i ] );
+        // find the index of the default resolution
+        if ( values[ i ].compare( sr.str() ) == 0 )
+        {
+            defaultIndex = counter;
+        }
         // find the index of the current resolution
         if ( values[ i ].compare( ss.str() ) == 0 )
         {
@@ -736,6 +773,7 @@ void PauseMenu::initGraphicsMenuComponents()
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, 0.4375f, 0.0f ),
             revValues,
+            defaultIndex,
             currentIndex
     );
     m_graphicsWidgets.push_back( widget );
@@ -775,6 +813,7 @@ void PauseMenu::initGraphicsMenuComponents()
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, 0.3125f, 0.0f ),
             values,
+            1,
             currentIndex
     );
     m_graphicsWidgets.push_back( widget );
@@ -814,6 +853,7 @@ void PauseMenu::initGraphicsMenuComponents()
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, 0.1875f, 0.0f ),
             values,
+            1,
             currentIndex
     );
     m_graphicsWidgets.push_back( widget );
@@ -844,7 +884,7 @@ void PauseMenu::initGraphicsMenuComponents()
     // add widget
     SettingWidget* widget = new SliderWidget(
             glm::vec3( 0.5f, 0.0625f, 0.0f ),
-            0.0f, 2.0f,
+            0.0f, 2.0f, 1.0f,
             omi::renderSettings.getGammaCorrection()
     );
     m_graphicsWidgets.push_back( widget );
@@ -898,6 +938,7 @@ void PauseMenu::initGraphicsMenuComponents()
     SettingWidget* widget = new EnumWidget(
             glm::vec3( 0.5f, -0.0625f, 0.0f ),
             values,
+            2,
             currentIndex
     );
     m_graphicsWidgets.push_back( widget );

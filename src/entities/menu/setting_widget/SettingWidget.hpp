@@ -34,6 +34,9 @@ public:
     /** Shows/hides the widget */
     virtual void setVisible( bool state ) = 0;
 
+    /** Reset the widget to the default value */
+    virtual void resetDefault() = 0;
+
 protected:
 
     //--------------------------------------------------------------------------

@@ -17,12 +17,14 @@ public:
     @param position the position to display the widget at
     @param low the lowest possible value on the slider
     @param high the highest possible value on the slider
-    @param defaultValue the initial value of the slider widget */
+    @param defaultValue the widget's default value
+    @param currentValue the widget's current value */
     SliderWidget(
             const glm::vec3& position,
             float low,
             float high,
-            float defaultValue );
+            float defaultValue,
+            float currentValue );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -40,6 +42,12 @@ public:
     /** #Override */
     void setVisible( bool state );
 
+    /** #Override */
+    void resetDefault();
+
+    /** @return the current value of the slider */
+    float getValue() const;
+
     //--------------------------------------------------------------------------
     //                                 VARIABLES
     //--------------------------------------------------------------------------
@@ -47,6 +55,8 @@ public:
     // the possible range of the slider
     float m_low;
     float m_high;
+    // the default value
+    float m_default;
     // the current value of the slider
     float m_current;
     // the speed of the slider

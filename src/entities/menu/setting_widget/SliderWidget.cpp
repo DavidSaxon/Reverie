@@ -13,12 +13,14 @@ SliderWidget::SliderWidget(
         const glm::vec3& position,
         float low,
         float high,
-        float defaultValue )
+        float defaultValue,
+        float currentValue )
     :
     SettingWidget ( position ),
     m_low( low ),
     m_high( high ),
-    m_current( defaultValue )
+    m_default( defaultValue ),
+    m_current( currentValue )
 {
     m_speed = ( m_high - m_low ) * 0.007f;
 }
@@ -74,6 +76,10 @@ void SliderWidget::init()
     m_text->setVertCentred( true );
     m_text->visible = false;
     m_components.add( m_text );
+
+    // position the arrow based on the value
+    m_arrowPos->translation.x = m_position.x +
+            ( m_current - ( ( m_high - m_low ) / 2.0f ) ) * 0.285f;
 
 }
 
@@ -138,4 +144,14 @@ void SliderWidget::setVisible( bool state )
     m_bar->visible = state;
     m_arrow->visible = state;
     m_text->visible = state;
+}
+
+void SliderWidget::resetDefault()
+{
+    m_current = m_default;
+}
+
+float SliderWidget::getValue() const
+{
+    return m_current;
 }

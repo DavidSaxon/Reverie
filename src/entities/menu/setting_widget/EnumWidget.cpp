@@ -10,11 +10,13 @@
 EnumWidget::EnumWidget(
         const glm::vec3& position,
         std::vector<std::string> values,
-        unsigned defaultValue )
+        unsigned defaultValue,
+        unsigned currentValue )
     :
     SettingWidget ( position ),
     m_values      ( values ),
-    m_currentIndex( static_cast<int>( defaultValue ) )
+    m_defaultIndex( static_cast<int>( defaultValue ) ),
+    m_currentIndex( static_cast<int>( currentValue ) )
 {
 }
 
@@ -146,6 +148,13 @@ void EnumWidget::setVisible( bool state )
     m_text->visible = state;
     m_leftArrow->visible = state;
     m_rightArrow->visible = state;
+}
+
+void EnumWidget::resetDefault()
+{
+    m_currentIndex = m_defaultIndex;
+    // update the text
+    m_text->setString( m_values[ m_currentIndex ] );
 }
 
 const std::string& EnumWidget::getValue() const
