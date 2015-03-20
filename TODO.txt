@@ -12,60 +12,16 @@
     - clean first
 }
 
-- blur pause screen?
-
-- settings on disk
-{
-    - audio
-    {
-        - sound fx volume
-        - master volume?
-    }
-    - input
-    {
-        - look sensitivity
-        - controls
-        {
-            - forward
-            - back
-            - left
-            - right
-        }
-        - others?
-    }
-}
-
-
-- settings should be applied in start up script!
-
 - send settings functions to omicron
 {
     - functions folder
     - startup
+    - pause menu widgets
 }
 
 - higher res glow texture?
 
 - send high res glow to omicron
-
-- pause menu
-{
-    - sub menu handling
-    {
-            - are you sure you want to exit?
-
-        - settings
-        {
-            - populate resolutions with sfml::videomode full screen modes
-
-            - need handling for enum text
-
-            - config file to store and reload settings
-        }
-    }
-
-    - show controls at bottom of menu
-}
 
 - overlay
 {

@@ -7,7 +7,4 @@ master: 1
 sound: 1
 music: 0.8
 look: 1
-forwards: 22
-backwards: 18
-left: 0
-right: 3
+move: wasd

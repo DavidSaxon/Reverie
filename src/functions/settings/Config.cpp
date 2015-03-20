@@ -38,10 +38,7 @@ void applySettingsFromConfig()
     std::string sound      = "undefined";
     std::string music      = "undefined";
     std::string look       = "undefined";
-    std::string forwards   = "undefined";
-    std::string backwards  = "undefined";
-    std::string left       = "undefined";
-    std::string right      = "undefined";
+    std::string move       = "undefined";
 
     // read what we can from the config file
     while ( file.good() )
@@ -96,27 +93,11 @@ void applySettingsFromConfig()
         {
             parseConfigLine( line, look );
         }
-        // read forwards key
-        else if ( util::str::beginsWith( line, "forwards:" ) )
+        // read move keys
+        else if ( util::str::beginsWith( line, "move:" ) )
         {
-            parseConfigLine( line, forwards );
+            parseConfigLine( line, move );
         }
-        // read backwards key
-        else if ( util::str::beginsWith( line, "backwards:" ) )
-        {
-            parseConfigLine( line, backwards );
-        }
-        // read left key
-        else if ( util::str::beginsWith( line, "left:" ) )
-        {
-            parseConfigLine( line, left );
-        }
-        // read right key
-        else if ( util::str::beginsWith( line, "right:" ) )
-        {
-            parseConfigLine( line, right );
-        }
-
     }
 
     // apply settings
@@ -129,10 +110,7 @@ void applySettingsFromConfig()
     apply::sound     ( sound );
     apply::music     ( music );
     apply::look      ( look );
-    apply::forwards  ( forwards );
-    apply::backwards ( backwards );
-    apply::left      ( left );
-    apply::right     ( right );
+    apply::move      ( move );
 
     // write settings back to the config file
     writeConfig();
@@ -207,19 +185,20 @@ void writeConfig()
             rev_settings::masterVolume << std::endl;
     // write look sensitivity
     file << "look: " << rev_settings::lookSensitivity << std::endl;
-    // write forwards key binding
-    file << "forwards: "
-         << static_cast<int>( rev_settings::keyForwards ) << std::endl;
-    // write backwards key binding
-    file << "backwards: "
-         << static_cast<int>( rev_settings::keyBackwards ) << std::endl;
-    // write left key binding
-    file << "left: "
-         << static_cast<int>( rev_settings::keyLeft ) << std::endl;
-    // write right key binding
-    file << "right: "
-         << static_cast<int>( rev_settings::keyRight ) << std::endl;
-
+    // write move keys
+    file << "move: ";
+    if ( rev_settings::keyForwards == omi::input::key::W )
+    {
+        file << "wasd" << std::endl;
+    }
+    else if ( rev_settings::keyForwards == omi::input::key::E )
+    {
+        file << "esdf" << std::endl;
+    }
+    else
+    {
+        file << "arrows" << std::endl;
+    }
 
     // clean up
     file.close();

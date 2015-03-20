@@ -34,17 +34,8 @@ void music( const std::string& value );
 /** Applies look sensitivity from a string */
 void look( const std::string& value );
 
-/** Applies the forwards key-binding from a string */
-void forwards( const std::string& value );
-
-/** Applies the backwards key-binding from a string */
-void backwards( const std::string& value );
-
-/** Applies the left key-binding from a string */
-void left( const std::string& value );
-
-/** Applies the right key-binding from a string */
-void right( const std::string& value );
+/** Applies movement keys from a string */
+void move( const std::string& value );
 
 } // namespace apply
 

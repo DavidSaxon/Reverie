@@ -51,12 +51,6 @@ void resolution( const std::string& value )
         omi::renderSettings.setResolution(
                 omi::displaySettings.getScreenSize() );
     }
-
-    // change window size if we're not in fullscreen mode
-    // if ( omi::displaySettings.getFullscreen() )
-    // {
-    //     omi::displaySettings.setSize( omi::renderSettings.getResolution() );
-    // }
 }
 
 void fullscreen( const std::string& value )
@@ -173,6 +167,8 @@ void music( const std::string& value )
 
 void look( const std::string& value )
 {
+    std::cout << "look apply" << std::endl;
+
     float look = 1.0f;
     if ( util::str::isFloat( value )  )
     {
@@ -185,44 +181,31 @@ void look( const std::string& value )
     rev_settings::lookSensitivity = look;
 }
 
-void forwards( const std::string& value )
+void move( const std::string& value )
 {
-    int key = static_cast<int>( omi::input::key::W );
-    if ( util::str::isInt( value ) )
-    {
-        key = static_cast<int>( atoi( value.c_str() ) );
-    }
-    rev_settings::keyForwards = static_cast<omi::input::key::Type>( key );
-}
+    std::cout << "move apply" << std::endl;
 
-void backwards( const std::string& value )
-{
-    int key = static_cast<int>( omi::input::key::S );
-    if ( util::str::isInt( value ) )
+    if ( value.compare( "arrows" ) == 0 )
     {
-        key = static_cast<int>( atoi( value.c_str() ) );
+        rev_settings::keyForwards  = omi::input::key::UP;
+        rev_settings::keyBackwards = omi::input::key::DOWN;
+        rev_settings::keyLeft      = omi::input::key::LEFT;
+        rev_settings::keyRight     = omi::input::key::RIGHT;
     }
-    rev_settings::keyBackwards = static_cast<omi::input::key::Type>( key );
-}
-
-void left( const std::string& value )
-{
-    int key = static_cast<int>( omi::input::key::A );
-    if ( util::str::isInt( value ) )
+    else if ( value.compare( "esdf" ) == 0 )
     {
-        key = static_cast<int>( atoi( value.c_str() ) );
+        rev_settings::keyForwards  = omi::input::key::E;
+        rev_settings::keyBackwards = omi::input::key::D;
+        rev_settings::keyLeft      = omi::input::key::S;
+        rev_settings::keyRight     = omi::input::key::F;
     }
-    rev_settings::keyLeft = static_cast<omi::input::key::Type>( key );
-}
-
-void right( const std::string& value )
-{
-    int key = static_cast<int>( omi::input::key::D );
-    if ( util::str::isInt( value ) )
+    else
     {
-        key = static_cast<int>( atoi( value.c_str() ) );
+        rev_settings::keyForwards  = omi::input::key::W;
+        rev_settings::keyBackwards = omi::input::key::S;
+        rev_settings::keyLeft      = omi::input::key::A;
+        rev_settings::keyRight     = omi::input::key::D;
     }
-    rev_settings::keyRight = static_cast<omi::input::key::Type>( key );
 }
 
 } // namespace apply

@@ -53,9 +53,17 @@ public:
         SETTINGS_BACK
     };
 
-    // TODO: input menu
+    // the items on the input settings menu
+    enum InputMenuItem
+    {
+        INPUT_LOOK = 0,
+        INPUT_MOVE,
+        INPUT_RESET_DEFAULTS,
+        INPUT_APPLY,
+        INPUT_BACK
+    };
 
-    // the items on the audio
+    // the items on the audio settings menu
     enum AudioMenuItem
     {
         AUDIO_MASTER = 0,
@@ -121,8 +129,10 @@ private:
     std::vector<omi::Text*> m_exitText;
     // the list of renderable text on the settings menu
     std::vector<omi::Text*> m_settingsText;
-    // TODO: input list
-    // TODO: audio list
+    // the list of renderable text on the input settings menu
+    std::vector<omi::Text*> m_inputText;
+    // the list of widget for the input settings menu
+    std::vector<SettingWidget*> m_inputWidgets;
     // the list of renderable text on the audio settings menu
     std::vector<omi::Text*> m_audioText;
     // the list of widgets for the audio settings menu
@@ -172,6 +182,9 @@ private:
     /** Performs the accept action on the settings menu */
     void acceptSettingsMenu();
 
+    /** Performs the accept action on the input menu */
+    void acceptInputMenu();
+
     /** Performs the accept action on the audio menu */
     void acceptAudioMenu();
 
@@ -204,6 +217,9 @@ private:
 
     /** Initialises the settings menu components */
     void initSettingsMenuComponents();
+
+    /** Initialises the input settings menu components */
+    void initInputMenuComponents();
 
     /** Initialises the audio settings menu components */
     void initAudioMenuComponents();

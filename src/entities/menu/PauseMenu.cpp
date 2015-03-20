@@ -139,7 +139,7 @@ void PauseMenu::back()
             m_currentMenu = TYPE_MAIN;
             break;
         }
-        case TYPE_GRAPHICS_SETTINGS:
+        case TYPE_INPUT_SETTINGS:
         {
             m_currentMenu = TYPE_SETTINGS;
             break;
@@ -149,7 +149,7 @@ void PauseMenu::back()
             m_currentMenu = TYPE_SETTINGS;
             break;
         }
-        case TYPE_INPUT_SETTINGS:
+        case TYPE_GRAPHICS_SETTINGS:
         {
             m_currentMenu = TYPE_SETTINGS;
             break;
@@ -227,6 +227,14 @@ void PauseMenu::updateMenuState()
                 setTextListVisibility( m_settingsText, true );
                 break;
             }
+            case TYPE_INPUT_SETTINGS:
+            {
+                m_currentItems = m_inputText;
+                m_currentWidgets = m_inputWidgets;
+                setTextListVisibility( m_inputText, true );
+                setWidgetVisibility( m_inputWidgets, true );
+                break;
+            }
             case TYPE_AUDIO_SETTINGS:
             {
                 m_currentItems = m_audioText;
@@ -266,6 +274,11 @@ void PauseMenu::accept()
         case TYPE_SETTINGS:
         {
             acceptSettingsMenu();
+            break;
+        }
+        case TYPE_INPUT_SETTINGS:
+        {
+            acceptInputMenu();
             break;
         }
         case TYPE_AUDIO_SETTINGS:
@@ -355,8 +368,61 @@ void PauseMenu::acceptSettingsMenu()
         }
         case SETTINGS_BACK:
         {
-            // return to the main menu
+            // return to the settings menu
             m_currentMenu = TYPE_MAIN;
+            updateMenuState();
+            break;
+        }
+    }
+}
+
+void PauseMenu::acceptInputMenu()
+{
+    switch ( static_cast<InputMenuItem>( m_currentIndex ) )
+    {
+        case INPUT_RESET_DEFAULTS:
+        {
+            for ( std::vector<SettingWidget*>::iterator it =
+                        m_inputWidgets.begin();
+                  it != m_inputWidgets.end();
+                  ++it )
+            {
+                ( *it )->resetDefault();
+            }
+            break;
+        }
+        case INPUT_APPLY:
+        {
+            // apply master volume
+            SliderWidget* lookW =
+                    static_cast<SliderWidget*>( m_inputWidgets[ 0 ] );
+            rev_settings::lookSensitivity = lookW->getValue();
+
+            // apply move keys
+            EnumWidget* moveW =
+                    static_cast<EnumWidget*>( m_inputWidgets[ 1 ] );
+            settings::apply::move( moveW->getValue() );
+
+            // write config file again
+            settings::config::writeConfig();
+
+            // return to the settings menu
+            m_currentMenu = TYPE_SETTINGS;
+            updateMenuState();
+            break;
+        }
+        case INPUT_BACK:
+        {
+            // revert to previous values
+            for ( std::vector<SettingWidget*>::iterator it =
+                        m_inputWidgets.begin();
+                  it != m_inputWidgets.end();
+                  ++it )
+            {
+                ( *it )->revert();
+            }
+            // return to the settings menu
+            m_currentMenu = TYPE_SETTINGS;
             updateMenuState();
             break;
         }
@@ -397,6 +463,12 @@ void PauseMenu::acceptAudioMenu()
             omi::audioSettings.setMusicVolume(
                     musicW->getValue() * rev_settings::masterVolume );
 
+            // write config file again
+            settings::config::writeConfig();
+
+            // return to the settings menu
+            m_currentMenu = TYPE_SETTINGS;
+            updateMenuState();
             break;
         }
         case AUDIO_BACK:
@@ -462,10 +534,9 @@ void PauseMenu::acceptGraphicsMenu()
             // write config file again
             settings::config::writeConfig();
 
-            // return to the main menu
+            // return to the settings menu
             m_currentMenu = TYPE_SETTINGS;
             updateMenuState();
-
             break;
         }
         case GRAPHICS_BACK:
@@ -517,6 +588,8 @@ void PauseMenu::hideAll()
     m_exitCheckText->visible = false;
     setTextListVisibility( m_exitText, false );
     setTextListVisibility( m_settingsText, false );
+    setTextListVisibility( m_inputText, false );
+    setWidgetVisibility( m_inputWidgets, false );
     setTextListVisibility( m_audioText, false );
     setWidgetVisibility( m_audioWidgets, false );
     setTextListVisibility( m_graphicsText, false );
@@ -539,6 +612,7 @@ void PauseMenu::initComponents()
     initMainMenuComponents();
     initExitMenuComponents();
     initSettingsMenuComponents();
+    initInputMenuComponents();
     initAudioMenuComponents();
     initGraphicsMenuComponents();
 }
@@ -772,6 +846,156 @@ void PauseMenu::initSettingsMenuComponents()
     m_components.add( text );
 
     m_settingsText.push_back( text );
+
+    }
+}
+
+void PauseMenu::initInputMenuComponents()
+{
+    // look sensitivity
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.25f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Mouse sensitivity" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_inputText.push_back( text );
+
+    // add widget
+    SettingWidget* widget = new SliderWidget(
+            glm::vec3( 0.5f, 0.25f, 0.0f ),
+            0.0f, 2.0f, 1.0f,
+            rev_settings::lookSensitivity
+    );
+    m_inputWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+
+    // move keys
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.125f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Movement Keys" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_inputText.push_back( text );
+
+    // add widget
+    std::vector<std::string> values;
+    values.push_back( "wasd" );
+    values.push_back( "esdf" );
+    values.push_back( "arrows" );
+    unsigned currentIndex = 0;
+    if ( rev_settings::keyForwards == omi::input::key::W )
+    {
+        currentIndex = 0;
+    }
+    else if ( rev_settings::keyForwards == omi::input::key::E )
+    {
+        currentIndex = 1;
+    }
+    else
+    {
+        currentIndex = 2;
+    }
+
+    SettingWidget* widget = new EnumWidget(
+            glm::vec3( 0.5f, 0.125f, 0.0f ),
+            values,
+            0,
+            currentIndex
+    );
+    m_inputWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+
+    // reset defaults text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.0f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Reset Defaults" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_inputText.push_back( text );
+
+    }
+
+    // apply text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, -0.125f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Apply" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_inputText.push_back( text );
+
+    }
+
+    // back text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, -0.25f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Back" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_inputText.push_back( text );
 
     }
 }
