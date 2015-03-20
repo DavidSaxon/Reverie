@@ -78,10 +78,7 @@ void SliderWidget::init()
     m_text->visible = false;
     m_components.add( m_text );
 
-    // position the arrow based on the value
-    m_arrowPos->translation.x = m_position.x +
-            ( m_current - ( ( m_high - m_low ) / 2.0f ) ) * 0.285f;
-
+    updateUI();
 }
 
 void SliderWidget::update()
@@ -167,7 +164,8 @@ void SliderWidget::updateUI()
 {
     // position the arrow based on the value
     m_arrowPos->translation.x = m_position.x +
-            ( m_current - ( ( m_high - m_low ) / 2.0f ) ) * 0.285f;
+            ( ( ( m_current - ( ( m_high - m_low ) / 2.0f ) ) ) /
+            ( m_high - m_low ) ) * 0.57f;
 
     // update text
     std::stringstream ss;

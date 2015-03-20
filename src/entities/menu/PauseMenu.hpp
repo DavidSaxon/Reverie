@@ -55,7 +55,16 @@ public:
 
     // TODO: input menu
 
-    // TODO: Audio menu
+    // the items on the audio
+    enum AudioMenuItem
+    {
+        AUDIO_MASTER = 0,
+        AUDIO_FX,
+        AUDIO_MUSIC,
+        AUDIO_RESET_DEFAULTS,
+        AUDIO_APPLY,
+        AUDIO_BACK
+    };
 
     // the items on the graphics settings menu
     enum GraphicsMenuItem
@@ -114,6 +123,10 @@ private:
     std::vector<omi::Text*> m_settingsText;
     // TODO: input list
     // TODO: audio list
+    // the list of renderable text on the audio settings menu
+    std::vector<omi::Text*> m_audioText;
+    // the list of widgets for the audio settings menu
+    std::vector<SettingWidget*> m_audioWidgets;
     // the list of renderable text on the graphics settings menu
     std::vector<omi::Text*> m_graphicsText;
     // the list of widgets for the graphics settings menu
@@ -159,6 +172,9 @@ private:
     /** Performs the accept action on the settings menu */
     void acceptSettingsMenu();
 
+    /** Performs the accept action on the audio menu */
+    void acceptAudioMenu();
+
     /** Performs the accept action on the graphics settings menu */
     void acceptGraphicsMenu();
 
@@ -183,13 +199,16 @@ private:
     /** Initialises the main menu components */
     void initMainMenuComponents();
 
-    /** Initialises the exit menu text components */
+    /** Initialises the exit menu components */
     void initExitMenuComponents();
 
-    /** Initialises the settings menu text components */
+    /** Initialises the settings menu components */
     void initSettingsMenuComponents();
 
-    /** Initialises the graphics settings menu text components */
+    /** Initialises the audio settings menu components */
+    void initAudioMenuComponents();
+
+    /** Initialises the graphics settings menu components */
     void initGraphicsMenuComponents();
 };
 

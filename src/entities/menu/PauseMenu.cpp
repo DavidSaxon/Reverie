@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "src/data/Globals.hpp"
+#include "src/data/Settings.hpp"
 #include "src/functions/settings/ApplySettings.hpp"
 #include "src/functions/settings/Config.hpp"
 #include "src/omicron/Omicron.hpp"
@@ -226,6 +227,14 @@ void PauseMenu::updateMenuState()
                 setTextListVisibility( m_settingsText, true );
                 break;
             }
+            case TYPE_AUDIO_SETTINGS:
+            {
+                m_currentItems = m_audioText;
+                m_currentWidgets = m_audioWidgets;
+                setTextListVisibility( m_audioText, true );
+                setWidgetVisibility( m_audioWidgets, true );
+                break;
+            }
             case TYPE_GRAPHICS_SETTINGS:
             {
                 m_currentItems = m_graphicsText;
@@ -257,6 +266,11 @@ void PauseMenu::accept()
         case TYPE_SETTINGS:
         {
             acceptSettingsMenu();
+            break;
+        }
+        case TYPE_AUDIO_SETTINGS:
+        {
+            acceptAudioMenu();
             break;
         }
         case TYPE_GRAPHICS_SETTINGS:
@@ -349,6 +363,60 @@ void PauseMenu::acceptSettingsMenu()
     }
 }
 
+void PauseMenu::acceptAudioMenu()
+{
+    switch ( static_cast<AudioMenuItem>( m_currentIndex ) )
+    {
+        case AUDIO_RESET_DEFAULTS:
+        {
+            for ( std::vector<SettingWidget*>::iterator it =
+                        m_audioWidgets.begin();
+                  it != m_audioWidgets.end();
+                  ++it )
+            {
+                ( *it )->resetDefault();
+            }
+            break;
+        }
+        case AUDIO_APPLY:
+        {
+            // apply master volume
+            SliderWidget* masterW =
+                    static_cast<SliderWidget*>( m_audioWidgets[ 0 ] );
+            rev_settings::masterVolume = masterW->getValue();
+
+            // apply fx volume
+            SliderWidget* fxW =
+                    static_cast<SliderWidget*>( m_audioWidgets[ 1 ] );
+            omi::audioSettings.setSoundVolume(
+                    fxW->getValue() * rev_settings::masterVolume );
+
+            // apply music volume
+            SliderWidget* musicW =
+                    static_cast<SliderWidget*>( m_audioWidgets[ 2 ] );
+            omi::audioSettings.setMusicVolume(
+                    musicW->getValue() * rev_settings::masterVolume );
+
+            break;
+        }
+        case AUDIO_BACK:
+        {
+            // revert to previous values
+            for ( std::vector<SettingWidget*>::iterator it =
+                        m_audioWidgets.begin();
+                  it != m_audioWidgets.end();
+                  ++it )
+            {
+                ( *it )->revert();
+            }
+            // return to the settings menu
+            m_currentMenu = TYPE_SETTINGS;
+            updateMenuState();
+            break;
+        }
+    }
+}
+
 void PauseMenu::acceptGraphicsMenu()
 {
     switch ( static_cast<GraphicsMenuItem>( m_currentIndex ) )
@@ -410,7 +478,7 @@ void PauseMenu::acceptGraphicsMenu()
             {
                 ( *it )->revert();
             }
-            // return to the main menu
+            // return to the settings menu
             m_currentMenu = TYPE_SETTINGS;
             updateMenuState();
             break;
@@ -449,6 +517,8 @@ void PauseMenu::hideAll()
     m_exitCheckText->visible = false;
     setTextListVisibility( m_exitText, false );
     setTextListVisibility( m_settingsText, false );
+    setTextListVisibility( m_audioText, false );
+    setWidgetVisibility( m_audioWidgets, false );
     setTextListVisibility( m_graphicsText, false );
     setWidgetVisibility( m_graphicsWidgets, false );
 }
@@ -469,6 +539,7 @@ void PauseMenu::initComponents()
     initMainMenuComponents();
     initExitMenuComponents();
     initSettingsMenuComponents();
+    initAudioMenuComponents();
     initGraphicsMenuComponents();
 }
 
@@ -701,6 +772,168 @@ void PauseMenu::initSettingsMenuComponents()
     m_components.add( text );
 
     m_settingsText.push_back( text );
+
+    }
+}
+
+void PauseMenu::initAudioMenuComponents()
+{
+    // master volume
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.3125f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Master Volume" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_audioText.push_back( text );
+
+    // add widget
+    SettingWidget* widget = new SliderWidget(
+            glm::vec3( 0.5f, 0.3125f, 0.0f ),
+            0.0f, 1.0f, 1.0f,
+            rev_settings::masterVolume
+    );
+    m_audioWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+
+    // fx volume
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.1875f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "FX Volume" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_audioText.push_back( text );
+
+    // add widget
+    SettingWidget* widget = new SliderWidget(
+            glm::vec3( 0.5f, 0.1875f, 0.0f ),
+            0.0f, 1.0f, 1.0f,
+            omi::audioSettings.getSoundVolume()
+    );
+    m_audioWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+
+    // music volume
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, 0.0625f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Music Volume" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_audioText.push_back( text );
+
+    // add widget
+    SettingWidget* widget = new SliderWidget(
+            glm::vec3( 0.5f, 0.0625f, 0.0f ),
+            0.0f, 1.0f, 0.8f,
+            omi::audioSettings.getMusicVolume()
+    );
+    m_audioWidgets.push_back( widget );
+    addEntity( widget );
+
+    }
+
+    // reset defaults text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, -0.0625f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Reset Defaults" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_audioText.push_back( text );
+
+    }
+
+    // apply text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, -0.1875f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Apply" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_audioText.push_back( text );
+
+    }
+
+    // back text
+    {
+
+    omi::Transform* t = new omi::Transform(
+            "",
+            glm::vec3( -1.0f, -0.3125f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t );
+    omi::Text* text =
+            omi::ResourceManager::getText( "pause_secondary_item_text", "", t );
+    text->gui = true;
+    text->setString( "Back" );
+    text->setVertCentred( true );
+    text->visible = false;
+    m_components.add( text );
+
+    m_audioText.push_back( text );
 
     }
 }
