@@ -80,6 +80,9 @@ public:
     /** @return if render able visibility checking is on */
     bool getVisibilityChecking() const;
 
+    /** @return if the rendered layers should be blurred */
+    bool getBlur() const;
+
     /** @return the amount of film grain */
     float getFilmGrain() const;
 
@@ -115,11 +118,14 @@ public:
     /** @param scale the scale of shadow map's resolution */
     void setShadowMapResolutionScale( float scale );
 
-    /** @param the state of colour picking */
+    /** @param state the state of colour picking */
     void setColourPicking( bool state );
 
-    /** @param the state of visibility checking */
+    /** @param state the state of visibility checking */
     void setVisibilityChecking( bool state );
+
+    /** @param state of blurring */
+    void setBlur( bool state );
 
     /**@param filmGrain the amount of film grain to be applied to the final
               output */
@@ -163,6 +169,9 @@ private:
     bool m_colourPicking;
     // whether Omicron should check if renderables are visible or not
     bool m_visibiltyChecking;
+
+    // whether the rendered output should be blurred or not
+    bool m_blur;
 
     // the amount of film grain to be applied to the final output
     float m_filmGrain;

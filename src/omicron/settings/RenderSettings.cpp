@@ -20,6 +20,7 @@ RenderSettings::RenderSettings() :
     m_shadowMapResolutionScale( 4.0f ),
     m_colourPicking           ( true ),
     m_visibiltyChecking       ( false ),
+    m_blur                    ( false ),
     m_filmGrain               ( 0.0f )
 {
 }
@@ -88,6 +89,11 @@ bool RenderSettings::getColourPicking() const
 bool RenderSettings::getVisibilityChecking() const
 {
     return m_visibiltyChecking;
+}
+
+bool RenderSettings::getBlur() const
+{
+    return m_blur;
 }
 
 float RenderSettings::getFilmGrain() const
@@ -167,6 +173,12 @@ void RenderSettings::setVisibilityChecking( bool state )
 {
     m_change = true;
     m_visibiltyChecking = state;
+}
+
+void RenderSettings::setBlur( bool state )
+{
+    m_change = true;
+    m_blur = state;
 }
 
 void RenderSettings::setFilmGrain( float filmGrain )

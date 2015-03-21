@@ -418,20 +418,33 @@ void RenderLists::render( Camera* camera )
     // bind the final render texture
     m_finalRenTex.bind();
 
-    // // render the standard and overlay render textures
+    // render the standard and overlay render textures
     m_stdRenderTexture.render();
     m_overlayRenderTexture.render();
 
     // // render the results of the render texture
     m_finalRenTex.unbind();
 
+    //-----------------------------------BLUR-----------------------------------
+
+    // TODO: check for blur
+
+    m_blurHorTexture.bind();
+    m_finalRenTex.render();
+    m_blurHorTexture.unbind();
+
+    m_blurVertTexture.bind();
+    m_blurHorTexture.render();
+    m_blurVertTexture.unbind();
 
     //-----------------------------------GUI------------------------------------
 
     // bind the gui render texture
     m_guiRenderTexture.bind();
 
-    m_finalRenTex.render();
+    // TODO: uncomment for when blur is off
+    // m_finalRenTex.render();
+    m_blurVertTexture.render();
 
     // disable depth testing
     glDisable( GL_DEPTH_TEST );

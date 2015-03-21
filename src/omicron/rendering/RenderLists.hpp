@@ -17,6 +17,8 @@
 #include "src/omicron/input/Input.hpp"
 #include "src/omicron/rendering/VisibilityCheckThread.hpp"
 #include "src/omicron/rendering/lighting/ShadowMap.hpp"
+#include "src/omicron/rendering/render_texture/BlurHorRenderTexture.hpp"
+#include "src/omicron/rendering/render_texture/BlurVertRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/FinalRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/GlowBlurHorRenderTexture.hpp"
 #include "src/omicron/rendering/render_texture/GlowBlurVertRenderTexture.hpp"
@@ -143,6 +145,9 @@ private:
     StdRenderTexture m_stdRenderTexture;
     // the overlay render texture
     StdRenderTexture m_overlayRenderTexture;
+    // the blur textures
+    BlurHorRenderTexture m_blurHorTexture;
+    BlurVertRenderTexture m_blurVertTexture;
     // the gui render texture
     GuiRenderTexture m_guiRenderTexture;
     // the final render texture for post effects

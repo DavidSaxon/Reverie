@@ -21,7 +21,7 @@ void FPSCounter::init()
     // transform component to position the text
     omi::Transform* transform = new omi::Transform(
             "",
-            glm::vec3( 1.5f, 0.85f, 0.0f ),
+            glm::vec3( 0.0f, 0.85f, 0.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
