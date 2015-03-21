@@ -46,6 +46,7 @@ void PauseMenu::update()
         {
             global::pause = true;
             m_currentMenu = TYPE_MAIN;
+            omi::renderSettings.setBlur( true );
         }
         else
         {
@@ -127,6 +128,7 @@ void PauseMenu::back()
         case TYPE_MAIN:
         {
             global::pause = false;
+            omi::renderSettings.setBlur( false );
             break;
         }
         case TYPE_EXIT:
@@ -301,6 +303,7 @@ void PauseMenu::acceptMainMenu()
         case MAIN_RESUME:
         {
             global::pause = false;
+            omi::renderSettings.setBlur( false );
             updateMenuState();
             break;
         }

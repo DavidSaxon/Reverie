@@ -427,24 +427,31 @@ void RenderLists::render( Camera* camera )
 
     //-----------------------------------BLUR-----------------------------------
 
-    // TODO: check for blur
+    if ( renderSettings.getBlur() )
+    {
+        // blur horizontally and vertically
+        m_blurHorTexture.bind();
+        m_finalRenTex.render();
+        m_blurHorTexture.unbind();
 
-    m_blurHorTexture.bind();
-    m_finalRenTex.render();
-    m_blurHorTexture.unbind();
-
-    m_blurVertTexture.bind();
-    m_blurHorTexture.render();
-    m_blurVertTexture.unbind();
+        m_blurVertTexture.bind();
+        m_blurHorTexture.render();
+        m_blurVertTexture.unbind();
+    }
 
     //-----------------------------------GUI------------------------------------
 
     // bind the gui render texture
     m_guiRenderTexture.bind();
 
-    // TODO: uncomment for when blur is off
-    // m_finalRenTex.render();
-    m_blurVertTexture.render();
+    if ( !renderSettings.getBlur() )
+    {
+        m_finalRenTex.render();
+    }
+    else
+    {
+        m_blurVertTexture.render();
+    }
 
     // disable depth testing
     glDisable( GL_DEPTH_TEST );

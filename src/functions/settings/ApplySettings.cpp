@@ -167,8 +167,6 @@ void music( const std::string& value )
 
 void look( const std::string& value )
 {
-    std::cout << "look apply" << std::endl;
-
     float look = 1.0f;
     if ( util::str::isFloat( value )  )
     {
@@ -183,8 +181,6 @@ void look( const std::string& value )
 
 void move( const std::string& value )
 {
-    std::cout << "move apply" << std::endl;
-
     if ( value.compare( "arrows" ) == 0 )
     {
         rev_settings::keyForwards  = omi::input::key::UP;
