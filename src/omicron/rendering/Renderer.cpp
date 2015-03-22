@@ -96,6 +96,8 @@ void Renderer::applyGLState()
     glClearDepth( 1.0f );
     glEnable( GL_TEXTURE_2D );
     glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+
+    glEnable( GL_MULTISAMPLE );
 }
 
 void Renderer::reloadRenderTextures()

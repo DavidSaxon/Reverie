@@ -534,6 +534,8 @@ void RenderLists::reloadRenderTextures()
     m_glowCollateRenTex.reload();
     m_stdRenderTexture.reload();
     m_overlayRenderTexture.reload();
+    m_blurHorTexture.reload();
+    m_blurVertTexture.reload();
     m_guiRenderTexture.reload();
     m_finalRenTex.reload();
 }

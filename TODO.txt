@@ -19,23 +19,25 @@
     - pause menu widgets
 }
 
-- higher res glow texture?
-
 - send high res glow to omicron
+
+- send blur to omicron
+
+- anti-aliasing
+
+- Level generation
+{
+    - Factory to make blocks
+    - Way to control blocks
+    {
+        - figure out what needs to be generated
+        - hide what's behind the player
+    }
+}
 
 - overlay
 {
-    - should be a layer like gui with perspective camera and own ambient light
-      shomehow, maybe has shader?
-    - dim other layers
-
-    -overlay lights
-
-    - add over stuff to omicron
-    {
-        - render lists
-        - rendererable
-    }
+    - investigate shadows on overlay etc..
 }
 
 - player
@@ -72,16 +74,6 @@
         - diagonal movement
         - run
         - animation (bobbing)
-    }
-}
-
-- Level generation
-{
-    - Factory to make blocks
-    - Way to control blocks
-    {
-        - figure out what needs to be generated
-        - hide what's behind the player
     }
 }
 

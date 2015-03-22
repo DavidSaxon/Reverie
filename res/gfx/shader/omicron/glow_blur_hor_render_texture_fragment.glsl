@@ -58,12 +58,9 @@ void main()
 
     // calculate the size of a pixel
     float pixelSize = 1.0 / u_resolution;
-    // float pixelSize = 1.0 / 120.0;
 
     // pixel under this one
     finalColour += texture2D( u_texture, v_texCoord ) * FILTER_OFFSET_0;
-
-
 
     // pixels to the right
     finalColour += texture2D( u_texture,
