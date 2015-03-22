@@ -4,7 +4,7 @@
 
 #include "lib/Utilitron/StringUtil.hpp"
 
-#include "src/data/Settings.hpp"
+#include "src/data/Globals.hpp"
 #include "src/omicron/Omicron.hpp"
 
 namespace settings {
@@ -126,14 +126,14 @@ void master( const std::string& value )
             volume = temp_val;
         }
     }
-    rev_settings::masterVolume = volume;
+    global::masterVolume = volume;
     omi::audioSettings.setSoundVolume(
         omi::audioSettings.getSoundVolume() *
-        rev_settings::masterVolume
+        global::masterVolume
     );
     omi::audioSettings.setMusicVolume(
         omi::audioSettings.getMusicVolume() *
-        rev_settings::masterVolume
+        global::masterVolume
     );
 }
 
@@ -148,7 +148,7 @@ void sound( const std::string& value )
             volume = temp_val;
         }
     }
-    omi::audioSettings.setSoundVolume( volume * rev_settings::masterVolume );
+    omi::audioSettings.setSoundVolume( volume * global::masterVolume );
 }
 
 void music( const std::string& value )
@@ -162,7 +162,7 @@ void music( const std::string& value )
             volume = temp_val;
         }
     }
-    omi::audioSettings.setMusicVolume( volume * rev_settings::masterVolume );
+    omi::audioSettings.setMusicVolume( volume * global::masterVolume );
 }
 
 void look( const std::string& value )
@@ -176,31 +176,31 @@ void look( const std::string& value )
             look = temp_val;
         }
     }
-    rev_settings::lookSensitivity = look;
+    global::lookSensitivity = look;
 }
 
 void move( const std::string& value )
 {
     if ( value.compare( "arrows" ) == 0 )
     {
-        rev_settings::keyForwards  = omi::input::key::UP;
-        rev_settings::keyBackwards = omi::input::key::DOWN;
-        rev_settings::keyLeft      = omi::input::key::LEFT;
-        rev_settings::keyRight     = omi::input::key::RIGHT;
+        global::keyForwards  = omi::input::key::UP;
+        global::keyBackwards = omi::input::key::DOWN;
+        global::keyLeft      = omi::input::key::LEFT;
+        global::keyRight     = omi::input::key::RIGHT;
     }
     else if ( value.compare( "esdf" ) == 0 )
     {
-        rev_settings::keyForwards  = omi::input::key::E;
-        rev_settings::keyBackwards = omi::input::key::D;
-        rev_settings::keyLeft      = omi::input::key::S;
-        rev_settings::keyRight     = omi::input::key::F;
+        global::keyForwards  = omi::input::key::E;
+        global::keyBackwards = omi::input::key::D;
+        global::keyLeft      = omi::input::key::S;
+        global::keyRight     = omi::input::key::F;
     }
     else
     {
-        rev_settings::keyForwards  = omi::input::key::W;
-        rev_settings::keyBackwards = omi::input::key::S;
-        rev_settings::keyLeft      = omi::input::key::A;
-        rev_settings::keyRight     = omi::input::key::D;
+        global::keyForwards  = omi::input::key::W;
+        global::keyBackwards = omi::input::key::S;
+        global::keyLeft      = omi::input::key::A;
+        global::keyRight     = omi::input::key::D;
     }
 }
 

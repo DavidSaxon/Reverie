@@ -6,6 +6,8 @@
 
 #include "lib/glm/glm.hpp"
 
+#include "src/omicron/input/Input.hpp"
+
 /***********************************************\
 | Variables that can be accessed by any object. |
 \***********************************************/
@@ -13,6 +15,19 @@ namespace global {
 
 // is true if reverie is paused
 extern bool pause;
+
+//-----------------------------------SETTINGS-----------------------------------
+
+// the master volume for all sounds
+extern float masterVolume;
+
+// the look sensitivity multiplier
+extern float lookSensitivity;
+// the key bindings
+extern omi::input::key::Type keyForwards;
+extern omi::input::key::Type keyBackwards;
+extern omi::input::key::Type keyLeft;
+extern omi::input::key::Type keyRight;
 
 //----------------------------------MENU STYLE----------------------------------
 

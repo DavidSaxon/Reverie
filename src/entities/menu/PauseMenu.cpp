@@ -4,7 +4,6 @@
 #include <sstream>
 
 #include "src/data/Globals.hpp"
-#include "src/data/Settings.hpp"
 #include "src/functions/settings/ApplySettings.hpp"
 #include "src/functions/settings/Config.hpp"
 #include "src/omicron/Omicron.hpp"
@@ -399,7 +398,7 @@ void PauseMenu::acceptInputMenu()
             // apply master volume
             SliderWidget* lookW =
                     static_cast<SliderWidget*>( m_inputWidgets[ 0 ] );
-            rev_settings::lookSensitivity = lookW->getValue();
+            global::lookSensitivity = lookW->getValue();
 
             // apply move keys
             EnumWidget* moveW =
@@ -452,19 +451,19 @@ void PauseMenu::acceptAudioMenu()
             // apply master volume
             SliderWidget* masterW =
                     static_cast<SliderWidget*>( m_audioWidgets[ 0 ] );
-            rev_settings::masterVolume = masterW->getValue();
+            global::masterVolume = masterW->getValue();
 
             // apply fx volume
             SliderWidget* fxW =
                     static_cast<SliderWidget*>( m_audioWidgets[ 1 ] );
             omi::audioSettings.setSoundVolume(
-                    fxW->getValue() * rev_settings::masterVolume );
+                    fxW->getValue() * global::masterVolume );
 
             // apply music volume
             SliderWidget* musicW =
                     static_cast<SliderWidget*>( m_audioWidgets[ 2 ] );
             omi::audioSettings.setMusicVolume(
-                    musicW->getValue() * rev_settings::masterVolume );
+                    musicW->getValue() * global::masterVolume );
 
             // write config file again
             settings::config::writeConfig();
@@ -879,7 +878,7 @@ void PauseMenu::initInputMenuComponents()
     SettingWidget* widget = new SliderWidget(
             glm::vec3( 0.5f, 0.25f, 0.0f ),
             0.0f, 2.0f, 1.0f,
-            rev_settings::lookSensitivity
+            global::lookSensitivity
     );
     m_inputWidgets.push_back( widget );
     addEntity( widget );
@@ -912,11 +911,11 @@ void PauseMenu::initInputMenuComponents()
     values.push_back( "esdf" );
     values.push_back( "arrows" );
     unsigned currentIndex = 0;
-    if ( rev_settings::keyForwards == omi::input::key::W )
+    if ( global::keyForwards == omi::input::key::W )
     {
         currentIndex = 0;
     }
-    else if ( rev_settings::keyForwards == omi::input::key::E )
+    else if ( global::keyForwards == omi::input::key::E )
     {
         currentIndex = 1;
     }
@@ -1029,7 +1028,7 @@ void PauseMenu::initAudioMenuComponents()
     SettingWidget* widget = new SliderWidget(
             glm::vec3( 0.5f, 0.3125f, 0.0f ),
             0.0f, 1.0f, 1.0f,
-            rev_settings::masterVolume
+            global::masterVolume
     );
     m_audioWidgets.push_back( widget );
     addEntity( widget );

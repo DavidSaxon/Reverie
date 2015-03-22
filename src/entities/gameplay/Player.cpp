@@ -1,7 +1,6 @@
 #include "Player.hpp"
 
 #include "src/data/Globals.hpp"
-#include "src/data/Settings.hpp"
 #include "src/omicron/input/Input.hpp"
 
 namespace {
@@ -80,10 +79,10 @@ void Player::look()
     // rotate the camera based on how far the mouse has moved
     m_camT->rotation.x +=
         ( omi::displaySettings.getCentre().y - omi::input::getMousePos().y ) *
-        LOOK_BASE_SPEED * rev_settings::lookSensitivity;
+        LOOK_BASE_SPEED * global::lookSensitivity;
     m_transform->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
-        LOOK_BASE_SPEED * rev_settings::lookSensitivity;
+        LOOK_BASE_SPEED * global::lookSensitivity;
 }
 
 void Player::move()
@@ -93,25 +92,25 @@ void Player::move()
     float moveSpeed = MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
 
     // forward
-    if ( omi::input::isKeyPressed( rev_settings::keyForwards ) )
+    if ( omi::input::isKeyPressed( global::keyForwards ) )
     {
         moveDis.z = -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
         moveDis.x = -util::math::sind( m_transform->rotation.y ) * moveSpeed;
     }
     // backwards
-    if ( omi::input::isKeyPressed( rev_settings::keyBackwards ) )
+    if ( omi::input::isKeyPressed( global::keyBackwards ) )
     {
         moveDis.z = util::math::cosd( m_transform->rotation.y ) * moveSpeed;
         moveDis.x = util::math::sind( m_transform->rotation.y ) * moveSpeed;
     }
     // left
-    if ( omi::input::isKeyPressed( rev_settings::keyLeft ) )
+    if ( omi::input::isKeyPressed( global::keyLeft ) )
     {
         moveDis.z =  util::math::sind( m_transform->rotation.y ) * moveSpeed;
         moveDis.x = -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
     }
     // right
-    if ( omi::input::isKeyPressed( rev_settings::keyRight ) )
+    if ( omi::input::isKeyPressed( global::keyRight ) )
     {
         moveDis.z = -util::math::sind( m_transform->rotation.y ) * moveSpeed;
         moveDis.x =  util::math::cosd( m_transform->rotation.y ) * moveSpeed;

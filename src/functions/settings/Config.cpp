@@ -4,7 +4,7 @@
 
 #include "lib/Utilitron/StringUtil.hpp"
 
-#include "src/data/Settings.hpp"
+#include "src/data/Globals.hpp"
 #include "src/functions/settings/ApplySettings.hpp"
 #include "src/omicron/Omicron.hpp"
 
@@ -176,22 +176,22 @@ void writeConfig()
         file << "high" << std::endl;
     }
     // write master volume
-    file << "master: " << rev_settings::masterVolume << std::endl;
+    file << "master: " << global::masterVolume << std::endl;
     // write sound volume
     file << "sound: " << omi::audioSettings.getSoundVolume() /
-            rev_settings::masterVolume << std::endl;
+            global::masterVolume << std::endl;
     // write music volume
     file << "music: " << omi::audioSettings.getMusicVolume() /
-            rev_settings::masterVolume << std::endl;
+            global::masterVolume << std::endl;
     // write look sensitivity
-    file << "look: " << rev_settings::lookSensitivity << std::endl;
+    file << "look: " << global::lookSensitivity << std::endl;
     // write move keys
     file << "move: ";
-    if ( rev_settings::keyForwards == omi::input::key::W )
+    if ( global::keyForwards == omi::input::key::W )
     {
         file << "wasd" << std::endl;
     }
-    else if ( rev_settings::keyForwards == omi::input::key::E )
+    else if ( global::keyForwards == omi::input::key::E )
     {
         file << "esdf" << std::endl;
     }
