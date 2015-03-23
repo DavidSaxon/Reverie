@@ -2,27 +2,6 @@
 | TODO |
 \++++++/
 
-- send gamma to omicron
-{
-    - render lists
-    - gui render texture (add to Cmake lists)
-    - render settings
-    - gui_render_texture_fragment
-
-    - clean first
-}
-
-- send settings functions to omicron
-{
-    - functions folder
-    - startup
-    - pause menu widgets
-}
-
-- send high res glow to omicron
-
-- send blur to omicron
-
 - anti-aliasing
 
 - Level generation

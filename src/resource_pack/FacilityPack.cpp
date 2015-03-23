@@ -18,6 +18,21 @@ void buildFacilityPack()
         "res/gfx/geometry/facility/floor.obj",
         0
     );
+
+    // wall tile
+    omi::ResourceManager::addTexture(
+            "facility_wall_spec",
+            resource_group::FACILITY,
+            "res/gfx/texture/facility/wall_spec.png"
+    );
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "facility_wall",
+        resource_group::FACILITY,
+        "default_shader",
+        "res/gfx/texture/facility/wall.png",
+        "res/gfx/geometry/facility/wall.obj",
+        0
+    );
 }
 
 } // namespace pack

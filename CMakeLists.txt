@@ -72,7 +72,6 @@ set(SRCS
     src/override/StartUp.cpp
 
     src/data/Globals.cpp
-    src/data/Settings.cpp
 
     src/functions/settings/ApplySettings.cpp
     src/functions/settings/Config.cpp
