@@ -27,6 +27,11 @@ private:
     omi::Transform* m_transform;
     // the transformation of the camera associated with the player
     omi::Transform* m_camT;
+
+    // the player's collision checker
+    omi::CollisionChecker* m_collisionChecker;
+
+    // TODO: REMOVE ME
     // the right arm of the player which shows active curses
     omi::Mesh* m_rightArm;
 

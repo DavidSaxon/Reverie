@@ -42,8 +42,14 @@ void Player::init()
     m_components.add( m_camT );
     omi::Camera* camera =
             new omi::Camera( "", omi::cam::PERSPECTIVE, m_camT );
-    camera->setExposure( 1.0f );
+    camera->setExposure( 0.85f );
     m_components.add( camera );
+
+    // collision checker
+    m_collisionChecker = new omi::CollisionChecker( "" );
+    m_collisionChecker->addBounding(
+            new omi::BoundingRect( glm::vec2( 0.5f, 0.5f ), m_transform ) );
+    m_components.add( m_collisionChecker );
 
     // TODO: fix
     // the flare light source
@@ -121,5 +127,7 @@ void Player::move()
     // TODO: key release shit
 
     // TODO: take into account collision detection
-    m_transform->translation += moveDis;
+    m_transform->translation +=
+                m_collisionChecker->forwardBestCheck( moveDis, "wall" );
+    // m_transform->translation += moveDis;
 }

@@ -32,11 +32,11 @@ void TestEntity::init()
         omi::PointLight* pointLight = new omi::PointLight(
                 "",
                 transform,
-                1.0f,
+                0.5f,
                 glm::vec3( 1.0f, 1.0f, 1.0f ),
-                0.0f,
-                0.0005f,
-                0.2f
+                0.05f,
+                0.1f,
+                0.05f
         );
         m_components.add( pointLight );
     }

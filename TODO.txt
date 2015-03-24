@@ -4,6 +4,10 @@
 
 - anti-aliasing
 
+- extend skirting and other geo for shadows
+
+- spot light shadows? or hidden dir light, works for point light too then (YES)
+
 - Level generation
 {
     - Factory to make blocks
