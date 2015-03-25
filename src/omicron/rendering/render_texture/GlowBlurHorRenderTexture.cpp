@@ -10,8 +10,7 @@ GlowBlurHorRenderTexture::GlowBlurHorRenderTexture() :
     RenderTexture(
         "res/gfx/shader/omicron/render_texture_vertex.glsl",
         "res/gfx/shader/omicron/glow_blur_hor_render_texture_fragment.glsl",
-        0.5f,
-        GL_LINEAR
+        1.0f
     )
 {
 }

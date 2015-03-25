@@ -24,7 +24,7 @@ void TestEntity::init()
     {
         omi::Transform* transform = new omi::Transform(
                 "",
-                glm::vec3( 0.0f, 2.0f, 0.0f ),
+                glm::vec3( 0.0f, 2.7f, 0.0f ),
                 glm::vec3(),
                 glm::vec3( 1.0f, 1.0f, 1.0f )
         );
@@ -57,6 +57,22 @@ void TestEntity::init()
     //             new omi::Glow( glm::vec3( 1.0f, 0.25f, 0.25f ), 1.0f );
     //     m_components.add( caster );
     // }
+
+    //--------------------------------LIGHT GEO---------------------------------
+
+    {
+        omi::Mesh* lightPaneMesh = omi::ResourceManager::getMesh(
+                "facility_light_pane", "", NULL );
+        lightPaneMesh->getMaterial().glow =
+                new omi::Glow( glm::vec3( 1.0f, 1.0f, 1.0f ), 1.0f );
+        m_components.add( lightPaneMesh );
+    }
+
+    {
+        omi::Mesh* lightFittingMesh = omi::ResourceManager::getMesh(
+                "facility_light_fitting", "", NULL );
+        m_components.add( lightFittingMesh );
+    }
 
     // //----------------------------------FLOOR-----------------------------------
 

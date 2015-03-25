@@ -2,7 +2,6 @@
 | TODO |
 \++++++/
 
-- anti-aliasing
 
 - extend skirting and other geo for shadows
 
@@ -10,6 +9,8 @@
 
 - Level generation
 {
+    - Need to plan out how the grid works
+
     - Factory to make blocks
     - Way to control blocks
     {
@@ -17,6 +18,10 @@
         - hide what's behind the player
     }
 }
+
+- depth of feild?
+
+- anti-aliasing
 
 - overlay
 {

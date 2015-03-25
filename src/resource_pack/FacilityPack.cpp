@@ -63,6 +63,31 @@ void buildFacilityPack()
         "res/gfx/geometry/facility/skirting_front.obj",
         0
     );
+
+    // light pane
+    omi::ResourceManager::addTexture(
+            "facility_light_glow",
+            resource_group::FACILITY,
+            "res/gfx/texture/facility/light_glow.png"
+    );
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "facility_light_pane",
+        resource_group::FACILITY,
+        "default_shader",
+        "res/gfx/texture/facility/light_pane.png",
+        "res/gfx/geometry/facility/light_pane.obj",
+        0
+    );
+
+    // light fitting
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "facility_light_fitting",
+        resource_group::FACILITY,
+        "default_shader",
+        "res/gfx/texture/facility/wall.png",
+        "res/gfx/geometry/facility/light_fitting.obj",
+        0
+    );
 }
 
 } // namespace pack
