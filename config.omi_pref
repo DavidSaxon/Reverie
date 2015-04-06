@@ -1,7 +1,7 @@
 resolution: 1920x1080
 fullscreen: on
 vsync: on
-gamma: 0.881875
+gamma: 1
 shadows: medium
 master: 1
 sound: 1

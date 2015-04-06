@@ -100,26 +100,26 @@ void Player::move()
     // forward
     if ( omi::input::isKeyPressed( global::keyForwards ) )
     {
-        moveDis.z = -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x = -util::math::sind( m_transform->rotation.y ) * moveSpeed;
+        moveDis.z += -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        moveDis.x += -util::math::sind( m_transform->rotation.y ) * moveSpeed;
     }
     // backwards
     if ( omi::input::isKeyPressed( global::keyBackwards ) )
     {
-        moveDis.z = util::math::cosd( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x = util::math::sind( m_transform->rotation.y ) * moveSpeed;
+        moveDis.z += util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        moveDis.x += util::math::sind( m_transform->rotation.y ) * moveSpeed;
     }
     // left
     if ( omi::input::isKeyPressed( global::keyLeft ) )
     {
-        moveDis.z =  util::math::sind( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x = -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        moveDis.z +=  util::math::sind( m_transform->rotation.y ) * moveSpeed;
+        moveDis.x += -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
     }
     // right
     if ( omi::input::isKeyPressed( global::keyRight ) )
     {
-        moveDis.z = -util::math::sind( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x =  util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        moveDis.z += -util::math::sind( m_transform->rotation.y ) * moveSpeed;
+        moveDis.x +=  util::math::cosd( m_transform->rotation.y ) * moveSpeed;
     }
 
     // TODO: diagonal move

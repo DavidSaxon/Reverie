@@ -71,7 +71,7 @@ void StraightSegment::init()
     omi::CollisionDetector* leftBlock =
             new omi::CollisionDetector( "", "wall", this );
     leftBlock->addBounding(
-                new omi::BoundingRect( glm::vec2( 3.0f, 3.0f ), t_cl ) );
+                new omi::BoundingRect( glm::vec2( 3.2f, 3.2f ), t_cl ) );
     m_components.add( leftBlock );
 
     // right wall
@@ -100,6 +100,20 @@ void StraightSegment::init()
             omi::ResourceManager::getTexture( "facility_skirting_spec" )
     );
     m_components.add( rightSkirtingMesh );
+
+    // right collision detector
+    omi::Transform* t_c2 = new omi::Transform(
+            "",
+            m_position + glm::vec3( -3.0f, 0.0f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( t_c2 );
+    omi::CollisionDetector* rightBlock =
+            new omi::CollisionDetector( "", "wall", this );
+    rightBlock->addBounding(
+                new omi::BoundingRect( glm::vec2( 3.2f, 3.2f ), t_c2 ) );
+    m_components.add( rightBlock );
 
 
     // ceiling
