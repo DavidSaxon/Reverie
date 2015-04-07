@@ -19,6 +19,16 @@ enum Type {
     SPHERE
 };
 
+// bounding shape directions
+enum Direction
+{
+    ALL = 0,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+};
+
 } // namespace bounding
 
 /******************************************************************************\
@@ -32,17 +42,27 @@ public:
     //                                CONSTRUCTORS
     //--------------------------------------------------------------------------
 
-    BoundingShape( bounding::Type type, Transform* transform ) :
+    BoundingShape(
+            bounding::Type type,
+            Transform* transform,
+            bounding::Direction direction = bounding::ALL )
+        :
         m_type     ( type ),
-        m_transform( transform )
+        m_transform( transform ),
+        m_direction( direction )
     {
     }
 
-    BoundingShape( bounding::Type type,
-            Transform* transform, const glm::vec3& offset ) :
+    BoundingShape(
+            bounding::Type type,
+            Transform* transform,
+            const glm::vec3& offset,
+            bounding::Direction direction = bounding::ALL )
+        :
         m_type     ( type ),
         m_transform( transform ),
-        m_offset   ( offset )
+        m_offset   ( offset ),
+        m_direction( direction )
     {
     }
 
@@ -78,6 +98,12 @@ public:
         return m_offset;
     }
 
+    /** @return the direction of the bounding shape */
+    bounding::Direction getDirection() const
+    {
+        return m_direction;
+    }
+
 private:
 
     //--------------------------------------------------------------------------
@@ -90,6 +116,8 @@ private:
     Transform* m_transform;
     // the offset of this bounding from the position of the transform
     glm::vec3 m_offset;
+    // the direction of the bounding shape
+    bounding::Direction m_direction;
 };
 
 } // namespace omi

@@ -2,6 +2,13 @@
 | TODO |
 \++++++/
 
+- Fix collision detection
+
+- Send collision checking fix to Omicron
+{
+    - CollisionChecker
+    - CollisionDetector
+}
 
 - extend skirting and other geo for shadows
 

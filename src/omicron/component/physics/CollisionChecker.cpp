@@ -104,47 +104,14 @@ glm::vec3 CollisionChecker::forwardBestCheck(
         // make a copy of the movement vector
         glm::vec3 new_move( move );
 
-        BoundingRect* playerRect =
-                static_cast<BoundingRect*>( colliderBounding );
-
-        // sort the boundings based on distance
-        std::vector<BoundingRect*> sorted;
-        while ( !collisionBoundings.empty() )
-        {
-            float minDistance = 99999.0f;
-            unsigned nearest = 0;
-
-            for ( unsigned i = 0; i < collisionBoundings.size(); ++i )
-            {
-                BoundingRect* obRect =
-                        static_cast<BoundingRect*>( collisionBoundings[ i ] );
-                // calculate distance
-                float distance = glm::distance(
-                        obRect->getTransform()->translation,
-                        playerRect->getTransform()->translation
-                );
-                // check if we've found the nearest
-                if ( distance < minDistance )
-                {
-                    minDistance = distance;
-                    nearest = i;
-                }
-            }
-
-            // add the nearest into the next spot in the sorted list
-            sorted.push_back( static_cast<BoundingRect*>(
-                    collisionBoundings[ nearest ] ) );
-            collisionBoundings.erase( collisionBoundings.begin() + nearest );
-        }
-
-        for ( std::vector<BoundingRect*>::iterator it = sorted.begin();
-              it != sorted.end(); ++it )
+        for ( std::vector<BoundingShape*>::iterator it =
+              collisionBoundings.begin(); it != collisionBoundings.end(); ++it )
         {
             // TODO: should support other shapes
             // cast to rectangle
             BoundingRect* rect1 =
                     static_cast<BoundingRect*>( colliderBounding );
-            BoundingRect* rect2 = *it;
+            BoundingRect* rect2 = static_cast<BoundingRect*>( *it );
 
 
             // calculate the best position
@@ -156,32 +123,41 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                     rect2->getTransform()->translation.xz() );
 
             // apply shift movement
-            if ( angle > 50.0f && angle <= 130.0f )
+            if ( angle > 45.0f && angle <= 135.0f &&
+                 rect2->getDirection() == bounding::UP )
             {
-                temp_move.z =
-                    ( rect2->getTransform()->translation.z +
-                    ( rect2->getSize().y / 2.0f ) ) -
-                    ( rect1->getTransform()->translation.z -
-                    ( rect1->getSize().y / 2.0f ) );
-                if ( temp_move.z > new_move.z )
+                if ( angle > 70.0f && angle <= 110.0f )
                 {
-                    new_move.z = temp_move.z;
+                    new_move.z = 0.0f;
+                }
+                else
+                {
+                    temp_move.z =
+                        ( rect2->getTransform()->translation.z +
+                        ( rect2->getSize().y / 2.0f ) ) -
+                        ( rect1->getTransform()->translation.z -
+                        ( rect1->getSize().y / 2.0f ) );
+                    if ( temp_move.z > new_move.z )
+                    {
+                        new_move.z = temp_move.z;
+                    }
                 }
             }
-            else if ( angle > 140.0f && angle <= 220.0f )
+            else if ( angle > 135.0f && angle <= 225.0f &&
+                      rect2->getDirection() == bounding::RIGHT )
             {
                 temp_move.x =
                     ( rect2->getTransform()->translation.x -
                     ( rect2->getSize().x / 2.0f ) ) -
                     ( rect1->getTransform()->translation.x +
                     ( rect1->getSize().x / 2.0f ) );
-                std::cout << "std x" << std::endl;
                 if ( temp_move.x < new_move.x )
                 {
                     new_move.x = temp_move.x;
                 }
             }
-            else if ( angle > 230.0f && angle <= 310.0f )
+            else if ( angle > 225.0f && angle <= 315.0f &&
+                      rect2->getDirection() == bounding::DOWN )
             {
                 temp_move.z =
                     ( rect2->getTransform()->translation.z -
@@ -193,15 +169,13 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                     new_move.z = temp_move.z;
                 }
             }
-            else if ( ( angle > 320.0f && angle <= 360.0f ) ||
-                      ( angle >= 0.0f && angle <= 40.0f )      )
+            else if ( rect2->getDirection() == bounding::LEFT )
             {
                 temp_move.x =
                     ( rect2->getTransform()->translation.x +
                     ( rect2->getSize().x / 2.0f ) ) -
                     ( rect1->getTransform()->translation.x -
                     ( rect1->getSize().x / 2.0f ) );
-                std::cout << "final x" << std::endl;
                 if ( temp_move.x > new_move.x )
                 {
                     new_move.x = temp_move.x;

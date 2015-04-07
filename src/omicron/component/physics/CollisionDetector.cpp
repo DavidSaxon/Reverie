@@ -14,6 +14,7 @@ CollisionDetector::CollisionDetector(
     m_group( group ),
     m_owner( static_cast<Entity*>( owner ) )
 {
+    m_direction = collision::ALL;
 }
 
 CollisionDetector::CollisionDetector(
@@ -25,6 +26,8 @@ CollisionDetector::CollisionDetector(
     m_group( group ),
     m_owner( static_cast<Entity*>( owner ) )
 {
+    m_direction = collision::ALL;
+
     // copy the boundings into a new vector of smart pointers
     for ( std::vector<BoundingShape*>::const_iterator it = boundings.begin();
          it != boundings.end(); ++it )

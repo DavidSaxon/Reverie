@@ -48,7 +48,7 @@ void Player::init()
     // collision checker
     m_collisionChecker = new omi::CollisionChecker( "" );
     m_collisionChecker->addBounding(
-            new omi::BoundingRect( glm::vec2( 0.5f, 0.5f ), m_transform ) );
+            new omi::BoundingRect( glm::vec2( 0.75f, 0.75f ), m_transform ) );
     m_components.add( m_collisionChecker );
 
     // TODO: fix

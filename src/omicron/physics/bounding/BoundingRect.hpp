@@ -18,8 +18,12 @@ public:
     /** Creates a new bounding rectangle with no offset
     @param size the width and height of the rectangle
     @param transform the transform to use for the rectangle's location */
-    BoundingRect( const glm::vec2& size, Transform* transform ) :
-        BoundingShape( bounding::RECTANGLE, transform ),
+    BoundingRect(
+            const glm::vec2& size,
+            Transform* transform,
+            bounding::Direction direction = bounding::ALL )
+        :
+        BoundingShape( bounding::RECTANGLE, transform, direction ),
         m_size( size )
     {
     }
@@ -31,8 +35,10 @@ public:
     BoundingRect(
             const glm::vec2& size,
             Transform* transform,
-            const glm::vec3& offset ) :
-        BoundingShape( bounding::RECTANGLE, transform, offset ),
+            const glm::vec3& offset,
+            bounding::Direction direction = bounding::ALL )
+        :
+        BoundingShape( bounding::RECTANGLE, transform, offset, direction ),
         m_size( size )
     {
     }

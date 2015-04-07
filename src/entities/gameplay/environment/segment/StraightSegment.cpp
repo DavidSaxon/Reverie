@@ -32,6 +32,7 @@ void StraightSegment::init()
     );
     m_components.add( floorMesh );
 
+    // THIS IS ACTUALLY THE RIGHT WALL
 
     // left wall
     omi::Transform* t_1 = new omi::Transform(
@@ -70,9 +71,14 @@ void StraightSegment::init()
     m_components.add( t_cl );
     omi::CollisionDetector* leftBlock =
             new omi::CollisionDetector( "", "wall", this );
-    leftBlock->addBounding(
-                new omi::BoundingRect( glm::vec2( 3.2f, 3.2f ), t_cl ) );
+    leftBlock->addBounding( new omi::BoundingRect(
+            glm::vec2( 3.0f, 3.0f ),
+            t_cl,
+            omi::bounding::RIGHT
+    ) );
     m_components.add( leftBlock );
+
+    // THIS IS ACTUALLY THE LEFT WALL
 
     // right wall
     omi::Transform* t_2 = new omi::Transform(
@@ -111,8 +117,11 @@ void StraightSegment::init()
     m_components.add( t_c2 );
     omi::CollisionDetector* rightBlock =
             new omi::CollisionDetector( "", "wall", this );
-    rightBlock->addBounding(
-                new omi::BoundingRect( glm::vec2( 3.2f, 3.2f ), t_c2 ) );
+    rightBlock->addBounding( new omi::BoundingRect(
+            glm::vec2( 3.0f, 3.0f ),
+            t_c2,
+            omi::bounding::LEFT
+    ) );
     m_components.add( rightBlock );
 
 
