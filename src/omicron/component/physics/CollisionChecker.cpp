@@ -86,8 +86,6 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                 CollisionDetect::checkAgainstGroup( bounding, group );
         if ( !b.empty() )
         {
-            std::cout << "colliding with: "  << b.size() << std::endl;
-
             colliderBounding = bounding;
             collisionBoundings = b;
             // reset position
@@ -182,8 +180,6 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                 }
             }
         }
-
-        // TODO: apply friction if new move is less than last move
 
         return new_move;
     }

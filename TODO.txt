@@ -2,12 +2,36 @@
 | TODO |
 \++++++/
 
-- Fix collision detection
+- change gamma scale??
 
 - Send collision checking fix to Omicron
 {
     - CollisionChecker
     - CollisionDetector
+    - BoundingShape
+    - BoundingRect
+    - Bounding
+}
+
+- FIX/FINISH THE TRANSFORM
+
+- send fixed transform to omicron
+
+- player controls
+{
+    - test port and outlast
+
+    - animation for walk
+
+    - accelerated walk?
+
+    - diagonal walk
+
+    - multiple keys ( left then right then left )
+
+    - clamp look
+
+    - accelerated look?
 }
 
 - extend skirting and other geo for shadows
@@ -26,43 +50,8 @@
     }
 }
 
-- depth of feild?
-
-- anti-aliasing
-
-- overlay
-{
-    - investigate shadows on overlay etc..
-}
-
 - player
 {
-    - mesh
-    {
-        - check for curses on arm
-        {
-            - need 5 textures
-            - blow up texture arm section
-            -- then:
-            - half skin texture
-            - double curse texture?
-
-            - can delete faces off back of arm
-            {
-                -wait till scar animations are done
-            }
-
-            - arm needs to fit for different aspect ratios?
-            {
-                ? use field of view
-            }
-        }
-
-        ? has body that casts shadows
-        ? can see body
-    }
-
-
     - better movement
     {
         - fix release when holding two keys
@@ -71,6 +60,27 @@
         - animation (bobbing)
     }
 }
+
+- overlay
+{
+    - investigate shadows on overlay etc..
+}
+
+- depth of feild?
+
+- motion blur
+{
+    - store previous position and interpolate
+    - start with camera
+    - then do for renderables
+    - could maybe do motion blurs at lower res
+    {
+        - hard since we need to switch texture size all the time
+        - or have copies of motion blur textures?
+    }
+}
+
+- anti-aliasing
 
 -Phobetor
 {

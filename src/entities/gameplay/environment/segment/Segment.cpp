@@ -4,8 +4,9 @@
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
 
-Segment::Segment( const glm::vec3& position ) :
-        m_position( position )
+Segment::Segment( const glm::vec3& position, float rotation ) :
+        m_position( position ),
+        m_rotation( rotation )
 {
 }
 

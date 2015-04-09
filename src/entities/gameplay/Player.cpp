@@ -122,12 +122,46 @@ void Player::move()
         moveDis.x +=  util::math::cosd( m_transform->rotation.y ) * moveSpeed;
     }
 
+    // TODO: walk animation!
+
     // TODO: diagonal move
 
     // TODO: key release shit
 
-    // TODO: take into account collision detection
-    m_transform->translation +=
-                m_collisionChecker->forwardBestCheck( moveDis, "wall" );
+    // TODO: friction
+
+    // store the original move distance
+    // glm::vec3 orgMove( moveDis );
+    // // get the actual move distance based on obstacles
+    moveDis = m_collisionChecker->forwardBestCheck( moveDis, "wall" );
+
+    // // apply friction
+    // glm::vec3 moveScale(
+    //         fabs( orgMove.x ),
+    //         fabs( orgMove.y ),
+    //         fabs( orgMove.z )
+    // );
+    // glm::vec3 tempMove( moveDis );
+
+    // if ( moveScale.x > ( moveScale.z * 2.0f ) )
+    // {
+    //     if ( fabs( orgMove.x - tempMove.x ) > moveScale.x )
+    //     {
+    //         moveDis.z = tempMove.z * ( moveScale.x / ( moveScale.z * 3.0f ) );
+    //     }
+    // }
+
+    // if ( fabs( orgMove.x - tempMove.x ) > ( moveScale.x / 2.0f ) )
+    // {
+    //     moveDis.z = 0.0f;
+    // }
+    // if ( fabs( orgMove.z - tempMove.z ) > ( moveScale.z / 2.0f ) )
+    // {
+    //     moveDis.x = 0.0f;
+    // }
+
+    // final shift the transformation
+    m_transform->translation += moveDis;
+
     // m_transform->translation += moveDis;
 }

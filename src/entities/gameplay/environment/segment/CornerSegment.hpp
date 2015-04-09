@@ -1,16 +1,16 @@
-#ifndef REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_SEGMENT_STRAIGHT_HPP_
-#   define REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_SEGMENT_STRAIGHT_HPP_
+#ifndef REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_SEGMENT_CORNER_HPP_
+#   define REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_SEGMENT_CORNER_HPP_
 
 #include "src/entities/gameplay/environment/segment/Segment.hpp"
 
-class StraightSegment : public Segment {
+class CornerSegment : public Segment {
 public:
 
     //--------------------------------------------------------------------------
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    StraightSegment( const glm::vec3& position, float rotation );
+    CornerSegment( const glm::vec3& position, float rotation );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS

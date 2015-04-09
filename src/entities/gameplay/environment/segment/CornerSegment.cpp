@@ -1,10 +1,10 @@
-#include "StraightSegment.hpp"
+#include "CornerSegment.hpp"
 
 //------------------------------------------------------------------------------
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
 
-StraightSegment::StraightSegment( const glm::vec3& position, float rotation ) :
+CornerSegment::CornerSegment( const glm::vec3& position, float rotation ) :
         Segment( position, rotation )
 {
 }
@@ -13,7 +13,7 @@ StraightSegment::StraightSegment( const glm::vec3& position, float rotation ) :
 //                            PUBLIC MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
 
-void StraightSegment::init()
+void CornerSegment::init()
 {
     // floor
     omi::Transform* t_0 = new omi::Transform(
@@ -32,9 +32,8 @@ void StraightSegment::init()
     );
     m_components.add( floorMesh );
 
-    // THIS IS ACTUALLY THE RIGHT WALL
+    //--------------------------------LEFT WALL---------------------------------
 
-    // left wall
     omi::Transform* t_1 = new omi::Transform(
             "",
             m_position,
@@ -62,8 +61,8 @@ void StraightSegment::init()
     m_components.add( leftSkirtingMesh );
 
     // left collision detector
-    glm::vec3 leftPos( 3.0f, 0.0f, 0.0f );
-    omi::bounding::Direction leftDirection = omi::bounding::RIGHT;
+    glm::vec3 leftPos( -3.0f, 0.0f, 0.0f );
+    omi::bounding::Direction leftDirection = omi::bounding::LEFT;
     if ( m_rotation > 45.0f )
     {
         leftPos = glm::vec3( 0.0f, 0.0f, 3.0f );
@@ -85,59 +84,51 @@ void StraightSegment::init()
     ) );
     m_components.add( leftBlock );
 
-    // THIS IS ACTUALLY THE LEFT WALL
 
-    // right wall
+    //--------------------------------FRONT WALL--------------------------------
+
     omi::Transform* t_2 = new omi::Transform(
             "",
             m_position,
-            glm::vec3( 0.0f, m_rotation - 90.0f, 0.0f ),
+            glm::vec3( 0.0f, m_rotation, 0.0f ),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
     m_components.add( t_2 );
-    omi::Mesh* rightWallMesh =
+    omi::Mesh* frontWallMesh =
                 omi::ResourceManager::getMesh( "facility_wall", "", t_2 );
-    rightWallMesh->getMaterial().specular = new omi::Specular(
-            8.0f,
+    frontWallMesh->getMaterial().specular = new omi::Specular(
+            64.0f,
             glm::vec3( 0.5f, 0.5f, 0.5f ),
             omi::ResourceManager::getTexture( "facility_wall_spec" )
     );
-    m_components.add( rightWallMesh );
+    m_components.add( frontWallMesh );
 
-    // right skirting
-    omi::Mesh* rightSkirtingMesh =
+    // left skirting
+    omi::Mesh* frontSkirting =
                 omi::ResourceManager::getMesh( "facility_skirting", "", t_2 );
-    rightSkirtingMesh->getMaterial().specular = new omi::Specular(
+    frontSkirting->getMaterial().specular = new omi::Specular(
             256.0f,
             glm::vec3( 0.75f, 0.75f, 0.75f ),
             omi::ResourceManager::getTexture( "facility_skirting_spec" )
     );
-    m_components.add( rightSkirtingMesh );
+    m_components.add( frontSkirting );
 
-    // right collision detector
-    glm::vec3 rightPos( -3.0f, 0.0f, 0.0f );
-    omi::bounding::Direction rightDirection = omi::bounding::LEFT;
-    if ( m_rotation > 45.0f )
-    {
-        rightPos = glm::vec3( 0.0f, 0.0f, -3.0f );
-        rightDirection = omi::bounding::UP;
-    }
+    // left collision detector
     omi::Transform* t_c2 = new omi::Transform(
             "",
-            m_position + rightPos,
+            m_position + glm::vec3( 0.0f, 0.0f, -3.0f ),
             glm::vec3( 0.0f, m_rotation, 0.0f ),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
     m_components.add( t_c2 );
-    omi::CollisionDetector* rightBlock =
+    omi::CollisionDetector* frontBlock =
             new omi::CollisionDetector( "", "wall", this );
-    rightBlock->addBounding( new omi::BoundingRect(
+    frontBlock->addBounding( new omi::BoundingRect(
             glm::vec2( 3.0f, 3.0f ),
             t_c2,
-            rightDirection
+            omi::bounding::UP
     ) );
-    m_components.add( rightBlock );
-
+    m_components.add( frontBlock );
 
     // ceiling
     omi::Transform* t_3 = new omi::Transform(
@@ -157,6 +148,6 @@ void StraightSegment::init()
     m_components.add( ceilingMesh );
 }
 
-void StraightSegment::update()
+void CornerSegment::update()
 {
 }

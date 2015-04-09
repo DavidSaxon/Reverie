@@ -10,7 +10,7 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    Segment( const glm::vec3& position  );
+    Segment( const glm::vec3& position, float rotation );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -29,6 +29,7 @@ protected:
     //--------------------------------------------------------------------------
 
     glm::vec3 m_position;
+    float m_rotation;
 };
 
 #endif
