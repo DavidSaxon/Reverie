@@ -122,7 +122,8 @@ glm::vec3 CollisionChecker::forwardBestCheck(
 
             // apply shift movement
             if ( angle > 45.0f && angle <= 135.0f &&
-                 rect2->getDirection() == bounding::UP )
+                 ( rect2->getDirection() == bounding::ALL ||
+                   rect2->getDirection() == bounding::UP     ) )
             {
                 if ( angle > 70.0f && angle <= 110.0f )
                 {
@@ -142,7 +143,8 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                 }
             }
             else if ( angle > 135.0f && angle <= 225.0f &&
-                      rect2->getDirection() == bounding::RIGHT )
+                      ( rect2->getDirection() == bounding::ALL ||
+                        rect2->getDirection() == bounding::RIGHT  ) )
             {
                 temp_move.x =
                     ( rect2->getTransform()->translation.x -
@@ -155,7 +157,8 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                 }
             }
             else if ( angle > 225.0f && angle <= 315.0f &&
-                      rect2->getDirection() == bounding::DOWN )
+                      ( rect2->getDirection() == bounding::ALL ||
+                        rect2->getDirection() == bounding::DOWN   ) )
             {
                 temp_move.z =
                     ( rect2->getTransform()->translation.z -
@@ -167,7 +170,8 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                     new_move.z = temp_move.z;
                 }
             }
-            else if ( rect2->getDirection() == bounding::LEFT )
+            else if ( rect2->getDirection() == bounding::ALL ||
+                      rect2->getDirection() == bounding::LEFT )
             {
                 temp_move.x =
                     ( rect2->getTransform()->translation.x +

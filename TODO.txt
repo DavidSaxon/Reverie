@@ -2,8 +2,6 @@
 | TODO |
 \++++++/
 
-- change gamma scale??
-
 - Send collision checking fix to Omicron
 {
     - CollisionChecker
@@ -12,6 +10,10 @@
     - BoundingRect
     - Bounding
 }
+
+- NEED TO IMPLEMENT ALL FOR COLLISION DECTECTION!
+
+- change gamma scale??
 
 - FIX/FINISH THE TRANSFORM
 
@@ -33,6 +35,8 @@
 
     - accelerated look?
 }
+
+- add full stop to font!
 
 - extend skirting and other geo for shadows
 
