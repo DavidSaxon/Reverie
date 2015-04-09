@@ -24,9 +24,9 @@ void GameplayScene::init()
 
     // TODO:
     // ambient lighting
-    omi::renderSettings.setAmbientStrength( 0.02f );
+    omi::renderSettings.setAmbientStrength( 0.03f );
     omi::renderSettings.setAmbientColour( glm::vec3( 1.0f, 1.0f, 1.0f ) );
-    omi::renderSettings.setFilmGrain( 0.04f );
+    omi::renderSettings.setFilmGrain( 0.06f );
 
     // TODO: REMOVE ME
     addEntity( new FPSCounter() );

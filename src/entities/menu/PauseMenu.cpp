@@ -1349,7 +1349,7 @@ void PauseMenu::initGraphicsMenuComponents()
     // add widget
     SettingWidget* widget = new SliderWidget(
             glm::vec3( 0.5f, 0.0625f, 0.0f ),
-            0.0f, 2.0f, 1.0f,
+            0.0f, 1.0f, 0.6f,
             omi::renderSettings.getGammaCorrection()
     );
     m_graphicsWidgets.push_back( widget );

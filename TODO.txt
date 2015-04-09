@@ -2,18 +2,11 @@
 | TODO |
 \++++++/
 
-- Send collision checking fix to Omicron
+- Send gamma scale change to Omicron
 {
-    - CollisionChecker
-    - CollisionDetector
-    - BoundingShape
-    - BoundingRect
-    - Bounding
+    - ApplySettings
+    - PauseMenu
 }
-
-- NEED TO IMPLEMENT ALL FOR COLLISION DECTECTION!
-
-- change gamma scale??
 
 - FIX/FINISH THE TRANSFORM
 

@@ -42,7 +42,7 @@ void Player::init()
     m_components.add( m_camT );
     omi::Camera* camera =
             new omi::Camera( "", omi::cam::PERSPECTIVE, m_camT );
-    camera->setExposure( 0.85f );
+    camera->setExposure( 1.2f );
     m_components.add( camera );
 
     // collision checker

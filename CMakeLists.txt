@@ -95,6 +95,7 @@ set(SRCS
     src/entities/loading/LoadingSplash.cpp
 
     src/entities/gameplay/Player.cpp
+    src/entities/gameplay/environment/segment/CornerSegment.cpp
     src/entities/gameplay/environment/segment/Segment.cpp
     src/entities/gameplay/environment/segment/StraightSegment.cpp
     src/entities/gameplay/TestEntity.cpp
