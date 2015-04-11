@@ -14,6 +14,16 @@ void buildPlayerPack()
         "res/gfx/geometry/player/flare.obj",
         0
     );
+
+    // TODO: REMOVE ME
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "test_cube",
+        resource_group::PLAYER,
+        "default_shader",
+        "res/gfx/texture/test/chesterfield.png",
+        "res/gfx/geometry/test/test_cube.obj",
+        0
+    );
 }
 
 } // namespace pack

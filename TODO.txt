@@ -2,13 +2,9 @@
 | TODO |
 \++++++/
 
-- Send gamma scale change to Omicron
-{
-    - ApplySettings
-    - PauseMenu
-}
-
 - FIX/FINISH THE TRANSFORM
+
+- delete test resources ( still in files )
 
 - send fixed transform to omicron
 
