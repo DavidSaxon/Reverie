@@ -2,13 +2,7 @@
 | TODO |
 \++++++/
 
-- delete test resources ( still in files )
-
-- send fixed transform to omicron
-{
-    - Transform.cpp and hpp
-    - Renderable
-}
+- Vsync off by default??
 
 - player controls
 {
