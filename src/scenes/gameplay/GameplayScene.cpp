@@ -7,7 +7,6 @@
 #include "src/entities/gameplay/Player.hpp"
 #include "src/entities/menu/PauseMenu.hpp"
 // TODO: REMOVE ME:
-#include "src/entities/gameplay/TestCube.hpp"
 #include "src/entities/gameplay/TestEntity.hpp"
 #include "src/entities/gameplay/environment/segment/CornerSegment.hpp"
 #include "src/entities/gameplay/environment/segment/StraightSegment.hpp"
@@ -25,7 +24,7 @@ void GameplayScene::init()
 
     // TODO:
     // ambient lighting
-    omi::renderSettings.setAmbientStrength( 0.3f );
+    omi::renderSettings.setAmbientStrength( 0.03f );
     omi::renderSettings.setAmbientColour( glm::vec3( 1.0f, 1.0f, 1.0f ) );
     omi::renderSettings.setFilmGrain( 0.04f );
 
@@ -37,7 +36,6 @@ void GameplayScene::init()
     addEntity( new PauseMenu() );
     // TODO: REMOVE ME:
     addEntity( new TestEntity() );
-    addEntity( new TestCube() );
     addEntity( new StraightSegment( glm::vec3( 0.0f, 0.0f,  48.0f ), 0.0f ) );
     addEntity( new StraightSegment( glm::vec3( 0.0f, 0.0f,  45.0f ), 0.0f ) );
     addEntity( new StraightSegment( glm::vec3( 0.0f, 0.0f,  42.0f ), 0.0f ) );

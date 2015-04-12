@@ -358,21 +358,6 @@ void Renderable::applyTransformations()
     }
 
     m_transform->apply( m_modelMatrix );
-
-    // get the computed transformations
-    // glm::vec3 translation( m_transform->computeTranslation() );
-    // glm::vec3 rotation( m_transform->computeRotation() );
-    // rotation.x *= util::math::DEGREES_TO_RADIANS;
-    // rotation.y *= util::math::DEGREES_TO_RADIANS;
-    // rotation.z *= util::math::DEGREES_TO_RADIANS;
-    // glm::vec3 scale( m_transform->computeScale() );
-
-    // apply to matrices
-    // m_modelMatrix *= glm::translate( translation );
-    // m_modelMatrix *= glm::rotate( rotation.x, glm::vec3( 1.0f, 0.0f, 0.0f ) );
-    // m_modelMatrix *= glm::rotate( rotation.y, glm::vec3( 0.0f, 1.0f, 0.0f ) );
-    // m_modelMatrix *= glm::rotate( rotation.z, glm::vec3( 0.0f, 0.0f, 1.0f ) );
-    // m_modelMatrix *= glm::scale( scale );
 }
 
 void Renderable::calculateMatrices( Camera* camera )
