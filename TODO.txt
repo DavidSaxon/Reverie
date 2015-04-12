@@ -3,6 +3,14 @@
 \++++++/
 
 - FIX/FINISH THE TRANSFORM
+{
+    - All rotation should be on global axis
+    - function to add by local access
+    - function to add by parent access
+
+    - parent rotation should be rotate around point and should be done when
+        making the model matrix
+}
 
 - delete test resources ( still in files )
 

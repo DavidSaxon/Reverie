@@ -5,6 +5,7 @@
 #define GLM_SWIZZLE
 
 #include "lib/glm/glm.hpp"
+#include "lib/glm/gtx/transform.hpp"
 
 #include "src/omicron/component/Component.hpp"
 
@@ -69,14 +70,7 @@ public:
               const glm::vec3&            t,
               const glm::vec3&            r,
               const glm::vec3&            s,
-                    axis_space::AxisSpace axisSpace = axis_space::LOCAL ) :
-        Component  ( id ),
-        parent     ( NULL ),
-        translation( t ),
-        rotation   ( r ),
-        scale      ( s )
-    {
-    }
+                    axis_space::AxisSpace axisSpace = axis_space::LOCAL );
 
     /** Creates a new transform component with a parent
     @param id the identifier of the component
@@ -91,91 +85,43 @@ public:
               const glm::vec3&            t,
               const glm::vec3&            r,
               const glm::vec3&            s,
-                    axis_space::AxisSpace axisSpace = axis_space::LOCAL ) :
-        Component  ( id ),
-        parent     ( p ),
-        translation( t ),
-        rotation   ( r ),
-        scale      ( s )
-    {
-    }
+                    axis_space::AxisSpace axisSpace = axis_space::LOCAL );
 
     /** Creates a new component by copying from another and providing a new
     identifier
     @param id the new identifier
     @param other the other component to copy from */
-    Transform( const std::string& id, const Transform& other ) :
-        Component  ( id ),
-        parent     ( other.parent ),
-        translation( other.translation ),
-        rotation   ( other.rotation ),
-        scale      ( other.scale )
-    {
-    }
+    Transform( const std::string& id, const Transform& other );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
     //--------------------------------------------------------------------------
 
+    // ##DEPRECATED
     /** @return the axis space being used by this transform */
-    axis_space::AxisSpace getAxisSpace() const
-    {
-        return m_axisSpace;
-    }
+    axis_space::AxisSpace getAxisSpace() const;
 
+    // ##DEPRECATED
     /** Compute the translation values to be applied taking into regards the
     parent transform and the axis space.
     @return the computed translation */
-    glm::vec3 computeTranslation() const
-    {
-        glm::vec3 computed( 0.0f, 0.0f, 0.0f );
-        // compute from parent
-        if ( parent != NULL )
-        {
-            // TODO: axis spaces
-            computed = parent->computeTranslation();
-        }
-        // add this translation
-        computed += translation;
+    glm::vec3 computeTranslation() const;
 
-        return computed;
-    }
-
+    // ##DEPRECATED
     /** Compute the rotation values to be applied taking into regards the
     parent transform and the axis space.
     @return the computed rotation */
-    glm::vec3 computeRotation() const
-    {
-        glm::vec3 computed( 0.0f, 0.0f, 0.0f );
-        // compute from parent
-        if ( parent != NULL )
-        {
-            // TODO: axis spaces
-            computed = parent->computeRotation();
-        }
-        // add this rotation
-        computed += rotation;
+    glm::vec3 computeRotation() const;
 
-        return computed;
-    }
 
+    // ##DEPRECATED
     /** Compute the scale values to be applied taking into regards the parent
     transform and the axis space.
     @return the computed scale */
-    glm::vec3 computeScale() const
-    {
-        glm::vec3 computed( 1.0f, 1.0f, 1.0f );
-        // compute from parent
-        if ( parent != NULL )
-        {
-            // TODO: axis spaces
-            computed = parent->computeScale();
-        }
-        // add this scale
-        computed *= scale;
+    glm::vec3 computeScale() const;
 
-        return computed;
-    }
+    /** Applies the the transform to the given matrix */
+    void apply( glm::mat4& matrix );
 
 private:
 

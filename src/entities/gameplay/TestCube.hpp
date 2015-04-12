@@ -22,8 +22,8 @@ private:
     //                                 VARIABLES
     //--------------------------------------------------------------------------
 
-    omi::Transform* m_t1;
-
+    omi::Transform* m_parentT;
+    omi::Transform* m_childT;
 };
 
 #endif
