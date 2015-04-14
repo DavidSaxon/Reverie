@@ -120,8 +120,11 @@ public:
     @return the computed scale */
     glm::vec3 computeScale() const;
 
-    /** Applies the the transform to the given matrix */
+    /** Applies the transform to the given matrix */
     void apply( glm::mat4& matrix );
+
+    /** Applies the transform in reverse to the given matrix */
+    void applyReverse( glm::mat4& matrix );
 
 private:
 

@@ -125,7 +125,38 @@ void Transform::apply( glm::mat4& matrix )
             glm::vec3( 0.0f, 0.0f, 1.0f )
     );
 
+    // scale
     matrix *= glm::scale( scale );
+}
+
+void Transform::applyReverse( glm::mat4& matrix )
+{
+    // scale
+    matrix *= glm::scale( scale );
+
+    // rotation
+    matrix *= glm::rotate(
+            -rotation.x * util::math::DEGREES_TO_RADIANS,
+            glm::vec3( 1.0f, 0.0f, 0.0f )
+    );
+    matrix *= glm::rotate(
+            -rotation.y * util::math::DEGREES_TO_RADIANS,
+            glm::vec3( 0.0f, 1.0f, 0.0f )
+    );
+    matrix *= glm::rotate(
+            -rotation.z * util::math::DEGREES_TO_RADIANS,
+            glm::vec3( 0.0f, 0.0f, 1.0f )
+    );
+
+    // translation
+    matrix *= glm::translate( -translation );
+
+    // apply the parent if there is one
+    if ( parent != NULL )
+    {
+        parent->applyReverse( matrix );
+    }
+
 }
 
 } // namespace omi
