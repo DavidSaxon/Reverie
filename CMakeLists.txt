@@ -12,6 +12,7 @@ set(SRCS
     src/omicron/component/physics/CollisionChecker.cpp
     src/omicron/component/physics/CollisionDetector.cpp
     src/omicron/component/Camera.cpp
+    src/omicron/component/Transform.cpp
     src/omicron/component/renderable/KeyFrameMesh.cpp
     src/omicron/component/renderable/Mesh.cpp
     src/omicron/component/renderable/Renderable.cpp
@@ -98,7 +99,6 @@ set(SRCS
     src/entities/gameplay/environment/segment/CornerSegment.cpp
     src/entities/gameplay/environment/segment/Segment.cpp
     src/entities/gameplay/environment/segment/StraightSegment.cpp
-    src/entities/gameplay/TestCube.cpp
     src/entities/gameplay/TestEntity.cpp
 
     src/entities/menu/PauseMenu.cpp

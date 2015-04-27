@@ -2,11 +2,25 @@
 | TODO |
 \++++++/
 
+- extend skirting and other geo for shadows
+
+- Level generation
+{
+    - Need to plan out how the grid works
+
+    - Factory to make blocks
+    - Way to control blocks
+    {
+        - figure out what needs to be generated
+        - hide what's behind the player
+    }
+}
+
 - Vsync off by default??
 
 - player controls
 {
-    - test port and outlast
+    - test portal and outlast
 
     - animation for walk
 
@@ -21,23 +35,8 @@
     - accelerated look?
 }
 
-- add full stop to font!
-
-- extend skirting and other geo for shadows
-
 - spot light shadows? or hidden dir light, works for point light too then (YES)
 
-- Level generation
-{
-    - Need to plan out how the grid works
-
-    - Factory to make blocks
-    - Way to control blocks
-    {
-        - figure out what needs to be generated
-        - hide what's behind the player
-    }
-}
 
 - player
 {
