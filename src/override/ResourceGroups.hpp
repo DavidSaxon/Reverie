@@ -11,6 +11,7 @@ enum ResourceGroup {
     LOADING,
     MENU,
     PLAYER,
+    INTRO,
     FACILITY
 };
 

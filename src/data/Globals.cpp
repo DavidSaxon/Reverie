@@ -3,6 +3,7 @@
 namespace global {
 
 bool pause = false;
+float timeScale = 1.0f;
 
 //-----------------------------------SETTINGS-----------------------------------
 

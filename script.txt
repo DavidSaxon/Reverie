@@ -48,6 +48,11 @@ Curses:
 
 Pick up one curse in intro, then 3 per floor ( 4 - 5 floors )
 
+
+- Curses come from room house looking room lit like don't hug me I'm scared 2
+    - look into a forlorn hope's eyes to get curse, look back and level has
+      changed
+
 Areas:
 ---
 
@@ -55,6 +60,8 @@ Areas:
     - white walls
     - black outline
     - glowing walls
+    ---------------
+    - crazy shader walls
     - text explaining what to do
 
 + Facility
@@ -63,17 +70,21 @@ Areas:
     - cross beams
     - pipes
 
-+ House
-    - sunlight
++ Clinic
+    - white shiny tiles ( like path room )
+    - fluorescent lights
 
 + Cellar
     - Stone or wood?
     - candles, or sunlight holes, or laterns?
+    - FLOODED! water on the floor
 
 + Tunnels
     - tight brick
     - small light bulbs
 
++ House?
+    - sunlight
 
 - secret areas?:
     - woods

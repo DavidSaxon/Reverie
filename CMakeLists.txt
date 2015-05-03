@@ -83,6 +83,7 @@ set(SRCS
     src/resource_pack/LoadingPack.cpp
     src/resource_pack/MenuPack.cpp
     src/resource_pack/PlayerPack.cpp
+    src/resource_pack/IntroPack.cpp
     src/resource_pack/FacilityPack.cpp
 
     src/scenes/start_up/StartUpScene.cpp
@@ -96,6 +97,9 @@ set(SRCS
     src/entities/loading/LoadingSplash.cpp
 
     src/entities/gameplay/Player.cpp
+    src/entities/gameplay/environment/tile/Tile.cpp
+
+
     src/entities/gameplay/environment/segment/CornerSegment.cpp
     src/entities/gameplay/environment/segment/Segment.cpp
     src/entities/gameplay/environment/segment/StraightSegment.cpp

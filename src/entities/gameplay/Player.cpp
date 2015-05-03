@@ -10,11 +10,30 @@ namespace {
 //------------------------------------------------------------------------------
 
 // the base speed at which the player moves
-static const float MOVE_BASE_SPEED = 0.075f;
+static const float MOVE_BASE_SPEED = 0.04f;
 // the base speed at which the player can look around
 static const float LOOK_BASE_SPEED = 0.055f;
 
+// the speed at which the player steps
+static const float STEP_SPEED = 150.0f;
+// the height of the player's steps
+static const float STEP_HEIGHT = 0.023f;
+// the rotation amount of the step animation
+static const float STEP_ROT_AMOUNT = 0.15f;
+
 } // namespace anonymous
+
+//------------------------------------------------------------------------------
+//                                  CONSTRUCTOR
+//------------------------------------------------------------------------------
+
+Player::Player()
+    :
+    m_zPriority    ( player::Z_NONE ),
+    m_yPriority    ( player::Y_NONE ),
+    m_stepAnimation( 0.0f )
+{
+}
 
 //------------------------------------------------------------------------------
 //                            PUBLIC MEMBER FUNCTIONS
@@ -85,83 +104,100 @@ void Player::look()
     // rotate the camera based on how far the mouse has moved
     m_camT->rotation.x +=
         ( omi::displaySettings.getCentre().y - omi::input::getMousePos().y ) *
-        LOOK_BASE_SPEED * global::lookSensitivity;
+        LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
     m_transform->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
-        LOOK_BASE_SPEED * global::lookSensitivity;
+        LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
 }
 
 void Player::move()
 {
     // calculate the distance the player is being asked to move
     glm::vec3 moveDis;
-    float moveSpeed = MOVE_BASE_SPEED * omi::fpsManager.getTimeScale();
+    float moveSpeed =
+            MOVE_BASE_SPEED *
+            omi::fpsManager.getTimeScale() *
+            global::timeScale;
 
     // forward
     if ( omi::input::isKeyPressed( global::keyForwards ) )
     {
-        moveDis.z += -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x += -util::math::sind( m_transform->rotation.y ) * moveSpeed;
+        if ( m_zPriority != player::Z_BACKWARD )
+        {
+            // set priority
+            m_zPriority = player::Z_FORWARD;
+            // move forwards
+            moveDis.z +=
+                    -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+            moveDis.x +=
+                    -util::math::sind( m_transform->rotation.y ) * moveSpeed;
+            // increase the step animation
+            m_stepAnimation += moveSpeed * STEP_SPEED;
+        }
+    }
+    else
+    {
+        m_zPriority = player::Z_NONE;
     }
     // backwards
     if ( omi::input::isKeyPressed( global::keyBackwards ) )
     {
-        moveDis.z += util::math::cosd( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x += util::math::sind( m_transform->rotation.y ) * moveSpeed;
+        if ( m_zPriority != player::Z_FORWARD )
+        {
+            // set priority
+            m_zPriority = player::Z_BACKWARD;
+            // move backwards
+            moveDis.z +=
+                    util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+            moveDis.x +=
+                    util::math::sind( m_transform->rotation.y ) * moveSpeed;
+            // decrease the step animation
+            m_stepAnimation -= moveSpeed * STEP_SPEED;
+        }
+    }
+    else
+    {
+        m_zPriority = player::Z_NONE;
     }
     // left
     if ( omi::input::isKeyPressed( global::keyLeft ) )
     {
         moveDis.z +=  util::math::sind( m_transform->rotation.y ) * moveSpeed;
         moveDis.x += -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        // if not moving along z increase the step animation
+        if ( m_zPriority == player::Z_NONE )
+        {
+            m_stepAnimation += moveSpeed * STEP_SPEED;
+        }
     }
     // right
     if ( omi::input::isKeyPressed( global::keyRight ) )
     {
         moveDis.z += -util::math::sind( m_transform->rotation.y ) * moveSpeed;
         moveDis.x +=  util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        // if not moving along z decrease the step animation
+        if ( m_zPriority == player::Z_NONE )
+        {
+            m_stepAnimation -= moveSpeed * STEP_SPEED;
+        }
     }
-
-    // TODO: walk animation!
-
-    // TODO: diagonal move
 
     // TODO: key release shit
 
-    // TODO: friction
-
-    // store the original move distance
-    // glm::vec3 orgMove( moveDis );
-    // // get the actual move distance based on obstacles
+    // get the actual move distance based on obstacles
     moveDis = m_collisionChecker->forwardBestCheck( moveDis, "wall" );
-
-    // // apply friction
-    // glm::vec3 moveScale(
-    //         fabs( orgMove.x ),
-    //         fabs( orgMove.y ),
-    //         fabs( orgMove.z )
-    // );
-    // glm::vec3 tempMove( moveDis );
-
-    // if ( moveScale.x > ( moveScale.z * 2.0f ) )
-    // {
-    //     if ( fabs( orgMove.x - tempMove.x ) > moveScale.x )
-    //     {
-    //         moveDis.z = tempMove.z * ( moveScale.x / ( moveScale.z * 3.0f ) );
-    //     }
-    // }
-
-    // if ( fabs( orgMove.x - tempMove.x ) > ( moveScale.x / 2.0f ) )
-    // {
-    //     moveDis.z = 0.0f;
-    // }
-    // if ( fabs( orgMove.z - tempMove.z ) > ( moveScale.z / 2.0f ) )
-    // {
-    //     moveDis.x = 0.0f;
-    // }
 
     // final shift the transformation
     m_transform->translation += moveDis;
 
-    // m_transform->translation += moveDis;
+    // TODO: clamp stepAni to 360
+    // TODO: step should be done on move amount and direction
+
+    // animate the players step
+    // TODO: should this use post collision data?
+    m_transform->translation.y =
+            util::math::sind( m_stepAnimation ) * STEP_HEIGHT;
+    m_transform->rotation.z =
+            util::math::sind( m_stepAnimation ) * STEP_ROT_AMOUNT;
 }
+

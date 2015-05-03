@@ -3,9 +3,33 @@
 
 #include "src/omicron/entity/Entity.hpp"
 
-// TODO: DOC:
+namespace player
+{
+
+// enumerators for move priorities
+enum ZMove
+{
+    Z_NONE = 0,
+    Z_FORWARD,
+    Z_BACKWARD
+};
+enum XMove
+{
+    Y_NONE = 0,
+    Y_LEFT,
+    Y_RIGHT
+};
+
+} // namespace player
+
 class Player : public omi::Entity {
 public:
+
+    //--------------------------------------------------------------------------
+    //                                CONSTRUCTOR
+    //--------------------------------------------------------------------------
+
+    Player();
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -30,6 +54,13 @@ private:
 
     // the player's collision checker
     omi::CollisionChecker* m_collisionChecker;
+
+    // move priorities
+    player::ZMove m_zPriority;
+    player::XMove m_yPriority;
+
+    // walk animation variables
+    float m_stepAnimation;
 
     // TODO: REMOVE ME
     // the right arm of the player which shows active curses

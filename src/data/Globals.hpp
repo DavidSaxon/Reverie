@@ -15,6 +15,8 @@ namespace global {
 
 // is true if reverie is paused
 extern bool pause;
+// the time scale of the game
+extern float timeScale;
 
 //-----------------------------------SETTINGS-----------------------------------
 
@@ -35,6 +37,32 @@ extern omi::input::key::Type keyRight;
 extern const glm::vec4 MENU_ITEM_SELECTED_COLOUR;
 // the colour of a non-selected menu item
 extern const glm::vec4 MENU_ITEM_NON_SELECTED_COLOUR;
+
+//---------------------------------ENVIRONMENT----------------------------------
+
+namespace environment
+{
+
+// Represents the different stages the environment can be in
+enum Stage
+{
+    INTRO = 0,
+    CLINIC,
+    FACILITY,
+    CELLAR,
+    TUNNELS
+};
+
+// Represents the different directions tile can be facing
+enum Direction
+{
+    NORTH = 0,
+    EAST,
+    SOUTH,
+    WEST
+};
+
+} // namespace environment
 
 } // namespace global
 
