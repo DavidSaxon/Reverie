@@ -74,6 +74,7 @@ set(SRCS
 
     src/data/Globals.cpp
 
+    src/functions/EnvironmentVendor.cpp
     src/functions/settings/ApplySettings.cpp
     src/functions/settings/Config.cpp
 
@@ -97,6 +98,8 @@ set(SRCS
     src/entities/loading/LoadingSplash.cpp
 
     src/entities/gameplay/Player.cpp
+    src/entities/gameplay/environment/LayoutManager.cpp
+    src/entities/gameplay/environment/tile/StraightTile.cpp
     src/entities/gameplay/environment/tile/Tile.cpp
 
 

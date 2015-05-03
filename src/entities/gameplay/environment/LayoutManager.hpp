@@ -1,8 +1,8 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_LAYOUTMANAGER_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_LAYOUTMANAGER_HPP_
 
-#include "src/omicron/entity/Entity.hpp"
 #include "src/data/Globals.hpp"
+#include "src/omicron/entity/Entity.hpp"
 
 /**************************************************************************\
 | The layout manager controls Reverie environment generation. The level is |

@@ -105,9 +105,11 @@ void Player::look()
     m_camT->rotation.x +=
         ( omi::displaySettings.getCentre().y - omi::input::getMousePos().y ) *
         LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
-    m_transform->rotation.y +=
+    m_camT->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
         LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
+
+    std::cout << "look dir: " << m_camT->rotation.y << std::endl;
 }
 
 void Player::move()
@@ -128,9 +130,9 @@ void Player::move()
             m_zPriority = player::Z_FORWARD;
             // move forwards
             moveDis.z +=
-                    -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+                    -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
             moveDis.x +=
-                    -util::math::sind( m_transform->rotation.y ) * moveSpeed;
+                    -util::math::sind( m_camT->rotation.y ) * moveSpeed;
             // increase the step animation
             m_stepAnimation += moveSpeed * STEP_SPEED;
         }
@@ -148,9 +150,9 @@ void Player::move()
             m_zPriority = player::Z_BACKWARD;
             // move backwards
             moveDis.z +=
-                    util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+                    util::math::cosd( m_camT->rotation.y ) * moveSpeed;
             moveDis.x +=
-                    util::math::sind( m_transform->rotation.y ) * moveSpeed;
+                    util::math::sind( m_camT->rotation.y ) * moveSpeed;
             // decrease the step animation
             m_stepAnimation -= moveSpeed * STEP_SPEED;
         }
@@ -162,8 +164,8 @@ void Player::move()
     // left
     if ( omi::input::isKeyPressed( global::keyLeft ) )
     {
-        moveDis.z +=  util::math::sind( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x += -util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        moveDis.z +=  util::math::sind( m_camT->rotation.y ) * moveSpeed;
+        moveDis.x += -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
         // if not moving along z increase the step animation
         if ( m_zPriority == player::Z_NONE )
         {
@@ -173,8 +175,8 @@ void Player::move()
     // right
     if ( omi::input::isKeyPressed( global::keyRight ) )
     {
-        moveDis.z += -util::math::sind( m_transform->rotation.y ) * moveSpeed;
-        moveDis.x +=  util::math::cosd( m_transform->rotation.y ) * moveSpeed;
+        moveDis.z += -util::math::sind( m_camT->rotation.y ) * moveSpeed;
+        moveDis.x +=  util::math::cosd( m_camT->rotation.y ) * moveSpeed;
         // if not moving along z decrease the step animation
         if ( m_zPriority == player::Z_NONE )
         {

@@ -40,6 +40,9 @@ extern const glm::vec4 MENU_ITEM_NON_SELECTED_COLOUR;
 
 //---------------------------------ENVIRONMENT----------------------------------
 
+// the size of a tile
+extern const float TILE_SIZE;
+
 namespace environment
 {
 
