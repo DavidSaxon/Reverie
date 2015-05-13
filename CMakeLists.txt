@@ -100,6 +100,8 @@ set(SRCS
 
     src/entities/gameplay/Player.cpp
     src/entities/gameplay/environment/LayoutManager.cpp
+    src/entities/gameplay/environment/tile/CornerTile.cpp
+    src/entities/gameplay/environment/tile/EndTile.cpp
     src/entities/gameplay/environment/tile/StraightTile.cpp
     src/entities/gameplay/environment/tile/Tile.cpp
 
