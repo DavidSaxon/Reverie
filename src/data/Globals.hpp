@@ -42,6 +42,8 @@ extern const glm::vec4 MENU_ITEM_NON_SELECTED_COLOUR;
 
 // the size of a tile
 extern const float TILE_SIZE;
+// the collider group for walls
+extern const std::string WALL_COLLISION_GROUP;
 
 namespace environment
 {

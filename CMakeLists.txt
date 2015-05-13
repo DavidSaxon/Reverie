@@ -74,6 +74,7 @@ set(SRCS
 
     src/data/Globals.cpp
 
+    src/functions/Direction.cpp
     src/functions/EnvironmentVendor.cpp
     src/functions/settings/ApplySettings.cpp
     src/functions/settings/Config.cpp

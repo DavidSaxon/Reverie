@@ -33,8 +33,19 @@ omi::Mesh* vendWallTile(
         omi::Transform* baseTransform,
         global::environment::Direction direction );
 
+/** Vends a straight skiting board for floor and ceiling
+@param stage the stage to vend skirting for
+@param baseTransform the base transformation to use for the skirting
+@param direction the direction the skirting is on the tile
+@return the mesh for the skirting */
+omi::Mesh* vendSkirting(
+        global::environment::Stage stage,
+        omi::Transform* baseTransform,
+        global::environment::Direction direction );
+
 /** Vends a collider for a wall tile */
 omi::CollisionDetector* vendWallCollider(
+        void* entity,
         omi::Transform* baseTransform,
         global::environment::Direction baseDirection,
         global::environment::Direction colliderDirection );

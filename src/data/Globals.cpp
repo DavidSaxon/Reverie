@@ -26,5 +26,6 @@ const glm::vec4 MENU_ITEM_NON_SELECTED_COLOUR( 0.9f, 0.9f, 0.9f, 1.0f );
 //---------------------------------ENVIRONMENT----------------------------------
 
 const float TILE_SIZE = 3.0f;
+const std::string WALL_COLLISION_GROUP = "wall";
 
 } // namespace global

@@ -26,15 +26,38 @@ void StraightTile::init()
 
     // floor
     m_components.add( vendor::vendCeilingTile( m_stage, m_baseT ) );
-    // walls
+    // east wall
     m_components.add( vendor::vendWallTile(
             m_stage,
             m_baseT,
             global::environment::EAST
     ) );
+    m_components.add( vendor::vendSkirting(
+            m_stage,
+            m_baseT,
+            global::environment::EAST
+    ) );
+    m_components.add( vendor::vendWallCollider(
+            this,
+            m_baseT,
+            m_direction,
+            global::environment::EAST
+    ) );
+    // west wall
     m_components.add( vendor::vendWallTile(
             m_stage,
             m_baseT,
+            global::environment::WEST
+    ) );
+    m_components.add( vendor::vendSkirting(
+            m_stage,
+            m_baseT,
+            global::environment::WEST
+    ) );
+    m_components.add( vendor::vendWallCollider(
+            this,
+            m_baseT,
+            m_direction,
             global::environment::WEST
     ) );
 }

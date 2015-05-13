@@ -15,11 +15,11 @@ static const float MOVE_BASE_SPEED = 0.04f;
 static const float LOOK_BASE_SPEED = 0.055f;
 
 // the speed at which the player steps
-static const float STEP_SPEED = 150.0f;
+static const float STEP_SPEED = 205.0f;
 // the height of the player's steps
-static const float STEP_HEIGHT = 0.023f;
+static const float STEP_HEIGHT = 0.031f;
 // the rotation amount of the step animation
-static const float STEP_ROT_AMOUNT = 0.15f;
+static const float STEP_ROT_AMOUNT = 0.185f;
 
 } // namespace anonymous
 
@@ -72,11 +72,11 @@ void Player::init()
 
     // TODO: fix
     // the flare light source
-    omi::Mesh* flare =
-        omi::ResourceManager::getMesh( "flare", "", NULL );
-    flare->overlay = true;
-    flare->castShadow = false;
-    m_components.add( flare );
+    // omi::Mesh* flare =
+    //     omi::ResourceManager::getMesh( "flare", "", NULL );
+    // flare->overlay = true;
+    // flare->castShadow = false;
+    // m_components.add( flare );
 }
 
 void Player::update()
@@ -108,8 +108,6 @@ void Player::look()
     m_camT->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
         LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
-
-    std::cout << "look dir: " << m_camT->rotation.y << std::endl;
 }
 
 void Player::move()
