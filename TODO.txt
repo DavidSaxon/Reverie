@@ -2,7 +2,9 @@
 | TODO |
 \++++++/
 
-- extend skirting and other geo for shadows
+- pass texture size in for mip-mapping
+
+- thinner wall colliders
 
 - Level generation
 {
@@ -22,13 +24,17 @@
 {
     - test portal and outlast
 
-    - animation for walk
-
-    - accelerated walk?
-
-    - diagonal walk
+    - animation
+    {
+        - animation should play based on walk speed
+    }
 
     - multiple keys ( left then right then left )
+    {
+        - move priority doesn't work!
+    }
+
+    - accelerated walk?
 
     - clamp look
 

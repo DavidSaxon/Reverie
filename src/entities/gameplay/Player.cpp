@@ -10,14 +10,14 @@ namespace {
 //------------------------------------------------------------------------------
 
 // the base speed at which the player moves
-static const float MOVE_BASE_SPEED = 0.04f;
+static const float MOVE_BASE_SPEED = 0.03f;
 // the base speed at which the player can look around
 static const float LOOK_BASE_SPEED = 0.055f;
 
 // the speed at which the player steps
-static const float STEP_SPEED = 205.0f;
+static const float STEP_SPEED = 185.0f;
 // the height of the player's steps
-static const float STEP_HEIGHT = 0.031f;
+static const float STEP_HEIGHT = 0.0285f;
 // the rotation amount of the step animation
 static const float STEP_ROT_AMOUNT = 0.185f;
 
@@ -118,6 +118,8 @@ void Player::move()
             MOVE_BASE_SPEED *
             omi::fpsManager.getTimeScale() *
             global::timeScale;
+    // whether the step animation has been applied yet or not
+    bool stepApplied = false;
 
     // forward
     if ( omi::input::isKeyPressed( global::keyForwards ) )
@@ -133,6 +135,7 @@ void Player::move()
                     -util::math::sind( m_camT->rotation.y ) * moveSpeed;
             // increase the step animation
             m_stepAnimation += moveSpeed * STEP_SPEED;
+            stepApplied = true;
         }
     }
     else
@@ -153,6 +156,7 @@ void Player::move()
                     util::math::sind( m_camT->rotation.y ) * moveSpeed;
             // decrease the step animation
             m_stepAnimation -= moveSpeed * STEP_SPEED;
+            stepApplied = true;
         }
     }
     else
@@ -165,9 +169,10 @@ void Player::move()
         moveDis.z +=  util::math::sind( m_camT->rotation.y ) * moveSpeed;
         moveDis.x += -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
         // if not moving along z increase the step animation
-        if ( m_zPriority == player::Z_NONE )
+        if ( !stepApplied )
         {
             m_stepAnimation += moveSpeed * STEP_SPEED;
+            stepApplied = true;
         }
     }
     // right
@@ -176,7 +181,7 @@ void Player::move()
         moveDis.z += -util::math::sind( m_camT->rotation.y ) * moveSpeed;
         moveDis.x +=  util::math::cosd( m_camT->rotation.y ) * moveSpeed;
         // if not moving along z decrease the step animation
-        if ( m_zPriority == player::Z_NONE )
+        if ( !stepApplied )
         {
             m_stepAnimation -= moveSpeed * STEP_SPEED;
         }

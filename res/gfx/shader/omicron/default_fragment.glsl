@@ -80,13 +80,23 @@ vec2 poissonDisk[4] = vec2[](
 
 void main() {
 
+    // normalize the normal
+    vec3 N = normalize( v_normal );
+
     //---------------------------------MATERIAL---------------------------------
 
     // the colour of the material
     vec4 material = u_colour;
 
+    // TODO: get texture size into shader
+    // choose mip-mapping level
+    vec2 dx_vtc = dFdx( v_texCoord * 2048 );
+    vec2 dy_vtc = dFdy( v_texCoord * 2048 );
+    float deltaMaxSqr = max( dot( dx_vtc, dx_vtc ), dot( dy_vtc, dy_vtc ) );
+    float mipmapLevel = 0.25 * log2( deltaMaxSqr );
+
     //apply texturing
-    vec4 textureColour = texture2D( u_texture, v_texCoord );
+    vec4 textureColour = textureLod( u_texture, v_texCoord, mipmapLevel );
     if ( u_invertTexCol != 0 )
     {
         vec4 invertCol = vec4( 1.0, 1.0, 1.0, 1.0 ) - textureColour;
@@ -108,9 +118,6 @@ void main() {
     {
         // the light value
         vec3 light = u_ambientLight;
-
-        // normalize the normal
-        vec3 N = normalize( v_normal );
 
         for ( int i = 0; i < u_lightCount; ++i )
         {
