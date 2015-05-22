@@ -17,7 +17,7 @@ static const float LOOK_BASE_SPEED = 0.055f;
 // the speed at which the player steps
 static const float STEP_SPEED = 185.0f;
 // the height of the player's steps
-static const float STEP_HEIGHT = 0.0285f;
+static const float STEP_HEIGHT = 0.026f;
 // the rotation amount of the step animation
 static const float STEP_ROT_AMOUNT = 0.185f;
 

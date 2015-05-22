@@ -11,14 +11,16 @@ Texture::Texture() :
     m_visible(true) {
 }
 
-Texture::Texture(GLuint id) :
-    m_id     (id),
-    m_visible(true) {
+Texture::Texture( GLuint id, const glm::vec2& dimensions ) :
+    m_id        (id),
+    m_dimensions( dimensions ),
+    m_visible   (true) {
 }
 
 Texture::Texture(const Texture& other) :
-    m_id     (other.m_id),
-    m_visible(true) {
+    m_id        ( other.m_id ),
+    m_dimensions( other.m_dimensions ),
+    m_visible   ( true ) {
 }
 
 //------------------------------------------------------------------------------
@@ -34,8 +36,9 @@ Texture::~Texture() {
 
 const Texture& Texture::operator=(const Texture& other) {
 
-    m_id =      other.m_id;
-    m_visible = other.m_visible;
+    m_id         = other.m_id;
+    m_dimensions = other.m_dimensions;
+    m_visible    = other.m_visible;
 
     return *this;
 }
@@ -57,6 +60,11 @@ GLuint Texture::getId() const {
 tex::Type Texture::getType() const {
 
     return tex::TEXTURE;
+}
+
+const glm::vec2& Texture::getDimensions() const
+{
+    return m_dimensions;
 }
 
 bool Texture::isVisible() const {

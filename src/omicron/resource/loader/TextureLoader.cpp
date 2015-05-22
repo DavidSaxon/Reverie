@@ -6,7 +6,11 @@ namespace omi {
 
 namespace loader {
 
-GLuint loadTexture( const std::string& filePath, bool clamp, bool showPixels )
+GLuint loadTexture(
+        const std::string& filePath,
+        bool clamp,
+        bool showPixels,
+        glm::vec2& dimensions )
 {
 
     // open the file using the resource server
@@ -67,6 +71,9 @@ GLuint loadTexture( const std::string& filePath, bool clamp, bool showPixels )
     int type   = ilGetInteger( IL_IMAGE_TYPE );
     int format = ilGetInteger( IL_IMAGE_FORMAT );
 
+    // set the return texture dimensions
+    dimensions.x = static_cast<float>( width );
+    dimensions.y = static_cast<float>( height );
 
     //--------------------------CREATE OPENGL TEXTURE---------------------------
 
@@ -110,7 +117,7 @@ GLuint loadTexture( const std::string& filePath, bool clamp, bool showPixels )
     }
     // set the filtering modes
     glTexParameteri(
-        GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
+        GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     if ( showPixels )
     {
         glTexParameteri(
@@ -125,14 +132,19 @@ GLuint loadTexture( const std::string& filePath, bool clamp, bool showPixels )
 
     //---------------------------RETURN THE OPENGL ID---------------------------
 
-
     return textureId;
 }
 
 Texture* textureFromImage(
-    const std::string& filePath, bool clamp, bool showPixels )
+    const std::string& filePath,
+    bool clamp,
+    bool showPixels,
+    glm::vec2& dimensions )
 {
-    return new Texture( loadTexture( filePath, clamp, showPixels ) );
+    return new Texture(
+            loadTexture( filePath, clamp, showPixels, dimensions ),
+            dimensions
+    );
 }
 
 Texture* animationFromImage(
@@ -155,7 +167,10 @@ Texture* animationFromImage(
         std::stringstream ss;
         ss << filename << "." << i << "." << extension;
 
-        textures.push_back( loadTexture( ss.str(), clamp, showPixels ) );
+        // TODO: use dimensions
+        glm::vec2 dimensions;
+        textures.push_back(
+                loadTexture( ss.str(), clamp, showPixels, dimensions ) );
     }
 
     return new Animation( textures, frameRate, repeat );

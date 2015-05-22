@@ -56,9 +56,13 @@ Shader loadShaderFromFiles(
 @param filePath the path to the image
 @param clamp whether to clamp the texture to the edge
 @param showPixels whether to interpolate the texture when scaling
+@param dimensions the returned dimensions of the texture
 @return the loaded texture */
 Texture* textureFromImage(
-    const std::string& filePath, bool clamp, bool showPixels );
+    const std::string& filePath,
+    bool clamp,
+    bool showPixels,
+    glm::vec2& dimensions );
 
 /** Loads an animation from an image sequence
 @param filePath the path of the sequence (omitting the frame number)

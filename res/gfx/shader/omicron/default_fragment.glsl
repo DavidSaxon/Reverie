@@ -13,6 +13,8 @@ uniform vec4 u_colour;
 uniform int u_hasTexture;
 // the texture
 uniform sampler2D u_texture;
+// the size of the texture
+uniform vec2 u_textureDim;
 // is true to invert texture colour
 uniform int u_invertTexCol;
 
@@ -90,10 +92,10 @@ void main() {
 
     // TODO: get texture size into shader
     // choose mip-mapping level
-    vec2 dx_vtc = dFdx( v_texCoord * 2048 );
-    vec2 dy_vtc = dFdy( v_texCoord * 2048 );
-    float deltaMaxSqr = max( dot( dx_vtc, dx_vtc ), dot( dy_vtc, dy_vtc ) );
-    float mipmapLevel = 0.25 * log2( deltaMaxSqr );
+    vec2 dx_vtc = dFdx( v_texCoord * u_textureDim.x );
+    vec2 dy_vtc = dFdy( v_texCoord * u_textureDim.y );
+    float deltaMaxSqr = min( dot( dx_vtc, dx_vtc ), dot( dy_vtc, dy_vtc ) );
+    float mipmapLevel = 0.7 * log2( deltaMaxSqr );
 
     //apply texturing
     vec4 textureColour = textureLod( u_texture, v_texCoord, mipmapLevel );

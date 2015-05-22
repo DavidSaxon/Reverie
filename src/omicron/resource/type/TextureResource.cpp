@@ -56,10 +56,11 @@ void TextureResource::load()
         {
             case tex::TEXTURE:
             {
+                glm::vec2 dimensions;
                 m_texture = std::unique_ptr<Texture>(
-                    loader::textureFromImage(
-                        m_filePath, m_clamp, m_showPixels
-                    )
+                        loader::textureFromImage(
+                            m_filePath, m_clamp, m_showPixels, dimensions
+                        )
                 );
                 break;
             }

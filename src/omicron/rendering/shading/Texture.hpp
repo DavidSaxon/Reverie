@@ -1,8 +1,13 @@
 #ifndef OMICRON_RENDERING_SHADING_TEXTURE_H_
 #   define OMICRON_RENDERING_SHADING_TEXTURE_H_
 
+#define GLM_FORCE_RADIANS
+#define GLM_SWIZZLE
+
 #include <GL/glew.h>
 #include <SFML/OpenGL.hpp>
+
+#include "lib/glm/glm.hpp"
 
 namespace omi {
 
@@ -31,7 +36,7 @@ public:
 
     /** Creates a new texture with the given OpenGL texture pointer
     @param id the pointer to the OpenGL texture*/
-    Texture(GLuint id);
+    Texture( GLuint id, const glm::vec2& dimensions );
 
     /** Creates a copy of the given texture
     @param other the other texture from */
@@ -62,6 +67,9 @@ public:
     /** @return the type of the texture */
     virtual tex::Type getType() const;
 
+    /** @return the dimensions of the texture */
+    const glm::vec2& getDimensions() const;
+
     /** @return if the texture is visible */
     bool isVisible() const;
 
@@ -73,6 +81,8 @@ protected:
 
     // the OpenGL pointer to the texture
     GLuint m_id;
+    // the dimensions of the texture
+    glm::vec2 m_dimensions;
 
     // if the texture is visible
     bool m_visible;

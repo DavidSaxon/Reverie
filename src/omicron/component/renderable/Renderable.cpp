@@ -418,6 +418,12 @@ void Renderable::setShader(
     {
         glUniform1i( glGetUniformLocation( program, "u_hasTexture" ), 1 );
         glBindTexture( GL_TEXTURE_2D, m_material.texture->getId() );
+        // pass in texture size
+        glm::vec2 textureDim = m_material.texture->getDimensions();
+        glUniform2f(
+            glGetUniformLocation( program, "u_textureDim" ),
+            textureDim.x, textureDim.y
+        );
     }
     else
     {

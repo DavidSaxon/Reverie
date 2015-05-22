@@ -3,6 +3,16 @@
 \++++++/
 
 - pass texture size in for mip-mapping
+- need to also do for animations
+
+- send shader mipmapping to omicron
+{
+    - default_fragment
+    - TextureLoader
+    - Loaders
+    - TextureResource
+    - Texture
+}
 
 - thinner wall colliders
 
