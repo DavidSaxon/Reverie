@@ -111,83 +111,72 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                     static_cast<BoundingRect*>( colliderBounding );
             BoundingRect* rect2 = static_cast<BoundingRect*>( *it );
 
-
             // calculate the best position
             glm::vec3 temp_move( new_move );
 
-            // calculate the angle
-            float angle = vecutil::angleBetween(
-                    rect1->getTransform()->translation.xz(),
-                    rect2->getTransform()->translation.xz() );
-
+            // TODO: bounding ALL?
             // apply shift movement
-            if ( angle > 45.0f && angle <= 135.0f &&
-                 ( rect2->getDirection() == bounding::ALL ||
-                   rect2->getDirection() == bounding::UP     ) )
+            if ( rect2->getDirection() == bounding::UP )
             {
-                if ( angle > 70.0f && angle <= 110.0f )
+                float minDis = ( rect1->getSize().y / 2.0f ) +
+                               ( rect2->getSize().y / 2.0f );
+                minDis = -minDis;
+                float dis = rect1->getTransform()->translation.z;
+                dis = rect2->getTransform()->translation.z - dis;
+                dis -= new_move.z;
+                temp_move.z = minDis - dis;
+
+                if ( new_move.z <= 0.0f )
                 {
-                    new_move.z = 0.0f;
-                }
-                else
-                {
-                    temp_move.z =
-                        ( rect2->getTransform()->translation.z +
-                        ( rect2->getSize().y / 2.0f ) ) -
-                        ( rect1->getTransform()->translation.z -
-                        ( rect1->getSize().y / 2.0f ) );
-                    if ( temp_move.z > new_move.z )
-                    {
-                        new_move.z = temp_move.z;
-                    }
+                    new_move.z = new_move.z - temp_move.z;
                 }
             }
-            else if ( angle > 135.0f && angle <= 225.0f &&
-                      ( rect2->getDirection() == bounding::ALL ||
-                        rect2->getDirection() == bounding::RIGHT  ) )
+            else if ( rect2->getDirection() == bounding::RIGHT )
             {
-                temp_move.x =
-                    ( rect2->getTransform()->translation.x -
-                    ( rect2->getSize().x / 2.0f ) ) -
-                    ( rect1->getTransform()->translation.x +
-                    ( rect1->getSize().x / 2.0f ) );
-                if ( temp_move.x < new_move.x )
+                float minDis = ( rect1->getSize().x / 2.0f ) +
+                               ( rect2->getSize().x / 2.0f );
+                float dis = rect1->getTransform()->translation.x;
+                dis = rect2->getTransform()->translation.x - dis;
+                dis -= new_move.x;
+                temp_move.x = minDis - dis;
+
+                if ( new_move.x >= 0.0f )
                 {
-                    new_move.x = temp_move.x;
+                    new_move.x = new_move.x - temp_move.x;
                 }
             }
-            else if ( angle > 225.0f && angle <= 315.0f &&
-                      ( rect2->getDirection() == bounding::ALL ||
-                        rect2->getDirection() == bounding::DOWN   ) )
+            else if ( rect2->getDirection() == bounding::DOWN )
             {
-                temp_move.z =
-                    ( rect2->getTransform()->translation.z -
-                    ( rect2->getSize().y / 2.0f ) ) -
-                    ( rect1->getTransform()->translation.z +
-                    ( rect1->getSize().y / 2.0f ) );
-                if ( temp_move.z < new_move.z )
+                float minDis = ( rect1->getSize().y / 2.0f ) +
+                               ( rect2->getSize().y / 2.0f );
+                float dis = rect1->getTransform()->translation.z;
+                dis = rect2->getTransform()->translation.z - dis;
+                dis -= new_move.z;
+                temp_move.z = minDis - dis;
+
+                if ( new_move.z >= 0.0f )
                 {
-                    new_move.z = temp_move.z;
+                    new_move.z = new_move.z - temp_move.z;
                 }
             }
-            else if ( rect2->getDirection() == bounding::ALL ||
-                      rect2->getDirection() == bounding::LEFT )
+            else if ( rect2->getDirection() == bounding::LEFT )
             {
-                temp_move.x =
-                    ( rect2->getTransform()->translation.x +
-                    ( rect2->getSize().x / 2.0f ) ) -
-                    ( rect1->getTransform()->translation.x -
-                    ( rect1->getSize().x / 2.0f ) );
-                if ( temp_move.x > new_move.x )
+                float minDis = ( rect1->getSize().x / 2.0f ) +
+                               ( rect2->getSize().x / 2.0f );
+                minDis = -minDis;
+                float dis = rect1->getTransform()->translation.x;
+                dis = rect2->getTransform()->translation.x - dis;
+                dis -= new_move.x;
+                temp_move.x = minDis - dis;
+
+                if ( new_move.x <= 0.0f )
                 {
-                    new_move.x = temp_move.x;
+                    new_move.x = new_move.x - temp_move.x;
                 }
             }
         }
-
         return new_move;
     }
-
     return move;
 }
 

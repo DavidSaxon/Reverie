@@ -2,19 +2,10 @@
 | TODO |
 \++++++/
 
-- pass texture size in for mip-mapping
-- need to also do for animations
-
-- send shader mipmapping to omicron
+- send collision fixes to Omicron
 {
-    - default_fragment
-    - TextureLoader
-    - Loaders
-    - TextureResource
-    - Texture
+    CollisionChecker
 }
-
-- thinner wall colliders
 
 - Level generation
 {
@@ -70,7 +61,7 @@
     - investigate shadows on overlay etc..
 }
 
-- depth of feild?
+- depth of field?
 
 - motion blur
 {

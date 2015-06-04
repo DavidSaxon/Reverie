@@ -195,6 +195,7 @@ void Player::move()
     // final shift the transformation
     m_transform->translation += moveDis;
 
+
     // TODO: clamp stepAni to 360
     // TODO: step should be done on move amount and direction
 

@@ -16,8 +16,6 @@ omi::Mesh* vendFloorTile(
         {
             omi::Mesh* m = omi::ResourceManager::getMesh(
                     "intro_floor", "", baseTransform );
-            // m->getMaterial().glow = new omi::Glow(
-            //         intro::WALL_COLOUR.rgb(), intro::WALL_BRIGHTNESS );
             return m;
         }
         // TODO: other stages
@@ -38,8 +36,6 @@ omi::Mesh* vendCeilingTile(
         {
             omi::Mesh* m = omi::ResourceManager::getMesh(
                     "intro_ceiling", "", baseTransform );
-            // m->getMaterial().glow = new omi::Glow(
-            //         intro::WALL_COLOUR.rgb(), intro::WALL_BRIGHTNESS );
             return m;
         }
         // TODO: other stages
@@ -72,8 +68,6 @@ omi::Mesh* vendWallTile(
         {
             m = omi::ResourceManager::getMesh(
                     "intro_wall", "", t );
-            // m->getMaterial().glow = new omi::Glow(
-            //         intro::WALL_COLOUR.rgb(), intro::WALL_BRIGHTNESS );
             return m;
         }
         // TODO: other stages
@@ -132,6 +126,11 @@ omi::CollisionDetector* vendWallCollider(
     glm::vec3 dirVector( 0.0f, 0.0f, 0.0f );
     // the bounding direction
     omi::bounding::Direction dirEnum = omi::bounding::ALL;
+    // the size of the collider bounding
+    const float colliderConst = 0.1f;
+    glm::vec2 colliderSize( 0.0f, 0.0f );
+
+    const float shiftConst = ( global::TILE_SIZE + colliderConst ) / 2.0f;
 
     // get the actual direction of the collider
     global::environment::Direction finalDirection =
@@ -143,26 +142,30 @@ omi::CollisionDetector* vendWallCollider(
     {
         case global::environment::NORTH:
         {
-            dirVector = glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE );
+            dirVector = glm::vec3( 0.0f, 0.0f, -shiftConst );
             dirEnum = omi::bounding::UP;
+            colliderSize = glm::vec2( global::TILE_SIZE, colliderConst );
             break;
         }
         case global::environment::EAST:
         {
-            dirVector = glm::vec3( global::TILE_SIZE, 0.0f, 0.0f );
+            dirVector = glm::vec3( shiftConst, 0.0f, 0.0f );
             dirEnum = omi::bounding::RIGHT;
+            colliderSize = glm::vec2( colliderConst, global::TILE_SIZE );
             break;
         }
         case global::environment::SOUTH:
         {
-            dirVector = glm::vec3( 0.0f, 0.0f, global::TILE_SIZE );
+            dirVector = glm::vec3( 0.0f, 0.0f, shiftConst );
             dirEnum = omi::bounding::DOWN;
+            colliderSize = glm::vec2( global::TILE_SIZE, colliderConst );
             break;
         }
         case global::environment::WEST:
         {
-            dirVector = glm::vec3( -global::TILE_SIZE, 0.0f, 0.0f );
+            dirVector = glm::vec3( -shiftConst, 0.0f, 0.0f );
             dirEnum = omi::bounding::LEFT;
+            colliderSize = glm::vec2( colliderConst, global::TILE_SIZE );
             break;
         }
     }
@@ -175,7 +178,7 @@ omi::CollisionDetector* vendWallCollider(
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
     c->addBounding( new omi::BoundingRect(
-            glm::vec2( 3.0f, 3.0f ),
+            colliderSize,
             t,
             dirEnum
     ) );
