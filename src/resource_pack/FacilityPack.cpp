@@ -75,7 +75,7 @@ void buildFacilityPack()
         resource_group::FACILITY,
         "default_shader",
         "res/gfx/texture/facility/light_pane.png",
-        "res/gfx/geometry/facility/light_pane.obj",
+        "res/gfx/geometry/environment/intro/light_pane_1.obj",
         0
     );
 
@@ -85,7 +85,7 @@ void buildFacilityPack()
         resource_group::FACILITY,
         "default_shader",
         "res/gfx/texture/facility/wall.png",
-        "res/gfx/geometry/facility/light_fitting.obj",
+        "res/gfx/geometry/environment/intro/light_fitting_1.obj",
         0
     );
 }

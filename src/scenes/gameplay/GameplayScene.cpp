@@ -7,10 +7,9 @@
 #include "src/entities/gameplay/Player.hpp"
 #include "src/entities/gameplay/environment/LayoutManager.hpp"
 #include "src/entities/menu/PauseMenu.hpp"
-// TODO: REMOVE ME:
+
+// TODO: REMOVE ME
 #include "src/entities/gameplay/TestEntity.hpp"
-#include "src/entities/gameplay/environment/segment/CornerSegment.hpp"
-#include "src/entities/gameplay/environment/segment/StraightSegment.hpp"
 
 //------------------------------------------------------------------------------
 //                            PUBLIC MEMBER FUNCTIONS
@@ -25,7 +24,8 @@ void GameplayScene::init()
 
     // TODO:
     // ambient lighting
-    omi::renderSettings.setAmbientStrength( 0.15f );
+    // omi::renderSettings.setAmbientStrength( 0.15f );
+    omi::renderSettings.setAmbientStrength( 0.4f );
     omi::renderSettings.setAmbientColour( glm::vec3( 1.0f, 1.0f, 1.0f ) );
     omi::renderSettings.setFilmGrain( 0.04f );
 

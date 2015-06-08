@@ -2,10 +2,7 @@
 | TODO |
 \++++++/
 
-- send collision fixes to Omicron
-{
-    CollisionChecker
-}
+- send collision check bug fix to omicron
 
 - Level generation
 {
