@@ -14,12 +14,19 @@ namespace math {
 //                                   CONSTANTS
 //------------------------------------------------------------------------------
 
+static const float EPISLON            = 0.0000001f;
 static const float DEGREES_TO_RADIANS = 0.0174532925f;
 static const float RADIANS_TO_DEGREES = 57.2957795f;
 
 //------------------------------------------------------------------------------
 //                                   FUNCTIONS
 //------------------------------------------------------------------------------
+
+/** Returns true if the two given floats are considered equal */
+inline bool floatEquals( float a, float b )
+{
+    return fabs( a - b ) <= EPISLON;
+}
 
 /** Rounds the value to the nearest integer
 @param value the value to round

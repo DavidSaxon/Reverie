@@ -35,8 +35,8 @@ void TestEntity::init()
                 0.5f,
                 glm::vec3( 1.0f, 1.0f, 1.0f ),
                 0.05f,
-                0.1f,
-                0.05f
+                0.06f,
+                0.04f
         );
         m_components.add( pointLight );
     }

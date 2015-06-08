@@ -24,8 +24,8 @@ void GameplayScene::init()
 
     // TODO:
     // ambient lighting
-    // omi::renderSettings.setAmbientStrength( 0.15f );
-    omi::renderSettings.setAmbientStrength( 0.4f );
+    omi::renderSettings.setAmbientStrength( 0.05f );
+    // omi::renderSettings.setAmbientStrength( 0.4f );
     omi::renderSettings.setAmbientColour( glm::vec3( 1.0f, 1.0f, 1.0f ) );
     omi::renderSettings.setFilmGrain( 0.04f );
 

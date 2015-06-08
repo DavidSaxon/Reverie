@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+#include "lib/Utilitron/MathUtil.hpp"
+
 #include "src/data/Globals.hpp"
 #include "src/omicron/input/Input.hpp"
 
@@ -11,15 +13,21 @@ namespace {
 
 // the base speed at which the player moves
 static const float MOVE_BASE_SPEED = 0.03f;
+// move multiplier when running
+static const float RUN_SPEED_MULTIPLIER = 1.8f;
+// animation multiplier when running
+static const float RUN_STEP_MULTIPLIER = 1.3f;
 // the base speed at which the player can look around
 static const float LOOK_BASE_SPEED = 0.055f;
+// the angle at which up/down looking is clamped
+static const float LOOK_CLAMP = 80.0f;
 
 // the speed at which the player steps
 static const float STEP_SPEED = 185.0f;
 // the height of the player's steps
 static const float STEP_HEIGHT = 0.026f;
 // the rotation amount of the step animation
-static const float STEP_ROT_AMOUNT = 0.185f;
+static const float STEP_ROT_AMOUNT = 0.25f;
 
 } // namespace anonymous
 
@@ -108,6 +116,13 @@ void Player::look()
     m_camT->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
         LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
+
+    // clamp up/down look
+    m_camT->rotation.x = util::math::clamp<float>(
+            m_camT->rotation.x,
+            -LOOK_CLAMP,
+            LOOK_CLAMP
+    );
 }
 
 void Player::move()
@@ -118,6 +133,8 @@ void Player::move()
             MOVE_BASE_SPEED *
             omi::fpsManager.getTimeScale() *
             global::timeScale;
+    // the step animation amount
+    float stepAnimationRate = 0.0f;
     // whether the step animation has been applied yet or not
     bool stepApplied = false;
 
@@ -134,7 +151,7 @@ void Player::move()
             moveDis.x +=
                     -util::math::sind( m_camT->rotation.y ) * moveSpeed;
             // increase the step animation
-            m_stepAnimation += moveSpeed * STEP_SPEED;
+            stepAnimationRate += moveSpeed * STEP_SPEED;
             stepApplied = true;
         }
     }
@@ -155,7 +172,7 @@ void Player::move()
             moveDis.x +=
                     util::math::sind( m_camT->rotation.y ) * moveSpeed;
             // decrease the step animation
-            m_stepAnimation -= moveSpeed * STEP_SPEED;
+            stepAnimationRate -= moveSpeed * STEP_SPEED;
             stepApplied = true;
         }
     }
@@ -171,7 +188,7 @@ void Player::move()
         // if not moving along z increase the step animation
         if ( !stepApplied )
         {
-            m_stepAnimation += moveSpeed * STEP_SPEED;
+            stepAnimationRate += moveSpeed * STEP_SPEED;
             stepApplied = true;
         }
     }
@@ -183,27 +200,49 @@ void Player::move()
         // if not moving along z decrease the step animation
         if ( !stepApplied )
         {
-            m_stepAnimation -= moveSpeed * STEP_SPEED;
+            stepAnimationRate -= moveSpeed * STEP_SPEED;
         }
+    }
+
+    // the multiplier for how animated the player is
+    float animationBoost = 1.0f;
+
+    // run key
+    if ( omi::input::isKeyPressed( omi::input::key::LEFT_SHIFT ) )
+    {
+        moveDis           *= RUN_SPEED_MULTIPLIER;
+        stepAnimationRate *= RUN_STEP_MULTIPLIER;
+        animationBoost    *= RUN_STEP_MULTIPLIER;
     }
 
     // TODO: key release shit
 
     // get the actual move distance based on obstacles
+    float orgMoveDis = fabs( moveDis.x ) + fabs( moveDis.z );
     moveDis = m_collisionChecker->forwardBestCheck( moveDis, "wall" );
+
+    // slow animation based on how far the player has actually moved
+    float slowPercent = 1.0f;
+    if ( !util::math::floatEquals( orgMoveDis, 0.0f ) )
+    {
+        float newMoveDis = fabs( moveDis.x ) + fabs( moveDis.z );
+        slowPercent = fabs( newMoveDis ) / fabs( orgMoveDis );
+    }
+    stepAnimationRate *= slowPercent;
 
     // final shift the transformation
     m_transform->translation += moveDis;
-
-
     // TODO: clamp stepAni to 360
     // TODO: step should be done on move amount and direction
+    // apply the step animation
+    m_stepAnimation += stepAnimationRate;
 
     // animate the players step
-    // TODO: should this use post collision data?
     m_transform->translation.y =
-            util::math::sind( m_stepAnimation ) * STEP_HEIGHT;
+            util::math::sind( m_stepAnimation ) *
+            STEP_HEIGHT * animationBoost;
     m_transform->rotation.z =
-            util::math::sind( m_stepAnimation ) * STEP_ROT_AMOUNT;
+            util::math::cosd( m_stepAnimation ) *
+            STEP_ROT_AMOUNT * animationBoost;
 }
 

@@ -2,7 +2,7 @@
 | TODO |
 \++++++/
 
-- send collision check bug fix to omicron
+- fix light pane (too low poly), make it a nit smaller too
 
 - Level generation
 {
