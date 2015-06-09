@@ -105,10 +105,6 @@ set(SRCS
     src/entities/gameplay/environment/tile/StraightTile.cpp
     src/entities/gameplay/environment/tile/Tile.cpp
 
-
-    src/entities/gameplay/environment/segment/CornerSegment.cpp
-    src/entities/gameplay/environment/segment/Segment.cpp
-    src/entities/gameplay/environment/segment/StraightSegment.cpp
     src/entities/gameplay/TestEntity.cpp
 
     src/entities/menu/PauseMenu.cpp
