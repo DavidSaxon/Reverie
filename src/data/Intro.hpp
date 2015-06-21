@@ -7,18 +7,10 @@
 #include "lib/glm/glm.hpp"
 
 /****************************************\
-| variables relating to the intro stage. |
+| Variables relating to the intro stage. |
 \****************************************/
 namespace intro
 {
-
-//---------------------------------ENVIRONMENT----------------------------------
-
-// the colour of walls
-extern const glm::vec4 WALL_COLOUR;
-// the brightness of walls
-extern const float WALL_BRIGHTNESS;
-
 } // namespace intro
 
 #endif

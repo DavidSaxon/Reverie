@@ -4,6 +4,8 @@
 #include "src/data/Globals.hpp"
 #include "src/omicron/entity/Entity.hpp"
 
+class Decor;
+
 namespace vendor
 {
 
@@ -50,6 +52,12 @@ omi::CollisionDetector* vendWallCollider(
         global::environment::Direction baseDirection,
         global::environment::Direction colliderDirection );
 
+/** Vends a list of decor which matches the given mask */
+void vendDecor(
+        global::environment::Stage stage,
+        omi::Transform* baseTransform,
+        unsigned long mask,
+        std::vector<Decor*>& decor );
 
 } // namespace vendor
 

@@ -9,9 +9,10 @@
 EndTile::EndTile(
         global::environment::Stage stage,
         const glm::vec3& position,
-        global::environment::Direction direction )
+        global::environment::Direction direction,
+        unsigned long decor )
     :
-    Tile( stage, position, direction )
+    Tile( stage, position, direction, decor )
 {
 }
 

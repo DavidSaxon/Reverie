@@ -41,7 +41,8 @@ void LayoutManager::introInit()
     addEntity( new EndTile(
             global::environment::INTRO,
             glm::vec3( 0.0f, 0.0f, global::TILE_SIZE ),
-            global::environment::SOUTH
+            global::environment::SOUTH,
+            global::environment::DECOR_PROP_3
     ) );
     addEntity( new StraightTile(
             global::environment::INTRO,
@@ -51,39 +52,96 @@ void LayoutManager::introInit()
     addEntity( new StraightTile(
             global::environment::INTRO,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE ),
-            global::environment::NORTH
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1 |
+            global::environment::DECOR_PROP_1  |
+            global::environment::DECOR_PROP_2
     ) );
-    addEntity( new CornerTile(
+    addEntity( new StraightTile(
             global::environment::INTRO,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 2.0f ),
             global::environment::NORTH
     ) );
     addEntity( new StraightTile(
             global::environment::INTRO,
-            glm::vec3( global::TILE_SIZE, 0.0f, -global::TILE_SIZE * 2.0f ),
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 3.0f ),
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_2
+    ) );
+    addEntity( new CornerTile(
+            global::environment::INTRO,
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3( global::TILE_SIZE, 0.0f, -global::TILE_SIZE * 4.0f ),
+            global::environment::EAST,
+            global::environment::DECOR_PROP_2
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            global::environment::EAST
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 3.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            global::environment::EAST
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 4.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            global::environment::EAST,
+            global::environment::DECOR_LIGHT_2 |
+            global::environment::DECOR_PROP_1  |
+            global::environment::DECOR_PROP_2
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 5.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            global::environment::EAST
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 6.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
             global::environment::EAST
     ) );
     addEntity( new CornerTile(
             global::environment::INTRO,
-            glm::vec3( global::TILE_SIZE * 2, 0, -global::TILE_SIZE * 2 ),
-            global::environment::EAST
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            global::environment::SOUTH,
+            global::environment::DECOR_PROP_2 |
+            global::environment::DECOR_PROP_3
     ) );
     addEntity( new StraightTile(
             global::environment::INTRO,
-            glm::vec3( global::TILE_SIZE * 2, 0, -global::TILE_SIZE ),
-            global::environment::SOUTH
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 5.0f
+            ),
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
     ) );
-    addEntity( new StraightTile(
-            global::environment::INTRO,
-            glm::vec3( global::TILE_SIZE * 2, 0, 0 ),
-            global::environment::SOUTH
-    ) );
-    addEntity( new EndTile(
-            global::environment::INTRO,
-            glm::vec3( global::TILE_SIZE * 2, 0, global::TILE_SIZE ),
-            global::environment::SOUTH
-    ) );
-
 }
 
 void LayoutManager::nonIntroInit()

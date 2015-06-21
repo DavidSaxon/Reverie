@@ -8,9 +8,6 @@
 #include "src/entities/gameplay/environment/LayoutManager.hpp"
 #include "src/entities/menu/PauseMenu.hpp"
 
-// TODO: REMOVE ME
-#include "src/entities/gameplay/TestEntity.hpp"
-
 //------------------------------------------------------------------------------
 //                            PUBLIC MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
@@ -36,8 +33,6 @@ void GameplayScene::init()
     addEntity( new PauseMenu() );
     addEntity( new Player() );
     addEntity( new LayoutManager() );
-
-    addEntity( new TestEntity() );
 }
 
 bool GameplayScene::update()

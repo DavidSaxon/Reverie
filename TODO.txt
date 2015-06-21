@@ -2,7 +2,13 @@
 | TODO |
 \++++++/
 
-- fix light pane (too low poly), make it a nit smaller too
+- send light transformation fix to omicron
+
+- fix attenuation
+
+- send attenuation fix to omicron
+
+- add corner bits
 
 - Level generation
 {

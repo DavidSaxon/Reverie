@@ -673,7 +673,17 @@ void RenderLists::buildLightData(
           it != m_lights.end(); ++it )
     {
         Light* light = *it;
+        // TODO: FIX THIS SHIT
         glm::vec3 pos( light->getTransform()->translation );
+
+        if ( light->getTransform()->parent != NULL )
+        {
+            glm::mat4 lightMatrix( 1.0f );
+            light->getTransform()->parent->apply( lightMatrix );
+            pos =  ( lightMatrix * glm::vec4( pos, 1.0f ) ).xyz();
+        }
+
+        // glm::vec3 pos( light->getTransform()->translation );
         // calculate rotation
         glm::mat4 rotMat = glm::mat4( 1.0f );
         rotMat *= glm::rotate(

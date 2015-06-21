@@ -104,6 +104,11 @@ set(SRCS
     src/entities/gameplay/environment/tile/EndTile.cpp
     src/entities/gameplay/environment/tile/StraightTile.cpp
     src/entities/gameplay/environment/tile/Tile.cpp
+    src/entities/gameplay/environment/decor/intro/IntroDoorDown.cpp
+    src/entities/gameplay/environment/decor/intro/IntroDoorLeft.cpp
+    src/entities/gameplay/environment/decor/intro/IntroDoorRight.cpp
+    src/entities/gameplay/environment/decor/intro/IntroDoorUp.cpp
+    src/entities/gameplay/environment/decor/intro/IntroLight1.cpp
 
     src/entities/gameplay/TestEntity.cpp
 

@@ -49,9 +49,16 @@ private:
             VirtualFile file;
             ResourceServer::get( filePath, file );
 
+            try
+            {
             if ( !m_buffer.loadFromMemory( file.getData(), file.getSize() ) )
             {
                 std::cout << "loading sound failed" << std::endl;
+            }
+            }
+            catch ( std::exception& e )
+            {
+                std::cout << "CAUGHT: " << e.what() << std::endl;
             }
 
             // load the given number of instances of the sound

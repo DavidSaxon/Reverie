@@ -185,7 +185,7 @@ void main() {
                     float attenuation = 1.0 / (
                         u_lightAttenuation[i].x +
                         ( u_lightAttenuation[i].y * distance ) +
-                        ( u_lightAttenuation[i].z * distance * distance ) );
+                        ( u_lightAttenuation[i].z * distance * distance * distance ) );
                     // apply diffuse
                     if ( u_lightInverse[i] == 1 )
                     {

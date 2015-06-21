@@ -14,7 +14,8 @@ public:
     StraightTile(
             global::environment::Stage stage,
             const glm::vec3& position,
-            global::environment::Direction direction );
+            global::environment::Direction direction,
+            unsigned long decor = global::environment::DECOR_NONE );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS

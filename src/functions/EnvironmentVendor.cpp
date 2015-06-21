@@ -1,10 +1,29 @@
 #include "EnvironmentVendor.hpp"
 
 #include "src/data/Intro.hpp"
+#include "src/entities/gameplay/environment/decor/intro/IntroDoorDown.hpp"
+#include "src/entities/gameplay/environment/decor/intro/IntroDoorLeft.hpp"
+#include "src/entities/gameplay/environment/decor/intro/IntroDoorRight.hpp"
+#include "src/entities/gameplay/environment/decor/intro/IntroDoorUp.hpp"
+#include "src/entities/gameplay/environment/decor/intro/IntroLight1.hpp"
 #include "src/functions/Direction.hpp"
+
 
 namespace vendor
 {
+
+//------------------------------------------------------------------------------
+//                               PRIVATE FUNCTIONS
+//------------------------------------------------------------------------------
+
+void vendDecorIntro(
+        omi::Transform* transform,
+        unsigned long mask,
+        std::vector<Decor*>& decor );
+
+//------------------------------------------------------------------------------
+//                                PUBLIC FUNCTIONS
+//------------------------------------------------------------------------------
 
 omi::Mesh* vendFloorTile(
         global::environment::Stage stage,
@@ -184,6 +203,74 @@ omi::CollisionDetector* vendWallCollider(
     ) );
 
     return c;
+}
+
+void vendDecor(
+        global::environment::Stage stage,
+        omi::Transform* baseTransform,
+        unsigned long mask,
+        std::vector<Decor*>& decor )
+{
+    // calculate the transform
+    omi::Transform* t = new omi::Transform(
+            "",
+            baseTransform,
+            glm::vec3( 0.0f, 0.0f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+
+    switch ( stage )
+    {
+        case global::environment::INTRO:
+        {
+            vendDecorIntro( t, mask, decor );
+            break;
+        }
+        // TODO: other stages
+        default:
+        {
+            break;
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+//                            PRIVATE MEMBER FUNCTIONS
+//------------------------------------------------------------------------------
+
+void vendDecorIntro(
+        omi::Transform* transform,
+        unsigned long mask,
+        std::vector<Decor*>& decor )
+{
+    // check against mask
+    if ( mask & global::environment::DECOR_LIGHT_1 )
+    {
+        decor.push_back( new IntroLight1( transform ) );
+    }
+    if ( mask & global::environment::DECOR_LIGHT_2 )
+    {
+        decor.push_back( new IntroLight1( transform, true ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_1 )
+    {
+        decor.push_back( new IntroDoorRight( transform ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_2 )
+    {
+        decor.push_back( new IntroDoorLeft( transform ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_3 )
+    {
+        decor.push_back( new IntroDoorUp( transform ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_4 )
+    {
+        decor.push_back( new IntroDoorDown( transform ) );
+    }
+
+    // TODO: other
 }
 
 } // namespace vendor

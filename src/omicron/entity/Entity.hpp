@@ -104,7 +104,7 @@ protected:
     }
 
     /** Marks this entity for removal from the scene and clean up */
-    void remove() {
+    virtual void remove() {
 
         m_remove = true;
     }

@@ -12,9 +12,13 @@ void StartUpScene::init()
     omi::renderSettings.setDepthTest( false );
 
     // load the needed resources
+    std::cout << "1" << std::endl;
     omi::ResourceManager::load( resource_group::ALL );
+    std::cout << "2" << std::endl;
     omi::ResourceManager::load( resource_group::DEBUG );
+    std::cout << "3" << std::endl;
     omi::ResourceManager::load( resource_group::START_UP );
+    std::cout << "4" << std::endl;
 
     // add entities
     m_omicronLogo = new OmicronLogo();

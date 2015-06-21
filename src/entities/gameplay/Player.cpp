@@ -16,16 +16,16 @@ static const float MOVE_BASE_SPEED = 0.03f;
 // move multiplier when running
 static const float RUN_SPEED_MULTIPLIER = 1.8f;
 // animation multiplier when running
-static const float RUN_STEP_MULTIPLIER = 1.3f;
+static const float RUN_STEP_MULTIPLIER = 1.4f;
 // the base speed at which the player can look around
 static const float LOOK_BASE_SPEED = 0.055f;
 // the angle at which up/down looking is clamped
 static const float LOOK_CLAMP = 80.0f;
 
 // the speed at which the player steps
-static const float STEP_SPEED = 185.0f;
+static const float STEP_SPEED = 186.0f;
 // the height of the player's steps
-static const float STEP_HEIGHT = 0.026f;
+static const float STEP_HEIGHT = 0.02f;
 // the rotation amount of the step animation
 static const float STEP_ROT_AMOUNT = 0.25f;
 
@@ -67,8 +67,13 @@ void Player::init()
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
     m_components.add( m_camT );
-    omi::Camera* camera =
-            new omi::Camera( "", omi::cam::PERSPECTIVE, m_camT );
+    omi::Camera* camera = new omi::Camera(
+            "",
+            omi::cam::PERSPECTIVE,
+            m_camT,
+            0.01f,
+            100.0f
+    );
     camera->setExposure( 1.2f );
     m_components.add( camera );
 
@@ -239,10 +244,10 @@ void Player::move()
 
     // animate the players step
     m_transform->translation.y =
-            util::math::sind( m_stepAnimation ) *
+            -util::math::cosd( m_stepAnimation + 180.0f ) *
             STEP_HEIGHT * animationBoost;
-    m_transform->rotation.z =
-            util::math::cosd( m_stepAnimation ) *
-            STEP_ROT_AMOUNT * animationBoost;
+    // m_transform->rotation.z =
+    //         util::math::sind( m_stepAnimation ) *
+    //         STEP_ROT_AMOUNT * animationBoost;
 }
 
