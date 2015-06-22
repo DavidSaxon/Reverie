@@ -41,9 +41,6 @@ bool StartUpScene::update() {
 
 omi::Scene* StartUpScene::nextScene()
 {
-    // release resources
-    omi::ResourceManager::release( resource_group::START_UP );
-
     // revert settings
     omi::renderSettings.setDepthTest( true );
 

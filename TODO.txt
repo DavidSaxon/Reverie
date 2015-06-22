@@ -4,11 +4,17 @@
 
 - send light transformation fix to omicron
 
-- fix attenuation
-
-- send attenuation fix to omicron
+- send text fix to omicron
 
 - add corner bits
+
+- fading text and entity for it
+
+- knocking door
+
+- rattling door
+
+- phobeter under flickering light
 
 - Level generation
 {

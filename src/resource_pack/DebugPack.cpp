@@ -12,6 +12,13 @@ void buildDebugPack()
         resource_group::DEBUG,
         "res/gfx/fonts/debug/clear_sans.ttf"
     );
+    // glow shader
+    omi::ResourceManager::addShader(
+        "glow_shader",
+        resource_group::ALL,
+        "res/gfx/shader/omicron/glow_vertex.glsl",
+        "res/gfx/shader/omicron/glow_fragment.glsl"
+    );
 
     //-----------------------------------TEXT-----------------------------------
 

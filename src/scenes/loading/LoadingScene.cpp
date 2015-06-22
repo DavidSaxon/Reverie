@@ -43,7 +43,8 @@ bool LoadingScene::update()
 
 omi::Scene* LoadingScene::nextScene()
 {
-    // TODO: release resources
+    // release resources
+    omi::ResourceManager::release( resource_group::START_UP );
     omi::ResourceManager::release( resource_group::LOADING );
 
     return new GameplayScene();

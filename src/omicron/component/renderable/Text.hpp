@@ -60,7 +60,7 @@ public:
 
     // TODO: font selectable
 
-    // TODO: font glow
+    void renderGlow( Camera* camera );
 
     //---------------------------------GETTERS----------------------------------
 

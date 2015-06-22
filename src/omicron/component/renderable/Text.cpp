@@ -126,6 +126,11 @@ void Text::render(
     unsetShader();
 }
 
+void Text::renderGlow( Camera* camera )
+{
+    return;
+}
+
 //-----------------------------------GETTERS------------------------------------
 
 Font* Text::getFont() const

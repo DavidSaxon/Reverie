@@ -91,6 +91,18 @@ void buildIntroPack()
         0
     );
 
+    // tutorial text
+    omi::ResourceManager::addMaterialText(
+        "intro_tutorial_text",
+        resource_group::INTRO,
+        "default_shader",
+        glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
+        0,
+        "title_font", // TODO:
+        "Welcome to the Reverie",
+        0.12f
+        // omi::material::SHADELESS
+    );
 };
 
 } // namespace pack
