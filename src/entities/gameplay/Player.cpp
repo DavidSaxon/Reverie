@@ -90,6 +90,14 @@ void Player::init()
     // flare->overlay = true;
     // flare->castShadow = false;
     // m_components.add( flare );
+
+    // TODO: MOVE TO MUSIC PLAYER ENTITIY
+    // music
+    omi::Music* music = new omi::Music(
+            "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
+    );
+    m_components.add( music );
+    music->play();
 }
 
 void Player::update()
