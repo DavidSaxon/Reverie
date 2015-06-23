@@ -15,6 +15,8 @@ namespace {
 static const float MOVE_BASE_SPEED = 0.03f;
 // move multiplier when running
 static const float RUN_SPEED_MULTIPLIER = 1.8f;
+// multiplier for debug speed
+static const float DEBUG_SPEED_MULTIPLIER = 7.5f;
 // animation multiplier when running
 static const float RUN_STEP_MULTIPLIER = 1.4f;
 // the base speed at which the player can look around
@@ -25,7 +27,7 @@ static const float LOOK_CLAMP = 80.0f;
 // the speed at which the player steps
 static const float STEP_SPEED = 186.0f;
 // the height of the player's steps
-static const float STEP_HEIGHT = 0.02f;
+static const float STEP_HEIGHT = 0.01f;
 // the rotation amount of the step animation
 static const float STEP_ROT_AMOUNT = 0.25f;
 
@@ -226,6 +228,12 @@ void Player::move()
         moveDis           *= RUN_SPEED_MULTIPLIER;
         stepAnimationRate *= RUN_STEP_MULTIPLIER;
         animationBoost    *= RUN_STEP_MULTIPLIER;
+    }
+    if ( omi::input::isKeyPressed( omi::input::key::LEFT_ALT ) )
+    {
+        moveDis           *= DEBUG_SPEED_MULTIPLIER;
+        stepAnimationRate *= 0.0f;
+        animationBoost    *= 0.0f;
     }
 
     // TODO: key release shit

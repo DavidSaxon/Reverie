@@ -38,6 +38,10 @@ private:
     bool m_flicker;
     // whether the light is on or off
     bool m_lightOn;
+    // the flicker counter
+    float m_flickerCounter;
+    // the current flicker threshold
+    float m_flickerThreshold;
 };
 
 #endif

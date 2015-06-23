@@ -90,12 +90,12 @@ void main() {
     // the colour of the material
     vec4 material = u_colour;
 
-    // TODO: get texture size into shader
     // choose mip-mapping level
     vec2 dx_vtc = dFdx( v_texCoord * u_textureDim.x );
     vec2 dy_vtc = dFdy( v_texCoord * u_textureDim.y );
-    float deltaMaxSqr = min( dot( dx_vtc, dx_vtc ), dot( dy_vtc, dy_vtc ) );
-    float mipmapLevel = 0.7 * log2( deltaMaxSqr );
+    float deltaMaxSqr = max( dot( dx_vtc, dx_vtc ), dot( dy_vtc, dy_vtc ) );
+    // float deltaMaxSqr = ( dot( dx_vtc, dx_vtc ) + dot( dy_vtc, dy_vtc ) ) / 2.0;
+    float mipmapLevel = 0.5 * log2( dot( dy_vtc, dy_vtc ) );
 
     //apply texturing
     vec4 textureColour = textureLod( u_texture, v_texCoord, mipmapLevel );

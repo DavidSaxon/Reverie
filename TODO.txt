@@ -2,9 +2,7 @@
 | TODO |
 \++++++/
 
-- send light transformation fix to omicron
-
-- send text fix to omicron
+- flickering at constant speed
 
 - add corner bits
 

@@ -1,5 +1,7 @@
 #include "src/entities/gameplay/environment/decor/intro/IntroLight1.hpp"
 
+#include <cmath>
+
 #include "src/data/Globals.hpp"
 
 //------------------------------------------------------------------------------
@@ -9,9 +11,10 @@
 namespace
 {
 
-static const float    LIGHT_POWER     = 0.5f;
-static const float    GLOW_BRIGHTNESS = 0.1f;
-static const unsigned FLICKER_SPEED   = 10;
+static const float LIGHT_POWER       = 0.5f;
+static const float GLOW_BRIGHTNESS   = 0.1f;
+static const float FLICKER_SPEED     = 0.1f;
+static const float FLICKER_THRESHOLD = 3.0f;
 
 } // namespace anonymous
 
@@ -21,9 +24,11 @@ static const unsigned FLICKER_SPEED   = 10;
 
 IntroLight1::IntroLight1( omi::Transform* baseTransform, bool flicker )
     :
-    Decor    ( baseTransform ),
-    m_flicker( flicker ),
-    m_lightOn( true )
+    Decor             ( baseTransform ),
+    m_flicker         ( flicker ),
+    m_lightOn         ( true ),
+    m_flickerCounter  ( 0.0f ),
+    m_flickerThreshold( 3.0f )
 {
 }
 
@@ -70,17 +75,17 @@ void IntroLight1::init()
     m_components.add( fittingMesh );
 
     // TESTING
-    omi::Transform* textPos = new omi::Transform(
-            "",
-            glm::vec3( 0.0f, 1.7f, -3.5f ),
-            glm::vec3( 0.0f, 0.0f, 0.0f ),
-            glm::vec3( 1.0f, 1.0f, 1.0f )
-    );
-    m_components.add( textPos );
-    omi::Text* text = omi::ResourceManager::getText(
-            "intro_tutorial_text", "", textPos );
-    text->setHorCentred( true );
-    m_components.add( text );
+    // omi::Transform* textPos = new omi::Transform(
+    //         "",
+    //         glm::vec3( 0.0f, 1.7f, -3.5f ),
+    //         glm::vec3( 0.0f, 0.0f, 0.0f ),
+    //         glm::vec3( 1.0f, 1.0f, 1.0f )
+    // );
+    // m_components.add( textPos );
+    // omi::Text* text = omi::ResourceManager::getText(
+    //         "intro_tutorial_text", "", textPos );
+    // text->setHorCentred( true );
+    // m_components.add( text );
 }
 
 void IntroLight1::update()
@@ -90,9 +95,20 @@ void IntroLight1::update()
         return;
     }
 
-    // flicker the light
-    if ( rand() % FLICKER_SPEED == 0 )
+    // increase the flicker counter
+    m_flickerCounter += FLICKER_SPEED * omi::fpsManager.getTimeScale();
+
+    // flicker the light if we've reached the threshold
+    if ( m_flickerCounter >= m_flickerThreshold )
     {
+        // reset counter
+        // m_flickerCounter = fmod( m_flickerCounter, m_flickerThreshold );
+        m_flickerCounter = 0.0f;
+        // recalculate random threshold
+        m_flickerThreshold =
+                ( static_cast<float>( rand() % 1000 ) / 1000.0f ) *
+                FLICKER_THRESHOLD;
+
         // switch state
         m_lightOn = !m_lightOn;
         // apply state
@@ -106,5 +122,7 @@ void IntroLight1::update()
             m_lightSource->setPower( 0.0f );
             m_paneMesh->getMaterial().glow->setBrightness( 0.0f );
         }
+
+
     }
 }

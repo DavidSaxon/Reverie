@@ -31,7 +31,7 @@ omi::Scene* init()
 
     //audio settings
     omi::audioSettings.setSoundDisabled( false );
-    omi::audioSettings.setMusicDisabled( false );
+    omi::audioSettings.setMusicDisabled( true );
 
     // apply settings from disk
     settings::config::applySettingsFromConfig();
