@@ -2,9 +2,9 @@
 | TODO |
 \++++++/
 
-- flickering at constant speed
+- anti-aliasing
 
-- add corner bits
+- send anti-aliasing to omicron
 
 - fading text and entity for it
 

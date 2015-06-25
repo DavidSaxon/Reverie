@@ -46,6 +46,14 @@ void buildIntroPack()
         "res/gfx/geometry/environment/intro/skirting.obj",
         0
     );
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "intro_skirting_corner",
+        resource_group::INTRO,
+        "default_shader",
+        "res/gfx/texture/intro/skirting.png",
+        "res/gfx/geometry/environment/intro/skirting_corner.obj",
+        0
+    );
 
     // light 1
     omi::ResourceManager::addTextureMaterialGeometryMesh(

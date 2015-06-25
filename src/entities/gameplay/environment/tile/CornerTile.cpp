@@ -61,6 +61,12 @@ void CornerTile::init()
             m_direction,
             global::environment::WEST
     ) );
+    // corner skirting
+    m_components.add( vendor::vendSkirtingCorner(
+            m_stage,
+            m_baseT,
+            global::environment::NORTH
+    ) );
 }
 
 void CornerTile::update()

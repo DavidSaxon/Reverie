@@ -110,8 +110,6 @@ set(SRCS
     src/entities/gameplay/environment/decor/intro/IntroDoorUp.cpp
     src/entities/gameplay/environment/decor/intro/IntroLight1.cpp
 
-    src/entities/gameplay/TestEntity.cpp
-
     src/entities/menu/PauseMenu.cpp
     src/entities/menu/setting_widget/EnumWidget.cpp
     src/entities/menu/setting_widget/SettingWidget.cpp

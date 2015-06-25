@@ -129,6 +129,38 @@ omi::Mesh* vendSkirting(
     }
 }
 
+omi::Mesh* vendSkirtingCorner(
+        global::environment::Stage stage,
+        omi::Transform* baseTransform,
+        global::environment::Direction direction )
+{
+    // create the secondary transform
+    omi::Transform* t = new omi::Transform(
+            "",
+            baseTransform,
+            glm::vec3( 0.0f, 0.0f, 0.0f ),
+            glm::vec3( 0.0f, dir::toAngle( direction ), 0.0f ),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    // the mesh point
+    omi::Mesh* m = NULL;
+
+    switch ( stage )
+    {
+        case global::environment::INTRO:
+        {
+            m = omi::ResourceManager::getMesh(
+                    "intro_skirting_corner", "", t );
+            return m;
+        }
+        // TODO: other stages
+        default:
+        {
+            return NULL;
+        }
+    }
+}
+
 omi::CollisionDetector* vendWallCollider(
         void* entity,
         omi::Transform* baseTransform,

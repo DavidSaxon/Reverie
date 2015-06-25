@@ -30,7 +30,7 @@ omi::Scene* init()
     omi::renderSettings.setShadowFrustumSize( 20.0f );
 
     //audio settings
-    omi::audioSettings.setSoundDisabled( false );
+    omi::audioSettings.setSoundDisabled( true );
     omi::audioSettings.setMusicDisabled( true );
 
     // apply settings from disk
