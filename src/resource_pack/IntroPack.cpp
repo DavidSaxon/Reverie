@@ -123,6 +123,13 @@ void buildIntroPack()
         0.12f,
         omi::material::SHADELESS
     );
+
+    //----------------------------------SOUNDS----------------------------------
+
+    omi::ResourceManager::addSound(
+        "intro_door_knock_1", resource_group::INTRO,
+        "res/sound/fx/intro/door_knock_1.ogg", 1
+    );
 };
 
 } // namespace pack

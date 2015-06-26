@@ -20,7 +20,7 @@ varying vec2 v_texCoord;
 
 void main()
 {
-    // calculate pixel size
+    // // calculate pixel size
     // vec2 pixelSize = vec2( 1.0 / u_res.x, 1.0 / u_res.y );
 
     // // get the depth for the current fragment
@@ -35,7 +35,7 @@ void main()
     //         u_depthTexture,
     //         vec2( v_texCoord.x, v_texCoord.y + pixelSize.y )
     // ).r;
-    // if ( abs( depth - neighbourDepth ) > 0.000005 )
+    // if ( abs( depth - neighbourDepth ) > 0.00001 )
     // {
     //     detectedEdge = true;
     // }
@@ -44,7 +44,7 @@ void main()
     //         u_depthTexture,
     //         vec2( v_texCoord.x, v_texCoord.y - pixelSize.y )
     // ).r;
-    // if ( abs( depth - neighbourDepth ) > 0.000005 )
+    // if ( abs( depth - neighbourDepth ) > 0.00001 )
     // {
     //     detectedEdge = true;
     // }
@@ -53,7 +53,7 @@ void main()
     //         u_depthTexture,
     //         vec2( v_texCoord.x - pixelSize.x, v_texCoord.y )
     // ).r;
-    // if ( abs( depth - neighbourDepth ) > 0.000005 )
+    // if ( abs( depth - neighbourDepth ) > 0.00001 )
     // {
     //     detectedEdge = true;
     // }
@@ -62,41 +62,43 @@ void main()
     //         u_depthTexture,
     //         vec2( v_texCoord.x + pixelSize.x, v_texCoord.y )
     // ).r;
-    // if ( abs( depth - neighbourDepth ) > 0.000005 )
+    // if ( abs( depth - neighbourDepth ) > 0.00001 )
     // {
     //     detectedEdge = true;
     // }
 
-    // read the texture colour
-    // vec3 finalColour = texture2D( u_texture, v_texCoord ).rgb;
+    // // read the texture colour
+    // // vec3 finalColour = texture2D( u_texture, v_texCoord ).rgb;
+    // vec3 finalColour = vec3( 0.0, 0.0, 0.0 );
 
-    // set final colour
+    // // set final colour
     // if ( detectedEdge )
     // {
     //     // blur since we're an edge
-    //     // finalColour = vec3( 1.0, 0.0, 0.0 );
+    //     finalColour = vec3( 1.0, 0.0, 0.0 );
 
-    //     finalColour *= 0.1;
-    //     finalColour += texture2D(
-    //             u_texture,
-    //             vec2( v_texCoord.x, v_texCoord.y + pixelSize.y )
-    //     ).rgb * 0.225;
-    //     finalColour += texture2D(
-    //             u_texture,
-    //             vec2( v_texCoord.x, v_texCoord.y - pixelSize.y )
-    //     ).rgb * 0.225;
-    //     finalColour += texture2D(
-    //             u_texture,
-    //             vec2( v_texCoord.x - pixelSize.x, v_texCoord.y )
-    //     ).rgb * 0.225;
-    //     finalColour += texture2D(
-    //             u_texture,
-    //             vec2( v_texCoord.x + pixelSize.x, v_texCoord.y )
-    //     ).rgb * 0.225;
+    //     // finalColour *= 0.1;
+    //     // finalColour += texture2D(
+    //     //         u_texture,
+    //     //         vec2( v_texCoord.x, v_texCoord.y + pixelSize.y )
+    //     // ).rgb * 0.225;
+    //     // finalColour += texture2D(
+    //     //         u_texture,
+    //     //         vec2( v_texCoord.x, v_texCoord.y - pixelSize.y )
+    //     // ).rgb * 0.225;
+    //     // finalColour += texture2D(
+    //     //         u_texture,
+    //     //         vec2( v_texCoord.x - pixelSize.x, v_texCoord.y )
+    //     // ).rgb * 0.225;
+    //     // finalColour += texture2D(
+    //     //         u_texture,
+    //     //         vec2( v_texCoord.x + pixelSize.x, v_texCoord.y )
+    //     // ).rgb * 0.225;
 
     //     // finalColour += vec3( 1.0, 0.0, 0.0 ) * 0.1;
 
     // }
 
+    // gl_FragColor = vec4( finalColour, 1.0 );
     gl_FragColor = texture2D( u_texture, v_texCoord );
 }

@@ -420,7 +420,7 @@ void RenderLists::render( Camera* camera )
 
     // render the standard and overlay render textures
     m_stdRenderTexture.render();
-    m_overlayRenderTexture.render();
+    // m_overlayRenderTexture.render();
 
     // // render the results of the render texture
     m_finalRenTex.unbind();

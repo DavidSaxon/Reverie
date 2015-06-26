@@ -44,10 +44,10 @@ void RenderTexture::bind()
     // bind the frame buffer
     glBindFramebuffer( GL_FRAMEBUFFER, m_frameBuffer );
     // bind the depth buffer
-    glBindRenderbuffer( GL_RENDERBUFFER, m_depthRenderBuffer );
+    // glBindRenderbuffer( GL_RENDERBUFFER, m_depthRenderBuffer );
     // colour attachment
-    GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-    glDrawBuffers( 1, drawBuffers );
+    // GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+    // glDrawBuffers( 1, drawBuffers );
     // clear the render buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     // set the view port to the size of the render texture
@@ -185,20 +185,20 @@ void RenderTexture::init()
     glBindFramebuffer( GL_FRAMEBUFFER, m_frameBuffer );
 
     // set up the depth buufer
-    glGenRenderbuffers( 1, &m_depthRenderBuffer );
-    glBindRenderbuffer( GL_RENDERBUFFER, m_depthRenderBuffer );
-    glRenderbufferStorage(
-        GL_RENDERBUFFER,
-        GL_DEPTH_COMPONENT,
-        static_cast<GLsizei>( renderSettings.getResolution().x * m_resScale ),
-        static_cast<GLsizei>( renderSettings.getResolution().y * m_resScale )
-    );
-    glFramebufferRenderbuffer(
-        GL_FRAMEBUFFER,
-        GL_DEPTH_ATTACHMENT,
-        GL_RENDERBUFFER,
-        m_depthRenderBuffer
-    );
+    // glGenRenderbuffers( 1, &m_depthRenderBuffer );
+    // glBindRenderbuffer( GL_RENDERBUFFER, m_depthRenderBuffer );
+    // glRenderbufferStorage(
+    //     GL_RENDERBUFFER,
+    //     GL_DEPTH_COMPONENT,
+    //     static_cast<GLsizei>( renderSettings.getResolution().x * m_resScale ),
+    //     static_cast<GLsizei>( renderSettings.getResolution().y * m_resScale )
+    // );
+    // glFramebufferRenderbuffer(
+    //     GL_FRAMEBUFFER,
+    //     GL_DEPTH_ATTACHMENT,
+    //     GL_RENDERBUFFER,
+    //     m_depthRenderBuffer
+    // );
 
     // generate the textures we will render to
 
@@ -232,38 +232,38 @@ void RenderTexture::init()
     );
 
     // depth texture
-    // glGenTextures( 1, &m_depthTexture );
-    // glBindTexture( GL_TEXTURE_2D, m_depthTexture );
-    // // create the empty depth texture
-    // glTexImage2D(
-    //     GL_TEXTURE_2D,
-    //     0,
-    //     GL_DEPTH_COMPONENT,
-    //     static_cast<GLsizei>( renderSettings.getResolution().x * m_resScale ),
-    //     static_cast<GLsizei>( renderSettings.getResolution().y * m_resScale ),
-    //     0,
-    //     GL_DEPTH_COMPONENT,
-    //     GL_FLOAT,
-    //     0
-    // );
-    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-    // // assign to the frame buffer
-    // glFramebufferTexture2D(
-    //     GL_FRAMEBUFFER,
-    //     GL_DEPTH_ATTACHMENT,
-    //     GL_TEXTURE_2D,
-    //     m_depthTexture,
-    //     0
-    // );
+    glGenTextures( 1, &m_depthTexture );
+    glBindTexture( GL_TEXTURE_2D, m_depthTexture );
+    // create the empty depth texture
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_DEPTH_COMPONENT,
+        static_cast<GLsizei>( renderSettings.getResolution().x * m_resScale ),
+        static_cast<GLsizei>( renderSettings.getResolution().y * m_resScale ),
+        0,
+        GL_DEPTH_COMPONENT,
+        GL_FLOAT,
+        0
+    );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    // assign to the frame buffer
+    glFramebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_DEPTH_ATTACHMENT,
+        GL_TEXTURE_2D,
+        m_depthTexture,
+        0
+    );
 
 
 
     // TODO: do we need this??
-    GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-    glDrawBuffers( 1, drawBuffers );
+    // GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+    // glDrawBuffers( 1, drawBuffers );
 
     // load shaders for the render texture
     m_shader = loader::loadShaderFromFiles(

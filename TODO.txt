@@ -2,9 +2,9 @@
 | TODO |
 \++++++/
 
-- fading text and entity for it
+- 3d sound manager
 
-- knocking door
+- send 3d sound to omicron
 
 - rattling door
 

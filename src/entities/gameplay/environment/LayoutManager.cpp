@@ -6,6 +6,7 @@
 #include "src/entities/gameplay/environment/tile/EndTile.hpp"
 #include "src/entities/gameplay/environment/tile/StraightTile.hpp"
 
+#include "src/entities/gameplay/intro/KnockDoor.hpp"
 #include "src/entities/gameplay/tutorial/TutorialText.hpp"
 
 //------------------------------------------------------------------------------
@@ -133,17 +134,14 @@ void LayoutManager::introInit()
             ),
             global::environment::EAST,
             global::environment::DECOR_LIGHT_2 |
-            global::environment::DECOR_PROP_1  |
             global::environment::DECOR_PROP_2
     ) );
-    // look text
-    addEntity( new TutorialText(
+    // knock door
+    addEntity( new KnockDoor(
             glm::vec3(
                     global::TILE_SIZE * 4.0f, 0.0f,
                     -global::TILE_SIZE * 4.0f
             ),
-            -90.0f,
-            "Hold the shift key to run",
             m_player
     ) );
     addEntity( new StraightTile(
@@ -171,6 +169,16 @@ void LayoutManager::introInit()
             global::environment::SOUTH,
             global::environment::DECOR_PROP_2 |
             global::environment::DECOR_PROP_3
+    ) );
+    // run text
+    addEntity( new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            -90.0f,
+            "Hold the shift key to run",
+            m_player
     ) );
     addEntity( new StraightTile(
             global::environment::INTRO,
