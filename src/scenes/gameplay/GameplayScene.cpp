@@ -31,8 +31,9 @@ void GameplayScene::init()
 
     // add the initial entities
     addEntity( new PauseMenu() );
-    addEntity( new Player() );
-    addEntity( new LayoutManager() );
+    Player* player = new Player();
+    addEntity( player );
+    addEntity( new LayoutManager( player ) );
 }
 
 bool GameplayScene::update()

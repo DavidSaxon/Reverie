@@ -75,6 +75,8 @@ protected:
 
     // the id of the texture to render to
     GLuint m_texture;
+    // the id of the depth texture to render to
+    GLuint m_depthTexture;
 
     // the path to the shaders
     std::string m_vertexShader;

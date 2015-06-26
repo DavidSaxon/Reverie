@@ -41,6 +41,9 @@ public:
     /** #Override */
     void update();
 
+    /** Return's the player's transform */
+    omi::Transform* getTransform();
+
 private:
 
     //--------------------------------------------------------------------------

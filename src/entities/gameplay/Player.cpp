@@ -14,11 +14,11 @@ namespace {
 // the base speed at which the player moves
 static const float MOVE_BASE_SPEED = 0.03f;
 // move multiplier when running
-static const float RUN_SPEED_MULTIPLIER = 1.8f;
+static const float RUN_SPEED_MULTIPLIER = 2.4f;
 // multiplier for debug speed
 static const float DEBUG_SPEED_MULTIPLIER = 7.5f;
 // animation multiplier when running
-static const float RUN_STEP_MULTIPLIER = 1.4f;
+static const float RUN_STEP_MULTIPLIER = 1.5f;
 // the base speed at which the player can look around
 static const float LOOK_BASE_SPEED = 0.055f;
 // the angle at which up/down looking is clamped
@@ -116,6 +116,11 @@ void Player::update()
         look();
         move();
     }
+}
+
+omi::Transform* Player::getTransform()
+{
+    return m_transform;
 }
 
 //------------------------------------------------------------------------------

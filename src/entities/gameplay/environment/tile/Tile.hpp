@@ -36,6 +36,9 @@ public:
     /** #Override */
     void update();
 
+    /** Returns the base transform of the tile */
+    omi::Transform* getBaseTransform();
+
 protected:
 
     //--------------------------------------------------------------------------

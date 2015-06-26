@@ -15,6 +15,7 @@ RenderTexture::RenderTexture(
     m_frameBuffer      ( 0 ),
     m_depthRenderBuffer( 0 ),
     m_texture          ( 0 ),
+    m_depthTexture     ( 0 ),
     m_vertexShader     ( vertexShader ),
     m_fragmentShader   ( fragmentShader ),
     m_resScale         ( resScale ),
@@ -113,8 +114,15 @@ void RenderTexture::render()
     // pass in custom shader parameters
     shaderParameters( program );
 
+    // pass in colour texture
     glActiveTexture( GL_TEXTURE0 );
     glBindTexture( GL_TEXTURE_2D, m_texture );
+
+    // pass in depth texture
+    glActiveTexture( GL_TEXTURE1 );
+    glUniform1i( glGetUniformLocation( program, "u_depthTexture" ), 1 );
+    glBindTexture( GL_TEXTURE_2D, m_depthTexture );
+    glActiveTexture( GL_TEXTURE0 );
 
     // draw geometry
     glBegin(GL_TRIANGLES);
@@ -193,6 +201,8 @@ void RenderTexture::init()
     );
 
     // generate the textures we will render to
+
+    // colour texture
     glGenTextures( 1, &m_texture );
     glBindTexture( GL_TEXTURE_2D, m_texture );
     // create an empty texture
@@ -220,6 +230,37 @@ void RenderTexture::init()
         m_texture,
         0
     );
+
+    // depth texture
+    // glGenTextures( 1, &m_depthTexture );
+    // glBindTexture( GL_TEXTURE_2D, m_depthTexture );
+    // // create the empty depth texture
+    // glTexImage2D(
+    //     GL_TEXTURE_2D,
+    //     0,
+    //     GL_DEPTH_COMPONENT,
+    //     static_cast<GLsizei>( renderSettings.getResolution().x * m_resScale ),
+    //     static_cast<GLsizei>( renderSettings.getResolution().y * m_resScale ),
+    //     0,
+    //     GL_DEPTH_COMPONENT,
+    //     GL_FLOAT,
+    //     0
+    // );
+    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    // // assign to the frame buffer
+    // glFramebufferTexture2D(
+    //     GL_FRAMEBUFFER,
+    //     GL_DEPTH_ATTACHMENT,
+    //     GL_TEXTURE_2D,
+    //     m_depthTexture,
+    //     0
+    // );
+
+
+
     // TODO: do we need this??
     GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers( 1, drawBuffers );
@@ -230,7 +271,7 @@ void RenderTexture::init()
 
     // unbind
     glBindFramebuffer ( GL_FRAMEBUFFER,  0 );
-    glBindRenderbuffer( GL_RENDERBUFFER, 0 );
+    // glBindRenderbuffer( GL_RENDERBUFFER, 0 );
     glBindTexture     ( GL_TEXTURE_2D,   0 );
 }
 

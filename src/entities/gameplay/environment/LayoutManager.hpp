@@ -4,6 +4,12 @@
 #include "src/data/Globals.hpp"
 #include "src/omicron/entity/Entity.hpp"
 
+//------------------------------------------------------------------------------
+//                              FORWARD DECLARATIONS
+//------------------------------------------------------------------------------
+
+class Player;
+
 /**************************************************************************\
 | The layout manager controls Reverie environment generation. The level is |
 | stored is a linked list type structure of segments.                      |
@@ -11,6 +17,12 @@
 class LayoutManager : public omi::Entity
 {
 public:
+
+    //--------------------------------------------------------------------------
+    //                                CONSTRUCTOR
+    //--------------------------------------------------------------------------
+
+    LayoutManager( Player* player );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -30,6 +42,9 @@ private:
 
     // the current stage the environment is in
     global::environment::Stage m_stage;
+
+    // pointer to the player
+    Player* m_player;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS

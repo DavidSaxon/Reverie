@@ -1,8 +1,22 @@
 #include "LayoutManager.hpp"
 
+#include "src/entities/gameplay/Player.hpp"
+
 #include "src/entities/gameplay/environment/tile/CornerTile.hpp"
 #include "src/entities/gameplay/environment/tile/EndTile.hpp"
 #include "src/entities/gameplay/environment/tile/StraightTile.hpp"
+
+#include "src/entities/gameplay/tutorial/TutorialText.hpp"
+
+//------------------------------------------------------------------------------
+//                                  CONSTRUCTOR
+//------------------------------------------------------------------------------
+
+LayoutManager::LayoutManager( Player* player )
+    :
+    m_player( player )
+{
+}
 
 //------------------------------------------------------------------------------
 //                            PUBLIC MEMBER FUNCTIONS
@@ -57,6 +71,14 @@ void LayoutManager::introInit()
             global::environment::DECOR_PROP_1  |
             global::environment::DECOR_PROP_2
     ) );
+    // title text
+    addEntity( new TutorialText(
+            glm::vec3( 0.0f, -0.4f, -global::TILE_SIZE ),
+            0.0f,
+            "Use the WASD keys to move",
+            m_player,
+            true
+    ) );
     addEntity( new StraightTile(
             global::environment::INTRO,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 2.0f ),
@@ -73,6 +95,13 @@ void LayoutManager::introInit()
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
             global::environment::NORTH,
             global::environment::DECOR_LIGHT_1
+    ) );
+    // look text
+    addEntity( new TutorialText(
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+            0.0f,
+            "Move the mouse to look around",
+            m_player
     ) );
     addEntity( new StraightTile(
             global::environment::INTRO,
@@ -106,6 +135,16 @@ void LayoutManager::introInit()
             global::environment::DECOR_LIGHT_2 |
             global::environment::DECOR_PROP_1  |
             global::environment::DECOR_PROP_2
+    ) );
+    // look text
+    addEntity( new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 4.0f, 0.0f,
+                    -global::TILE_SIZE * 4.0f
+            ),
+            -90.0f,
+            "Hold the shift key to run",
+            m_player
     ) );
     addEntity( new StraightTile(
             global::environment::INTRO,

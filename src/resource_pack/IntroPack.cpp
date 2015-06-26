@@ -99,17 +99,29 @@ void buildIntroPack()
         0
     );
 
+    // intro title text
+    omi::ResourceManager::addMaterialText(
+        "intro_title_text",
+        resource_group::INTRO,
+        "default_shader",
+        glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
+        1,
+        "title_font", // TODO:
+        "REVERIE",
+        0.24f,
+        omi::material::SHADELESS
+    );
     // tutorial text
     omi::ResourceManager::addMaterialText(
         "intro_tutorial_text",
         resource_group::INTRO,
         "default_shader",
         glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
-        0,
+        1,
         "title_font", // TODO:
-        "Welcome to the Reverie",
-        0.12f
-        // omi::material::SHADELESS
+        "Tutorial text",
+        0.12f,
+        omi::material::SHADELESS
     );
 };
 

@@ -2,10 +2,6 @@
 | TODO |
 \++++++/
 
-- anti-aliasing
-
-- send anti-aliasing to omicron
-
 - fading text and entity for it
 
 - knocking door
@@ -83,6 +79,15 @@
 }
 
 - anti-aliasing
+
+- turn overlay back on
+
+- send anti-aliasing to omicron
+{
+    - RenderTexture.cpp and .hpp
+    - fxaa_render_texture_fragment.glsl
+    - fxaa_render_texture_fragment.glsl
+}
 
 -Phobetor
 {

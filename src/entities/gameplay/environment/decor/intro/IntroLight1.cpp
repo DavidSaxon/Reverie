@@ -73,19 +73,6 @@ void IntroLight1::init()
     fittingMesh->getMaterial().specular =
         new omi::Specular( 64.0f, glm::vec3( 1.0f, 1.0f, 1.0f ) );
     m_components.add( fittingMesh );
-
-    // TESTING
-    // omi::Transform* textPos = new omi::Transform(
-    //         "",
-    //         glm::vec3( 0.0f, 1.7f, -3.5f ),
-    //         glm::vec3( 0.0f, 0.0f, 0.0f ),
-    //         glm::vec3( 1.0f, 1.0f, 1.0f )
-    // );
-    // m_components.add( textPos );
-    // omi::Text* text = omi::ResourceManager::getText(
-    //         "intro_tutorial_text", "", textPos );
-    // text->setHorCentred( true );
-    // m_components.add( text );
 }
 
 void IntroLight1::update()
