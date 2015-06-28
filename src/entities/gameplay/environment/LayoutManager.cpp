@@ -49,9 +49,10 @@ void LayoutManager::update()
 
 void LayoutManager::introInit()
 {
-    // TODO: create lighting manager.. or use stage manager which you deleted
-    // set ambient lighting
-    // omi::renderSettings.setAmbientStrength( 1.0f );
+    // // TODO: create lighting manager.. or use stage manager which you deleted
+    // // set ambient lighting
+    // // omi::renderSettings.setAmbientStrength( 1.0f );
+
 
     // the intro is the same every-time
     addEntity( new EndTile(

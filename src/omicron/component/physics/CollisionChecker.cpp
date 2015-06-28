@@ -126,7 +126,7 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                 dis -= new_move.z;
                 temp_move.z = minDis - dis;
 
-                if ( new_move.z <= 0.0f && new_move.z - temp_move.z <= 0.0f )
+                if ( new_move.z <= 0.0f && new_move.z - temp_move.z <= 0.01f )
                 {
                     new_move.z = new_move.z - temp_move.z;
                 }
@@ -154,7 +154,7 @@ glm::vec3 CollisionChecker::forwardBestCheck(
                 dis -= new_move.z;
                 temp_move.z = minDis - dis;
 
-                if ( new_move.z >= 0.0f && new_move.z - temp_move.z >= 0.0f )
+                if ( new_move.z >= 0.0f && new_move.z - temp_move.z >= -0.01f )
                 {
                     new_move.z = new_move.z - temp_move.z;
                 }

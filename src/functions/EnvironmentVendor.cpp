@@ -221,6 +221,10 @@ omi::CollisionDetector* vendWallCollider(
         }
     }
 
+    std::cout << "final dir: " << finalDirection << std::endl;
+    std::cout << "dir vector: " << dirVector.x << " : " << dirVector.y << " : " << dirVector.z << std::endl;
+    std::cout << "colliderSize: " << colliderSize.x << " : " << colliderSize.y << std::endl;
+
     // create and add the bounding to the collider
     omi::Transform* t = new omi::Transform(
             "",
