@@ -34,8 +34,8 @@ void SoundPool::release(unsigned id) {
     m_pool.erase(m_pool.find(id));
 }
 
-unsigned SoundPool::play(unsigned id, bool loop, float volume) {
-
+unsigned SoundPool::play(unsigned id, bool loop, float volume)
+{
     // don't play if sounds are disabled
     if (audioSettings.isSoundDisabled()) {
 

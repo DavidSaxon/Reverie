@@ -285,6 +285,10 @@ void vendDecorIntro(
     {
         decor.push_back( new IntroLight1( transform, true ) );
     }
+    if ( mask & global::environment::DECOR_LIGHT_3 )
+    {
+        decor.push_back( new IntroLight1( transform, true, true ) );
+    }
     if ( mask & global::environment::DECOR_PROP_1 )
     {
         decor.push_back( new IntroDoorRight( transform ) );

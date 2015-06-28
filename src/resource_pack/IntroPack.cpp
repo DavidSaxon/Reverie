@@ -98,6 +98,14 @@ void buildIntroPack()
         "res/gfx/geometry/environment/intro/door_1_handle.obj",
         0
     );
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "intro_rattle_handle",
+        resource_group::INTRO,
+        "default_shader",
+        "res/gfx/texture/intro/light_fitting.png",
+        "res/gfx/geometry/environment/intro/rattle_handle.obj",
+        0
+    );
 
     // intro title text
     omi::ResourceManager::addMaterialText(
@@ -124,11 +132,25 @@ void buildIntroPack()
         omi::material::SHADELESS
     );
 
+    // TODO: MOVE TO PHOBETOR PACK
+    omi::ResourceManager::addTextureMaterialGeometryMesh(
+        "phobetor_still",
+        resource_group::INTRO,
+        "default_shader",
+        "res/gfx/texture/phobetor/skin.png",
+        "res/gfx/geometry/phobetor/still.obj",
+        0
+    );
+
     //----------------------------------SOUNDS----------------------------------
 
     omi::ResourceManager::addSound(
         "intro_door_knock_1", resource_group::INTRO,
         "res/sound/fx/intro/door_knock_1.ogg", 1
+    );
+    omi::ResourceManager::addSound(
+        "intro_door_rattle_1", resource_group::INTRO,
+        "res/sound/fx/intro/door_rattle_1.ogg", 1
     );
 };
 

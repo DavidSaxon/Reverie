@@ -2,11 +2,13 @@
 | TODO |
 \++++++/
 
+- remove facility pack
+
+- clean up player pack
+
 - 3d sound manager
 
 - send 3d sound to omicron
-
-- rattling door
 
 - phobeter under flickering light
 

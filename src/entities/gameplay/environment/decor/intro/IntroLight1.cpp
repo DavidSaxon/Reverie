@@ -22,10 +22,14 @@ static const float FLICKER_THRESHOLD = 3.0f;
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
 
-IntroLight1::IntroLight1( omi::Transform* baseTransform, bool flicker )
+IntroLight1::IntroLight1(
+        omi::Transform* baseTransform,
+        bool flicker,
+        bool phobetor )
     :
     Decor             ( baseTransform ),
     m_flicker         ( flicker ),
+    m_phobetor        ( phobetor ),
     m_lightOn         ( true ),
     m_flickerCounter  ( 0.0f ),
     m_flickerThreshold( 3.0f )
@@ -73,6 +77,22 @@ void IntroLight1::init()
     fittingMesh->getMaterial().specular =
         new omi::Specular( 64.0f, glm::vec3( 1.0f, 1.0f, 1.0f ) );
     m_components.add( fittingMesh );
+
+    // phobetor
+    if ( m_phobetor )
+    {
+        omi::Transform* pt = new omi::Transform(
+                "",
+                m_baseTransform,
+                glm::vec3( 0.0f, 0.0f, -1.0f ),
+                glm::vec3(),
+                glm::vec3( 1.0f, 1.0f, 1.0f )
+        );
+        m_components.add( pt );
+        m_phobetorMesh = omi::ResourceManager::getMesh(
+                "phobetor_still", "", pt );
+        m_components.add( m_phobetorMesh );
+    }
 }
 
 void IntroLight1::update()
@@ -99,7 +119,7 @@ void IntroLight1::update()
         // switch state
         m_lightOn = !m_lightOn;
         // apply state
-        if ( m_lightOn )
+        if ( m_lightOn && !m_phobetor )
         {
             m_lightSource->setPower( LIGHT_POWER );
             m_paneMesh->getMaterial().glow->setBrightness( GLOW_BRIGHTNESS );
@@ -109,7 +129,5 @@ void IntroLight1::update()
             m_lightSource->setPower( 0.0f );
             m_paneMesh->getMaterial().glow->setBrightness( 0.0f );
         }
-
-
     }
 }

@@ -73,10 +73,11 @@ enum Decor
     DECOR_NONE    = 0L,
     DECOR_LIGHT_1 = 1L << 0,
     DECOR_LIGHT_2 = 1L << 1,
-    DECOR_PROP_1  = 1L << 2,
-    DECOR_PROP_2  = 1L << 3,
-    DECOR_PROP_3  = 1L << 4,
-    DECOR_PROP_4  = 1L << 5,
+    DECOR_LIGHT_3 = 1L << 2,
+    DECOR_PROP_1  = 1L << 3,
+    DECOR_PROP_2  = 1L << 4,
+    DECOR_PROP_3  = 1L << 5,
+    DECOR_PROP_4  = 1L << 6,
 };
 
 } // namespace environment

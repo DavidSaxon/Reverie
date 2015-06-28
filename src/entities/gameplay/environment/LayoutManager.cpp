@@ -7,6 +7,7 @@
 #include "src/entities/gameplay/environment/tile/StraightTile.hpp"
 
 #include "src/entities/gameplay/intro/KnockDoor.hpp"
+#include "src/entities/gameplay/intro/RattleDoor.hpp"
 #include "src/entities/gameplay/tutorial/TutorialText.hpp"
 
 //------------------------------------------------------------------------------
@@ -187,6 +188,100 @@ void LayoutManager::introInit()
                     -global::TILE_SIZE * 5.0f
             ),
             global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 6.0f
+            ),
+            global::environment::NORTH
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 7.0f
+            ),
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_2
+    ) );
+    // rattle door
+    addEntity( new RattleDoor(
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 7.0f
+            ),
+            m_player
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 8.0f
+            ),
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    // pause text
+    addEntity( new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 8.0f
+            ),
+            0.0f,
+            "Press ESC to access the menu",
+            m_player
+    ) );
+    addEntity( new CornerTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            global::environment::EAST
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 6.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            global::environment::WEST
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 5.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            global::environment::WEST
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 4.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            global::environment::WEST,
+            global::environment::DECOR_LIGHT_3
+    ) );
+    addEntity( new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 3.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            global::environment::WEST
+    ) );
+    addEntity( new CornerTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            global::environment::WEST,
             global::environment::DECOR_LIGHT_1
     ) );
 }

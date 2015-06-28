@@ -11,7 +11,10 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    IntroLight1( omi::Transform* baseTransform, bool flicker = false  );
+    IntroLight1(
+            omi::Transform* baseTransform,
+            bool flicker = false,
+            bool phobetor = false  );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -33,9 +36,13 @@ private:
     omi::PointLight* m_lightSource;
     // the light pane mesh
     omi::Mesh* m_paneMesh;
+    // the phobetor mesh
+    omi::Mesh* m_phobetorMesh;
 
     // whether the light is flicker or not
     bool m_flicker;
+    // whether or not to show phobetor or not
+    bool m_phobetor;
     // whether the light is on or off
     bool m_lightOn;
     // the flicker counter

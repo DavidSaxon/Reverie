@@ -94,7 +94,9 @@ private:
             m_bank[m_instance].setLoop(loop);
             m_bank[m_instance].setVolume(
                 (audioSettings.getSoundVolume() * volume) * 100.0f);
+            m_bank[m_instance].setPosition( 1.0, 0.0, 0.0 );
             m_bank[m_instance].play();
+
 
             // increment instance
             unsigned rInstance = m_instance;
