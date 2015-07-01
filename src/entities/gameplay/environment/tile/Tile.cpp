@@ -33,7 +33,6 @@ Tile::Tile(
 
 void Tile::init()
 {
-    // TODO: appeared position
     // create the base transform
     m_baseT = new omi::Transform(
             "",
@@ -43,8 +42,14 @@ void Tile::init()
     );
     m_components.add( m_baseT );
 
-    // vend and add the floor since it's there on every tile
-    m_components.add( vendor::vendFloorTile( m_stage, m_baseT ) );
+    // vend and add the floor and ceiling since it's there on every tile
+    omi::Mesh* mesh = vendor::vendFloorTile( m_stage, m_baseT );
+    m_meshComp.push_back( mesh );
+    m_components.add( mesh );
+
+    mesh = vendor::vendCeilingTile( m_stage, m_baseT );
+    m_meshComp.push_back( mesh );
+    m_components.add( mesh );
 
     // vend the decor
     vendor::vendDecor( m_stage, m_baseT, m_decor, m_decorEntities );
@@ -59,6 +64,19 @@ void Tile::init()
 
 void Tile::update()
 {
+}
+
+void Tile::setVisibility( bool state )
+{
+    // super call
+    ProcedualEntity::setVisibility( state );
+    // set decor visibility
+    for ( std::vector<Decor*>::iterator it = m_decorEntities.begin();
+          it != m_decorEntities.end();
+          ++it )
+    {
+        ( *it )->setVisibility( state );
+    }
 }
 
 omi::Transform* Tile::getBaseTransform()

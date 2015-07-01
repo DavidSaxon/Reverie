@@ -4,7 +4,7 @@
 #include <map>
 
 #include "src/data/Globals.hpp"
-#include "src/omicron/entity/Entity.hpp"
+#include "src/entities/gameplay/ProcedualEntity.hpp"
 
 class Decor;
 
@@ -12,7 +12,7 @@ class Decor;
 | A tile represents a cube segment of the environment. Tiles are sub-classed |
 | into their separate types.                                                 |
 \****************************************************************************/
-class Tile : public omi::Entity
+class Tile : public ProcedualEntity
 {
 public:
 
@@ -35,6 +35,9 @@ public:
 
     /** #Override */
     void update();
+
+    /** Sets the visibility of this tile */
+    void setVisibility( bool state );
 
     /** Returns the base transform of the tile */
     omi::Transform* getBaseTransform();

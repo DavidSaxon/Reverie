@@ -567,13 +567,13 @@ void RenderLists::removeRenderable( Renderable* renderable )
 
 void RenderLists::addLight( Light* light )
 {
-    // don't add the light if over the max light limit
-    if ( m_lights.size() >= MAX_LIGHTS )
-    {
-        // TODO: some sort of warning if in designer mode
-        // don't add the light
-        return;
-    }
+    // // don't add the light if over the max light limit
+    // if ( m_lights.size() >= MAX_LIGHTS )
+    // {
+    //     // TODO: some sort of warning if in designer mode
+    //     // don't add the light
+    //     return;
+    // }
 
     // add to the list of lights
     m_lights.push_back( light );
@@ -673,6 +673,12 @@ void RenderLists::buildLightData(
           it != m_lights.end(); ++it )
     {
         Light* light = *it;
+
+        // ignore non-active lights
+        if ( !light->active )
+        {
+            continue;
+        }
 
         // TODO: FIX THIS SHIT
         glm::vec3 pos( light->getTransform()->translation );

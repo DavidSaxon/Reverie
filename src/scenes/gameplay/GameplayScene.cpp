@@ -5,7 +5,7 @@
 #include "src/entities/debug/FPSCounter.hpp"
 
 #include "src/entities/gameplay/Player.hpp"
-#include "src/entities/gameplay/environment/LayoutManager.hpp"
+#include "src/entities/gameplay/layout/LayoutManager.hpp"
 #include "src/entities/menu/PauseMenu.hpp"
 
 //------------------------------------------------------------------------------

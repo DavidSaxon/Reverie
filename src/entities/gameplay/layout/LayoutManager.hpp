@@ -1,15 +1,17 @@
-#ifndef REVERIE_ENTITIES_GAMEPLAY_TUTORIAL_TEXT_HPP_
-#   define REVERIE_ENTITIES_GAMEPLAY_TUTORIAL_TEXT_HPP_
+#ifndef REVERIE_ENTITIES_GAMEPLAY_LAYOUT_MANAGER_HPP_
+#   define REVERIE_ENTITIES_GAMEPLAY_LAYOUT_MANAGER_HPP_
 
-#include "src/entities/gameplay/ProcedualEntity.hpp"
+#include "src/data/Globals.hpp"
+#include "src/omicron/entity/Entity.hpp"
 
 //------------------------------------------------------------------------------
 //                              FORWARD DECLARATIONS
 //------------------------------------------------------------------------------
 
+class AbstractLayoutCore;
 class Player;
 
-class TutorialText : public ProcedualEntity
+class LayoutManager : public omi::Entity
 {
 public:
 
@@ -17,12 +19,7 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    TutorialText(
-            const glm::vec3 basePos,
-            float baseRot,
-            const std::string& str,
-            Player* player,
-            bool isTitle = false );
+    LayoutManager( Player* player );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -40,25 +37,13 @@ private:
     //                                 VARIABLES
     //--------------------------------------------------------------------------
 
-    // the position of the text
-    omi::Transform* m_pos;
-    // the text component
-    omi::Text* m_text;
-    // the title text component
-    omi::Text* m_titleText;
+    // the current stage the environment is in
+    global::environment::Stage m_stage;
+    // the current layout core
+    AbstractLayoutCore* m_layoutCore;
 
-    // the base transformation
-    glm::vec3 m_basePos;
-    float m_baseRot;
-
-    // the string to use as text
-    std::string m_str;
-
-    // a pointer to the player entity
+    // pointer to the player
     Player* m_player;
-
-    // if the title should be displayed
-    bool m_isTitle;
 };
 
 #endif

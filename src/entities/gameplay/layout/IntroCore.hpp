@@ -1,15 +1,16 @@
-#ifndef REVERIE_ENTITIES_GAMEPLAY_TUTORIAL_TEXT_HPP_
-#   define REVERIE_ENTITIES_GAMEPLAY_TUTORIAL_TEXT_HPP_
+#ifndef REVERIE_ENTITIES_GAMEPLAY_LAYOUT_INTROCORE_HPP_
+#   define REVERIE_ENTITIES_GAMEPLAY_LAYOUT_INTROCORE_HPP_
 
-#include "src/entities/gameplay/ProcedualEntity.hpp"
+#include "src/entities/gameplay/layout/AbstractLayoutCore.hpp"
 
 //------------------------------------------------------------------------------
 //                              FORWARD DECLARATIONS
 //------------------------------------------------------------------------------
 
 class Player;
+class ProcedualEntity;
 
-class TutorialText : public ProcedualEntity
+class IntroCore : public AbstractLayoutCore
 {
 public:
 
@@ -17,12 +18,7 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    TutorialText(
-            const glm::vec3 basePos,
-            float baseRot,
-            const std::string& str,
-            Player* player,
-            bool isTitle = false );
+    IntroCore( Player* player );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -40,25 +36,16 @@ private:
     //                                 VARIABLES
     //--------------------------------------------------------------------------
 
-    // the position of the text
-    omi::Transform* m_pos;
-    // the text component
-    omi::Text* m_text;
-    // the title text component
-    omi::Text* m_titleText;
+    // the layout sections
+    std::vector< std::vector< ProcedualEntity* > > m_sections;
 
-    // the base transformation
-    glm::vec3 m_basePos;
-    float m_baseRot;
+    //--------------------------------------------------------------------------
+    //                          PRIVATE MEMBER FUNCTIONS
+    //--------------------------------------------------------------------------
 
-    // the string to use as text
-    std::string m_str;
+    void addToSection( size_t section, ProcedualEntity* entity );
 
-    // a pointer to the player entity
-    Player* m_player;
-
-    // if the title should be displayed
-    bool m_isTitle;
+    void setSectionVisibility( size_t section, bool state );
 };
 
 #endif

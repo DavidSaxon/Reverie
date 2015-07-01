@@ -25,53 +25,71 @@ void EndTile::init()
     // super call
     Tile::init();
 
-    // floor
-    m_components.add( vendor::vendCeilingTile( m_stage, m_baseT ) );
     // north wall
-    m_components.add( vendor::vendWallTile(
+    omi::Mesh* mesh = vendor::vendWallTile(
             m_stage,
             m_baseT,
             global::environment::NORTH
-    ) );
-    m_components.add( vendor::vendSkirting(
+    );
+    m_meshComp.push_back( mesh );
+    m_components.add( mesh );
+
+    mesh = vendor::vendSkirting(
             m_stage,
             m_baseT,
             global::environment::NORTH
-    ) );
+    );
+    m_meshComp.push_back( mesh );
+    m_components.add( mesh );
+
     m_components.add( vendor::vendWallCollider(
             this,
             m_baseT,
             m_direction,
             global::environment::NORTH
     ) );
+
+
     // east wall
-    m_components.add( vendor::vendWallTile(
+    mesh = vendor::vendWallTile(
             m_stage,
             m_baseT,
             global::environment::EAST
-    ) );
-    m_components.add( vendor::vendSkirting(
+    );
+    m_meshComp.push_back( mesh );
+    m_components.add( mesh );
+
+    mesh = vendor::vendSkirting(
             m_stage,
             m_baseT,
             global::environment::EAST
-    ) );
+    );
+    m_meshComp.push_back( mesh );
+
     m_components.add( vendor::vendWallCollider(
             this,
             m_baseT,
             m_direction,
             global::environment::EAST
     ) );
+
+
     // west wall
-    m_components.add( vendor::vendWallTile(
+    mesh = vendor::vendWallTile(
             m_stage,
             m_baseT,
             global::environment::WEST
-    ) );
-    m_components.add( vendor::vendSkirting(
+    );
+    m_meshComp.push_back( mesh );
+    m_components.add( mesh );
+
+    mesh = vendor::vendSkirting(
             m_stage,
             m_baseT,
             global::environment::WEST
-    ) );
+    );
+    m_meshComp.push_back( mesh );
+
     m_components.add( vendor::vendWallCollider(
             this,
             m_baseT,

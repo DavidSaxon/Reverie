@@ -1,9 +1,9 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_DECOR_DECOR_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_ENVIRONMENT_DECOR_DECOR_HPP_
 
-#include "src/omicron/entity/Entity.hpp"
+#include "src/entities/gameplay/ProcedualEntity.hpp"
 
-class Decor : public omi::Entity
+class Decor : public ProcedualEntity
 {
 public:
 

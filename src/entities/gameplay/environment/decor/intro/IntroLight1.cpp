@@ -62,6 +62,7 @@ void IntroLight1::init()
             0.1f,
             0.02f
     );
+    m_lightComp.push_back( m_lightSource );
     m_components.add( m_lightSource );
 
     // light pane
@@ -69,6 +70,7 @@ void IntroLight1::init()
             "intro_light_1_pane", "", m_baseTransform );
     m_paneMesh->getMaterial().glow =
             new omi::Glow( glm::vec3( 1.0f, 1.0f, 1.0f ), GLOW_BRIGHTNESS );
+    m_meshComp.push_back( m_paneMesh );
     m_components.add( m_paneMesh );
 
     // light fitting
@@ -76,8 +78,10 @@ void IntroLight1::init()
             "intro_light_1_fitting", "", m_baseTransform );
     fittingMesh->getMaterial().specular =
         new omi::Specular( 64.0f, glm::vec3( 1.0f, 1.0f, 1.0f ) );
+    m_meshComp.push_back( fittingMesh );
     m_components.add( fittingMesh );
 
+    // TODO: REMOVE
     // phobetor
     if ( m_phobetor )
     {
@@ -91,6 +95,7 @@ void IntroLight1::init()
         m_components.add( pt );
         m_phobetorMesh = omi::ResourceManager::getMesh(
                 "phobetor_still", "", pt );
+        m_meshComp.push_back( m_phobetorMesh );
         m_components.add( m_phobetorMesh );
     }
 }

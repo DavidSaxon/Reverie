@@ -103,7 +103,7 @@ void RattleDoor::update()
         m_panelManipulator->translation.x = (
                 ( static_cast<float>( rand() % 1000 ) / 1000.0f ) * 0.018f );
 
-        const float turnSpeed = 5.0f;
+        const float turnSpeed = 4.0f;
 
         // increase the handle animation
         m_handleAnimation += 0.015f * omi::fpsManager.getTimeScale();
