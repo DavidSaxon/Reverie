@@ -1,7 +1,7 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_INTRO_KNOCKDOOR_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_INTRO_KNOCKDOOR_HPP_
 
-#include "src/omicron/entity/Entity.hpp"
+#include "src/entities/gameplay/ProcedualEntity.hpp"
 
 //------------------------------------------------------------------------------
 //                              FORWARD DECLARATIONS
@@ -9,7 +9,7 @@
 
 class Player;
 
-class KnockDoor : public omi::Entity
+class KnockDoor : public ProcedualEntity
 {
 public:
 

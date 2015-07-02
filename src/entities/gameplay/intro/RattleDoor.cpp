@@ -34,6 +34,7 @@ void RattleDoor::init()
     // add geometry
     omi::Mesh* frame = omi::ResourceManager::getMesh(
             "intro_door_1_frame", "", m_pos );
+    m_meshComp.push_back( frame );
     m_components.add( frame );
 
     // panel manipulator
@@ -49,6 +50,7 @@ void RattleDoor::init()
 
     omi::Mesh* panel = omi::ResourceManager::getMesh(
             "intro_door_1_panel", "", m_panelManipulator );
+    m_meshComp.push_back( panel );
     m_components.add( panel );
 
     // handle manipulator
@@ -65,6 +67,7 @@ void RattleDoor::init()
             "intro_rattle_handle", "", m_handleManipulator );
     handle->getMaterial().specular =
         new omi::Specular( 64.0f, glm::vec3( 1.0f, 1.0f, 1.0f ) );
+    m_meshComp.push_back( handle );
     m_components.add( handle );
 }
 

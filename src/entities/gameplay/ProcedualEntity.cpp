@@ -13,6 +13,13 @@ void ProcedualEntity::setVisibility( bool state )
     {
         ( *it )->visible = state;
     }
+    // set text visibility
+    for ( std::vector< omi::Text* >::iterator it = m_textComp.begin();
+        it != m_textComp.end();
+        ++it )
+    {
+        ( *it )->visible = state;
+    }
     // set light active state
     for ( std::vector< omi::Light* >::iterator it = m_lightComp.begin();
         it != m_lightComp.end();

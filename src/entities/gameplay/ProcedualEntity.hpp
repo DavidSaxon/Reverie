@@ -20,6 +20,7 @@ protected:
     //--------------------------------------------------------------------------
 
     std::vector< omi::Mesh* > m_meshComp;
+    std::vector< omi::Text* > m_textComp;
     std::vector< omi::Light* > m_lightComp;
 };
 

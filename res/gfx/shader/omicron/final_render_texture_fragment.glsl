@@ -34,6 +34,37 @@ void main() {
     // set colour
     vec4 texCol = texture2D( u_texture, v_texCoord );
 
+    vec2 uv = ( v_texCoord * 2.0 ) - 1.0;
+
+    // TODO: testing sepia
+    // if ( length( uv ) < 0.25 )
+    // {
+    //     texCol.r = ( texCol.r * 0.393 ) +
+    //                ( texCol.g * 0.769 ) +
+    //                ( texCol.b * 0.189 );
+    //     texCol.g = ( texCol.r * 0.349 ) +
+    //                ( texCol.g * 0.686 ) +
+    //                ( texCol.b * 0.168 );
+    //     texCol.b = ( texCol.r * 0.272 ) +
+    //                ( texCol.g * 0.534 ) +
+    //                ( texCol.b * 0.131 );
+    // }
+    // TODO: testing invert
+    // if ( length( uv ) < 0.25 )
+    // {
+    //     texCol.r = 1.0 - texCol.r;
+    //     texCol.g = 1.0 - texCol.g;
+    //     texCol.b = 1.0 - texCol.b;
+    // }
+    // TODO: testing shuffle
+    // if ( length( uv ) < 0.25 )
+    // {
+    //     texCol.r = texCol.g;
+    //     texCol.g = texCol.b;
+    //     texCol.b = texCol.r;
+    // }
+
+
     // apply film grain to output
     float noise = clamp( rand( v_texCoord ), 0.0, 1.0 );
     noise = ( noise * 2.0 ) - 1.0;

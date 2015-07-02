@@ -243,6 +243,9 @@ void LayoutManager::introInit()
             ),
             global::environment::EAST
     ) );
+
+
+
     addEntity( new StraightTile(
             global::environment::INTRO,
             glm::vec3(

@@ -79,6 +79,13 @@ void Player::init()
     camera->setExposure( 1.2f );
     m_components.add( camera );
 
+    // collision detector
+    omi::CollisionDetector* detector =
+            new omi::CollisionDetector( "", "player", this );
+    detector->addBounding(
+            new omi::BoundingRect( glm::vec2( 0.75f, 0.75f ), m_transform ) );
+    m_components.add( detector );
+
     // collision checker
     m_collisionChecker = new omi::CollisionChecker( "" );
     m_collisionChecker->addBounding(

@@ -7,6 +7,7 @@
 //                              FORWARD DECLARATIONS
 //------------------------------------------------------------------------------
 
+class IntroLayoutTrigger;
 class Player;
 class ProcedualEntity;
 
@@ -38,6 +39,10 @@ private:
 
     // the layout sections
     std::vector< std::vector< ProcedualEntity* > > m_sections;
+    // initial visible sections
+    std::vector< size_t > m_initalVis;
+    // layout triggers
+    std::vector< IntroLayoutTrigger* > m_triggers;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS
@@ -46,6 +51,18 @@ private:
     void addToSection( size_t section, ProcedualEntity* entity );
 
     void setSectionVisibility( size_t section, bool state );
+
+    void setSectionsVisible( const std::vector< size_t >& sections );
+
+    void initSection0();
+
+    void initSection1();
+
+    void initSection2();
+
+    void initSection3();
+
+    void initSection4();
 };
 
 #endif

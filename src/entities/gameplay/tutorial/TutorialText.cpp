@@ -44,6 +44,7 @@ void TutorialText::init()
     m_text->setString( m_str );
     m_text->setHorCentred ( true );
     m_text->setVertCentred( true );
+    m_textComp.push_back( m_text );
     m_components.add( m_text );
 
     // title text
@@ -62,6 +63,7 @@ void TutorialText::init()
                 "intro_title_text", "", m_titlePos );
         m_titleText->setHorCentred ( true );
         m_titleText->setVertCentred( true );
+        m_textComp.push_back( m_titleText );
         m_components.add( m_titleText );
 
     }

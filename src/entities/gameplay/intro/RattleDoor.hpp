@@ -1,7 +1,7 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_INTRO_RATTLEDOOR_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_INTRO_RATTLEDOOR_HPP_
 
-#include "src/omicron/entity/Entity.hpp"
+#include "src/entities/gameplay/ProcedualEntity.hpp"
 
 //------------------------------------------------------------------------------
 //                              FORWARD DECLARATIONS
@@ -9,7 +9,7 @@
 
 class Player;
 
-class RattleDoor : public omi::Entity
+class RattleDoor : public ProcedualEntity
 {
 public:
 
