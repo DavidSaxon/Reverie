@@ -152,6 +152,10 @@ void buildIntroPack()
         "intro_door_rattle_1", resource_group::INTRO,
         "res/sound/fx/intro/door_rattle_1.ogg", 1
     );
+    omi::ResourceManager::addSound(
+        "intro_lights_off", resource_group::INTRO,
+        "res/sound/fx/intro/lights_off.ogg", 1
+    );
 };
 
 } // namespace pack

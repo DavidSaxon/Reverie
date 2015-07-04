@@ -41,7 +41,10 @@ Player::Player()
     :
     m_zPriority    ( player::Z_NONE ),
     m_yPriority    ( player::Y_NONE ),
-    m_stepAnimation( 0.0f )
+    m_stepAnimation( 0.0f ),
+    m_camShake     ( 0.0f ),
+    m_shakeUp      ( true ),
+    m_shakeUpTimer ( 0.0f )
 {
 }
 
@@ -100,13 +103,8 @@ void Player::init()
     // flare->castShadow = false;
     // m_components.add( flare );
 
-    // TODO: MOVE TO MUSIC PLAYER ENTITIY
-    // music
-    omi::Music* music = new omi::Music(
-            "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
-    );
-    m_components.add( music );
-    music->play();
+    // initialize music
+    initMusic();
 }
 
 void Player::update()
@@ -130,6 +128,26 @@ omi::Transform* Player::getTransform()
     return m_transform;
 }
 
+void Player::setMusic( player::Music music )
+{
+    // TODO:
+}
+
+void Player::playMusic()
+{
+    m_currentMusic->play();
+}
+
+void Player::pauseMusic()
+{
+    m_currentMusic->pause();
+}
+
+void Player::setCamShake( float camShake )
+{
+    m_camShake = camShake;
+}
+
 //------------------------------------------------------------------------------
 //                            PRIVATE MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
@@ -143,6 +161,28 @@ void Player::look()
     m_camT->rotation.y +=
         ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
         LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
+
+    // apply camera shake
+    if ( m_camShake > 0.0f )
+    {
+        // change upwards shake?
+        float r = ( static_cast< float >( rand() % 1000 ) / 1000.0f ) + 0.001f;
+        m_shakeUpTimer += m_camShake * r;
+        if ( m_shakeUpTimer >= 1.0f )
+        {
+            m_shakeUpTimer -= 1.0f;
+            m_shakeUp = !m_shakeUp;
+        }
+        // shake up
+        if ( m_shakeUp )
+        {
+            m_camT->rotation.x += 0.25f;
+        }
+        else
+        {
+            m_camT->rotation.x -= 0.25f;
+        }
+    }
 
     // clamp up/down look
     m_camT->rotation.x = util::math::clamp<float>(
@@ -279,3 +319,14 @@ void Player::move()
     //         STEP_ROT_AMOUNT * animationBoost;
 }
 
+void Player::initMusic()
+{
+    m_introMusic = new omi::Music(
+            "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
+    );
+    m_components.add( m_introMusic );
+
+    // set and play the current music
+    m_currentMusic = m_introMusic;
+    m_currentMusic->play();
+}

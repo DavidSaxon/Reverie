@@ -1,5 +1,5 @@
-#ifndef REVERIE_ENTITIES_GAMEPLAY_INTRO_KNOCKDOOR_HPP_
-#   define REVERIE_ENTITIES_GAMEPLAY_INTRO_KNOCKDOOR_HPP_
+#ifndef REVERIE_ENTITIES_GAMEPLAY_INTRO_PHOBETORENCOUNTER1_HPP_
+#   define REVERIE_ENTITIES_GAMEPLAY_INTRO_PHOBETORENCOUNTER1_HPP_
 
 #include "src/entities/gameplay/ProcedualEntity.hpp"
 
@@ -9,7 +9,7 @@
 
 class Player;
 
-class KnockDoor : public ProcedualEntity
+class PhobetorEncounter1 : public ProcedualEntity
 {
 public:
 
@@ -17,7 +17,7 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    KnockDoor( const glm::vec3& basePos, Player* player );
+    PhobetorEncounter1( const glm::vec3& basePos, Player* player );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -31,15 +31,30 @@ public:
 
 private:
 
-    // the position of the door
+    // the position of the encounter
     omi::Transform* m_pos;
     glm::vec3 m_basePos;
 
     // a pointer to the player entity
     Player* m_player;
 
-    // is true once the door has been triggered
-    bool m_triggered;
+    // the light source component
+    omi::PointLight* m_lightSource;
+    // the light pane mesh
+    omi::Mesh* m_paneMesh;
+    // the phobetor mesh
+    omi::Mesh* m_phobetorMesh;
+
+    // collision detectors
+    omi::CollisionDetector* m_startDetector;
+    omi::CollisionDetector* m_endDetector;
+
+    // flags
+    bool m_startFlag;
+    bool m_endFlag;
+
+    // turn on animation counter
+    float m_turnOnAnimation;
 };
 
 #endif

@@ -17,7 +17,7 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    RattleDoor( const glm::vec3 basePos, Player* player );
+    RattleDoor( const glm::vec3& basePos, Player* player );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS

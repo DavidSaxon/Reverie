@@ -9,6 +9,7 @@
 
 #include "src/entities/gameplay/intro/IntroLayoutTrigger.hpp"
 #include "src/entities/gameplay/intro/KnockDoor.hpp"
+#include "src/entities/gameplay/intro/PhobetorEncounter1.hpp"
 #include "src/entities/gameplay/intro/RattleDoor.hpp"
 #include "src/entities/gameplay/tutorial/TutorialText.hpp"
 
@@ -40,6 +41,7 @@ void IntroCore::init()
     initSection2();
     initSection3();
     initSection4();
+    initSection5();
 }
 
 void IntroCore::update()
@@ -329,6 +331,7 @@ void IntroCore::initSection2()
             ),
             global::environment::EAST
     ) );
+
     // trigger
     IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
             glm::vec3(
@@ -369,7 +372,17 @@ void IntroCore::initSection3()
                     -global::TILE_SIZE * 9.0f
             ),
             global::environment::WEST,
-            global::environment::DECOR_LIGHT_3
+            global::environment::DECOR_LIGHT_1
+    ) );
+    // hunt text
+    addToSection( 1, new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 4.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            ),
+            90.0f,
+            "You are being hunted",
+            m_player
     ) );
     addToSection( 3, new StraightTile(
             global::environment::INTRO,
@@ -389,10 +402,112 @@ void IntroCore::initSection3()
             global::environment::DECOR_LIGHT_1
     ) );
 
-    // TODO: trigger
+    // trigger
+    IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
+            glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 9.0f
+            )
+    );
+    trigger->sections.push_back( 2 );
+    trigger->sections.push_back( 3 );
+    trigger->sections.push_back( 4 );
+    trigger->sections.push_back( 5 );
+    addEntity( trigger );
+    m_triggers.push_back( trigger );
 }
 
 void IntroCore::initSection4()
 {
+    addToSection( 4, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 10.0f
+            ),
+            global::environment::NORTH
+    ) );
+    addToSection( 4, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 11.0f
+            ),
+            global::environment::NORTH
+    ) );
+    addToSection( 4, new StraightTile(
+            global::environment::INTRO,
+                        glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 12.0f
+            ),
+            global::environment::NORTH
+    ) );
+    addToSection( 4, new StraightTile(
+            global::environment::INTRO,
+                        glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 13.0f
+            ),
+            global::environment::NORTH
+    ) );
+    addToSection( 4, new StraightTile(
+            global::environment::INTRO,
+                        glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 14.0f
+            ),
+            global::environment::NORTH
+    ) );
+    // Phobetor encouter
+    addToSection( 4, new PhobetorEncounter1(
+                        glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 14.0f
+            ),
+            m_player
+    ) );
+    addToSection( 4, new StraightTile(
+            global::environment::INTRO,
+                        glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 15.0f
+            ),
+            global::environment::NORTH
+    ) );
+    addToSection( 4, new CornerTile(
+            global::environment::INTRO,
+                        glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::NORTH
+    ) );
 
+    // trigger
+    IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
+            glm::vec3(
+                    global::TILE_SIZE * 2.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            )
+    );
+    trigger->sections.push_back( 3 );
+    trigger->sections.push_back( 4 );
+    trigger->sections.push_back( 5 );
+    trigger->sections.push_back( 6 );
+    addEntity( trigger );
+    m_triggers.push_back( trigger );
+}
+
+void IntroCore::initSection5()
+{
+    addToSection( 5, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 3.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::EAST,
+            global::environment::DECOR_LIGHT_1
+    ) );
 }

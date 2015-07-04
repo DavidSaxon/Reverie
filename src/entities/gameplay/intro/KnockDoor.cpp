@@ -6,7 +6,7 @@
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
 
-KnockDoor::KnockDoor( const glm::vec3 basePos, Player* player )
+KnockDoor::KnockDoor( const glm::vec3& basePos, Player* player )
     :
     m_basePos  ( basePos ),
     m_player   ( player ),

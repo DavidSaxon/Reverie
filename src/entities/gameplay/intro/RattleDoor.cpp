@@ -7,7 +7,7 @@
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
 
-RattleDoor::RattleDoor( const glm::vec3 basePos, Player* player )
+RattleDoor::RattleDoor( const glm::vec3& basePos, Player* player )
     :
     m_basePos        ( basePos ),
     m_player         ( player ),
