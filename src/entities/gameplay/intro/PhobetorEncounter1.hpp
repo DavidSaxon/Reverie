@@ -43,7 +43,7 @@ private:
     // the light pane mesh
     omi::Mesh* m_paneMesh;
     // the phobetor mesh
-    omi::Mesh* m_phobetorMesh;
+    omi::KeyFrameMesh* m_phobetorMesh;
 
     // collision detectors
     omi::CollisionDetector* m_startDetector;

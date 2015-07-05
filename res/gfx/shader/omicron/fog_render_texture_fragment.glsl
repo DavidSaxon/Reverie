@@ -24,7 +24,7 @@ void main()
 
     vec3 c = texture2D( u_texture, v_texCoord ).rgb;
 
-    c = ( c * ( 1.0 - depth ) ) + ( vec3( 0.5, 0.5, 0.5 ) * depth );
+    c = ( c * ( 1.0 - depth ) ) + ( vec3( 0.25, 0.05, 0.05 ) * depth );
 
     gl_FragColor = vec4( c, 1.0 );
 

@@ -59,6 +59,8 @@ public:
 
     void setCamShake( float camShake );
 
+    void setRunDisabled( bool state );
+
 private:
 
     //--------------------------------------------------------------------------
@@ -90,6 +92,9 @@ private:
     float m_camShake;
     bool m_shakeUp;
     float m_shakeUpTimer;
+
+    // if running is disabled
+    bool m_runDisabled;
 
     // TODO: REMOVE ME
     // the right arm of the player which shows active curses

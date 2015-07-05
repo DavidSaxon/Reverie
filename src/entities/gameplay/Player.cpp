@@ -44,7 +44,8 @@ Player::Player()
     m_stepAnimation( 0.0f ),
     m_camShake     ( 0.0f ),
     m_shakeUp      ( true ),
-    m_shakeUpTimer ( 0.0f )
+    m_shakeUpTimer ( 0.0f ),
+    m_runDisabled  ( false )
 {
 }
 
@@ -148,6 +149,11 @@ void Player::setCamShake( float camShake )
     m_camShake = camShake;
 }
 
+void Player::setRunDisabled( bool state )
+{
+    m_runDisabled = state;
+}
+
 //------------------------------------------------------------------------------
 //                            PRIVATE MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
@@ -166,7 +172,7 @@ void Player::look()
     if ( m_camShake > 0.0f )
     {
         // change upwards shake?
-        float r = ( static_cast< float >( rand() % 1000 ) / 1000.0f ) + 0.001f;
+        float r = ( static_cast< float >( rand() % 1000 ) / 1000.0f ) + 0.01f;
         m_shakeUpTimer += m_camShake * r;
         if ( m_shakeUpTimer >= 1.0f )
         {
@@ -176,11 +182,11 @@ void Player::look()
         // shake up
         if ( m_shakeUp )
         {
-            m_camT->rotation.x += 0.25f;
+            m_camT->rotation.x += 0.1f;
         }
         else
         {
-            m_camT->rotation.x -= 0.25f;
+            m_camT->rotation.x -= 0.1f;
         }
     }
 
@@ -275,7 +281,8 @@ void Player::move()
     float animationBoost = 1.0f;
 
     // run key
-    if ( omi::input::isKeyPressed( omi::input::key::LEFT_SHIFT ) )
+    if ( omi::input::isKeyPressed( omi::input::key::LEFT_SHIFT ) &&
+         !m_runDisabled )
     {
         moveDis           *= RUN_SPEED_MULTIPLIER;
         stepAnimationRate *= RUN_STEP_MULTIPLIER;

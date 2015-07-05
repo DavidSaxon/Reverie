@@ -28,6 +28,8 @@ void buildMenuPack();
 
 void buildPlayerPack();
 
+void buildPhobetorPack();
+
 void buildIntroPack();
 
 void buildFacilityPack();
@@ -45,6 +47,7 @@ inline void build()
     buildLoadingPack();
     buildMenuPack();
     buildPlayerPack();
+    buildPhobetorPack();
     buildIntroPack();
     buildFacilityPack();
 }

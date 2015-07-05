@@ -21,10 +21,11 @@ FinalRenderTexture::FinalRenderTexture() :
 void FinalRenderTexture::shaderParameters( GLuint program )
 {
     // pass in resolution
-    // glUniform2f(
-    //     glGetUniformLocation( program, "u_resolution" ),
-    //     renderSettings.getResolution().x, renderSettings.getResolution().y
-    // );
+    glUniform2f(
+        glGetUniformLocation( program, "u_res" ),
+        renderSettings.getResolution().x * m_resScale,
+        renderSettings.getResolution().y * m_resScale
+    );
 
     // calculate a random number for the shader to use and pass in
     float randMul = static_cast<float>( rand() % 1000 ) / 100.0f;

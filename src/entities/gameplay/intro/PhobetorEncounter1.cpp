@@ -81,10 +81,9 @@ void PhobetorEncounter1::init()
     m_components.add( fittingMesh );
 
 
-    // TODO: should be phobetor breath animation
-    // the phobetor mesh
-    m_phobetorMesh = omi::ResourceManager::getMesh(
-            "phobetor_still", "", m_pos );
+    // phobetor
+    m_phobetorMesh = omi::ResourceManager::getKeyFrameMesh(
+                "phobetor_basic", "", m_pos );
     m_phobetorMesh->visible = false;
     m_components.add( m_phobetorMesh );
 
@@ -133,7 +132,8 @@ void PhobetorEncounter1::update()
         m_phobetorMesh->visible = true;
 
         // shake the camera
-        // m_player->setCamShake( 1.2f );
+        m_player->setCamShake( 1.5f );
+        m_player->setRunDisabled( true );
 
         // pause music
         m_player->pauseMusic();
@@ -162,7 +162,8 @@ void PhobetorEncounter1::update()
         // hide phobetor again
         m_phobetorMesh->visible = false;
 
-        // m_player->setCamShake( -1.0f );
+        m_player->setCamShake( -1.0f );
+        m_player->setRunDisabled( false );
 
         // resume playing music
         m_player->playMusic();

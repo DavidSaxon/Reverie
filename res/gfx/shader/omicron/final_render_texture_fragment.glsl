@@ -6,10 +6,14 @@
 
 // the texture
 uniform sampler2D u_texture;
+uniform sampler2D u_depthTexture;
 // random multiplier
 uniform float u_randMul;
 // the amount of film grain
 uniform float u_filmGrain;
+
+// screen resolution
+uniform vec2 u_res;
 
 //the texture coords
 varying vec2 v_texCoord;
@@ -31,11 +35,15 @@ float rand( vec2 co )
 
 void main() {
 
-    // set colour
+    // calculate pixel size
+    vec2 pixelSize = vec2( 1.0 / u_res.x, 1.0 / u_res.y );
+
+    // get texture colour
     vec4 texCol = texture2D( u_texture, v_texCoord );
 
-    vec2 uv = ( v_texCoord * 2.0 ) - 1.0;
+    //---------------------------------FILTERS----------------------------------
 
+    vec2 uv = ( v_texCoord * 2.0 ) - 1.0;
     // TODO: testing sepia
     // if ( length( uv ) < 0.25 )
     // {
