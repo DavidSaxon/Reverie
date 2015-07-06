@@ -85,6 +85,7 @@ set(SRCS
     src/resource_pack/LoadingPack.cpp
     src/resource_pack/MenuPack.cpp
     src/resource_pack/PlayerPack.cpp
+    src/resource_pack/PhobetorPack.cpp
     src/resource_pack/IntroPack.cpp
     src/resource_pack/FacilityPack.cpp
 
@@ -99,7 +100,10 @@ set(SRCS
     src/entities/loading/LoadingSplash.cpp
 
     src/entities/gameplay/Player.cpp
-    src/entities/gameplay/environment/LayoutManager.cpp
+    src/entities/gameplay/ProcedualEntity.cpp
+    src/entities/gameplay/layout/AbstractLayoutCore.cpp
+    src/entities/gameplay/layout/IntroCore.cpp
+    src/entities/gameplay/layout/LayoutManager.cpp
     src/entities/gameplay/environment/tile/CornerTile.cpp
     src/entities/gameplay/environment/tile/EndTile.cpp
     src/entities/gameplay/environment/tile/StraightTile.cpp
@@ -112,7 +116,9 @@ set(SRCS
 
     src/entities/gameplay/tutorial/TutorialText.cpp
 
+    src/entities/gameplay/intro/IntroLayoutTrigger.cpp
     src/entities/gameplay/intro/KnockDoor.cpp
+    src/entities/gameplay/intro/PhobetorEncounter1.cpp
     src/entities/gameplay/intro/RattleDoor.cpp
 
     src/entities/menu/PauseMenu.cpp
