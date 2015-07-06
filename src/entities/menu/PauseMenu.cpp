@@ -1089,7 +1089,7 @@ void PauseMenu::initAudioMenuComponents()
     // add widget
     SettingWidget* widget = new SliderWidget(
             glm::vec3( 0.5f, 0.0625f, 0.0f ),
-            0.0f, 1.0f, 0.8f,
+            0.0f, 1.0f, 0.6f,
             omi::audioSettings.getMusicVolume()
     );
     m_audioWidgets.push_back( widget );

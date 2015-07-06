@@ -153,7 +153,7 @@ void sound( const std::string& value )
 
 void music( const std::string& value )
 {
-    float volume = 0.8f;
+    float volume = 0.6f;
     if ( util::str::isFloat( value )  )
     {
         float temp_val = static_cast<float>( atof( value.c_str() ) );

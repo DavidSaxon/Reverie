@@ -45,6 +45,21 @@ unsigned SoundPool::play(unsigned id, bool loop, float volume)
     return m_pool[id].playNext(loop, volume);
 }
 
+unsigned SoundPool::play(
+        unsigned id,
+        bool loop,
+        float volume,
+        const glm::vec3& direction )
+{
+    // don't play if sounds are disabled
+    if (audioSettings.isSoundDisabled()) {
+
+        return -1;
+    }
+
+    return m_pool[id].playNext( loop, volume, direction );
+}
+
 void SoundPool::stop(unsigned id, unsigned instance) {
 
     m_pool[id].stop(instance);

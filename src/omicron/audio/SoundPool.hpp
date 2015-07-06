@@ -94,7 +94,32 @@ private:
             m_bank[m_instance].setLoop(loop);
             m_bank[m_instance].setVolume(
                 (audioSettings.getSoundVolume() * volume) * 100.0f);
-            m_bank[m_instance].setPosition( 1.0, 0.0, 0.0 );
+            m_bank[m_instance].setPosition( 0.0, 0.0, 0.0 );
+            m_bank[m_instance].play();
+
+
+            // increment instance
+            unsigned rInstance = m_instance;
+            m_instance = (m_instance + 1) % m_numInstance;
+
+            return rInstance;
+        }
+
+        inline unsigned playNext(
+                bool loop,
+                float volume,
+                const glm::vec3& direction )
+        {
+
+            // TODO: figure out why the buffer can't be set in the constructor
+            m_bank[m_instance].setBuffer(m_buffer);
+            // play current instance
+            m_bank[m_instance].setLoop(loop);
+            m_bank[m_instance].setVolume(
+                (audioSettings.getSoundVolume() * volume) * 100.0f);
+            m_bank[ m_instance ].setRelativeToListener( true );
+            m_bank[m_instance].setPosition(
+                    direction.x, direction.y, direction.z );
             m_bank[m_instance].play();
 
 
@@ -153,6 +178,18 @@ public:
     @param volume the volume to play the sound at
     @return the instances of the sound playing */
     static unsigned play(unsigned id, bool loop, float volume);
+
+    /** Plays a sound from a given direction
+    @param id the identifier of the sound to play
+    @param loop whether the sound should loop or not
+    @param volume the volume to play the sound at
+    @param direction the direction the sound is being played from
+    @return the instances of the sound playing */
+    static unsigned play(
+            unsigned id,
+            bool loop,
+            float volume,
+            const glm::vec3& direction );
 
     /** Stops a sound
     @param id the identifier of the sound to stop

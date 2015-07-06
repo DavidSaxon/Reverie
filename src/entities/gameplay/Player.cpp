@@ -329,7 +329,7 @@ void Player::move()
 void Player::initMusic()
 {
     m_introMusic = new omi::Music(
-            "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
+            "", "res/sound/music/welcome_to_the_reverie.ogg", 0.95f, true
     );
     m_components.add( m_introMusic );
 
