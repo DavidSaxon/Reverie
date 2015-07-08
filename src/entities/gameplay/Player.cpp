@@ -13,6 +13,8 @@ namespace {
 
 // the base speed at which the player moves
 static const float MOVE_BASE_SPEED = 0.03f;
+// move acceleration speed
+static const float MOVE_ACCEL_SPEED = 0.05f;
 // move multiplier when running
 static const float RUN_SPEED_MULTIPLIER = 2.4f;
 // multiplier for debug speed
@@ -42,6 +44,10 @@ Player::Player()
     m_zPriority    ( player::Z_NONE ),
     m_yPriority    ( player::Y_NONE ),
     m_stepAnimation( 0.0f ),
+    m_upAccel      ( 0.0f ),
+    m_downAccel    ( 0.0f ),
+    m_leftAccel    ( 0.0f ),
+    m_rightAccel   ( 0.0f ),
     m_camShake     ( 0.0f ),
     m_shakeUp      ( true ),
     m_shakeUpTimer ( 0.0f ),
@@ -200,82 +206,138 @@ void Player::look()
 
 void Player::move()
 {
-    // calculate the distance the player is being asked to move
     glm::vec3 moveDis;
-    float moveSpeed =
-            MOVE_BASE_SPEED *
-            omi::fpsManager.getTimeScale() *
-            global::timeScale;
-    // the step animation amount
-    float stepAnimationRate = 0.0f;
-    // whether the step animation has been applied yet or not
-    bool stepApplied = false;
 
     // forward
     if ( omi::input::isKeyPressed( global::keyForwards ) )
     {
-        if ( m_zPriority != player::Z_BACKWARD )
+        // apply acceleration
+        if ( m_upAccel < 1.0f )
         {
-            // set priority
-            m_zPriority = player::Z_FORWARD;
-            // move forwards
-            moveDis.z +=
-                    -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-            moveDis.x +=
-                    -util::math::sind( m_camT->rotation.y ) * moveSpeed;
-            // increase the step animation
-            stepAnimationRate += moveSpeed * STEP_SPEED;
-            stepApplied = true;
+            m_upAccel += MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
         }
+        else
+        {
+            m_upAccel = 1.0f;
+        }
+
+        // apply movement
+        moveDis.z -= m_upAccel;
     }
     else
     {
-        m_zPriority = player::Z_NONE;
+        // decelerate
+        if ( m_upAccel > 0.0f )
+        {
+            m_upAccel -= MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
+        }
+        else
+        {
+            m_upAccel = 0.0f;
+        }
     }
     // backwards
     if ( omi::input::isKeyPressed( global::keyBackwards ) )
     {
-        if ( m_zPriority != player::Z_FORWARD )
+        // apply acceleration
+        if ( m_downAccel < 1.0f )
         {
-            // set priority
-            m_zPriority = player::Z_BACKWARD;
-            // move backwards
-            moveDis.z +=
-                    util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-            moveDis.x +=
-                    util::math::sind( m_camT->rotation.y ) * moveSpeed;
-            // decrease the step animation
-            stepAnimationRate -= moveSpeed * STEP_SPEED;
-            stepApplied = true;
+            m_downAccel += MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
         }
+        else
+        {
+            m_downAccel = 1.0f;
+        }
+
+        // apply movement
+        moveDis.z += m_downAccel;
     }
     else
     {
-        m_zPriority = player::Z_NONE;
+        // decelerate
+        if ( m_downAccel > 0.0f )
+        {
+            m_downAccel -= MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
+        }
+        else
+        {
+            m_downAccel = 0.0f;
+        }
     }
     // left
     if ( omi::input::isKeyPressed( global::keyLeft ) )
     {
-        moveDis.z +=  util::math::sind( m_camT->rotation.y ) * moveSpeed;
-        moveDis.x += -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-        // if not moving along z increase the step animation
-        if ( !stepApplied )
+        // apply acceleration
+        if ( m_leftAccel < 1.0f )
         {
-            stepAnimationRate += moveSpeed * STEP_SPEED;
-            stepApplied = true;
+            m_leftAccel += MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
+        }
+        else
+        {
+            m_leftAccel = 1.0f;
+        }
+
+        // apply movement
+        moveDis.x -= m_leftAccel;
+    }
+    else
+    {
+        // decelerate
+        if ( m_leftAccel > 0.0f )
+        {
+            m_leftAccel -= MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
+        }
+        else
+        {
+            m_leftAccel = 0.0f;
         }
     }
     // right
     if ( omi::input::isKeyPressed( global::keyRight ) )
     {
-        moveDis.z += -util::math::sind( m_camT->rotation.y ) * moveSpeed;
-        moveDis.x +=  util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-        // if not moving along z decrease the step animation
-        if ( !stepApplied )
+        // apply acceleration
+        if ( m_rightAccel < 1.0f )
         {
-            stepAnimationRate -= moveSpeed * STEP_SPEED;
+            m_rightAccel += MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
+        }
+        else
+        {
+            m_rightAccel = 1.0f;
+        }
+
+        // apply movement
+        moveDis.x += m_rightAccel;
+    }
+    else
+    {
+        // decelerate
+        if ( m_rightAccel > 0.0f )
+        {
+            m_rightAccel -= MOVE_ACCEL_SPEED * omi::fpsManager.getTimeScale();
+        }
+        else
+        {
+            m_rightAccel = 0.0f;
         }
     }
+
+    float moveSpeed =
+            MOVE_BASE_SPEED *
+            omi::fpsManager.getTimeScale() *
+            global::timeScale;
+
+    // calculated weighted move
+    float moveTotal = fabs( moveDis.x ) + fabs( moveDis.z );
+    if ( moveTotal > 0.0f )
+    {
+        moveDis.x /= moveTotal;
+        moveDis.z /= moveTotal;
+    }
+
+    // apply step animation
+    float stepAnimationRate =
+            util::math::clamp< float >( moveTotal, 0.0f, 1.0f )
+            * moveSpeed * STEP_SPEED;
 
     // the multiplier for how animated the player is
     float animationBoost = 1.0f;
@@ -284,16 +346,101 @@ void Player::move()
     if ( omi::input::isKeyPressed( omi::input::key::LEFT_SHIFT ) &&
          !m_runDisabled )
     {
-        moveDis           *= RUN_SPEED_MULTIPLIER;
+        moveSpeed         *= RUN_SPEED_MULTIPLIER;
+        // TODO: apply based on move speed?
         stepAnimationRate *= RUN_STEP_MULTIPLIER;
         animationBoost    *= RUN_STEP_MULTIPLIER;
     }
+    // TODO: REMOVE ME
     if ( omi::input::isKeyPressed( omi::input::key::LEFT_ALT ) )
     {
-        moveDis           *= DEBUG_SPEED_MULTIPLIER;
+        moveSpeed         *= DEBUG_SPEED_MULTIPLIER;
         stepAnimationRate *= 0.0f;
         animationBoost    *= 0.0f;
     }
+
+    moveDis.x *= moveSpeed;
+    moveDis.z *= moveSpeed;
+
+    // direct the move based on the look direction
+    glm::vec3 tempMove( moveDis );
+    moveDis.x =
+            ( tempMove.z * util::math::sind( m_camT->rotation.y ) ) +
+            ( tempMove.x * util::math::cosd( m_camT->rotation.y ) );
+    moveDis.z =
+            ( tempMove.z * util::math::cosd( m_camT->rotation.y ) ) +
+            ( tempMove.x * -util::math::sind( m_camT->rotation.y ) );
+
+
+
+    // // whether the step animation has been applied yet or not
+    // bool stepApplied = false;
+
+    // // forward
+    // if ( omi::input::isKeyPressed( global::keyForwards ) )
+    // {
+    //     if ( m_zPriority != player::Z_BACKWARD )
+    //     {
+    //         // set priority
+    //         m_zPriority = player::Z_FORWARD;
+    //         // move forwards
+    //         moveDis.z +=
+    //                 -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
+    //         moveDis.x +=
+    //                 -util::math::sind( m_camT->rotation.y ) * moveSpeed;
+    //         // increase the step animation
+    //         stepAnimationRate += moveSpeed * STEP_SPEED;
+    //         stepApplied = true;
+    //     }
+    // }
+    // else
+    // {
+    //     m_zPriority = player::Z_NONE;
+    // }
+    // // backwards
+    // if ( omi::input::isKeyPressed( global::keyBackwards ) )
+    // {
+    //     if ( m_zPriority != player::Z_FORWARD )
+    //     {
+    //         // set priority
+    //         m_zPriority = player::Z_BACKWARD;
+    //         // move backwards
+    //         moveDis.z +=
+    //                 util::math::cosd( m_camT->rotation.y ) * moveSpeed;
+    //         moveDis.x +=
+    //                 util::math::sind( m_camT->rotation.y ) * moveSpeed;
+    //         // decrease the step animation
+    //         stepAnimationRate -= moveSpeed * STEP_SPEED;
+    //         stepApplied = true;
+    //     }
+    // }
+    // else
+    // {
+    //     m_zPriority = player::Z_NONE;
+    // }
+    // // left
+    // if ( omi::input::isKeyPressed( global::keyLeft ) )
+    // {
+    //     moveDis.z +=  util::math::sind( m_camT->rotation.y ) * moveSpeed;
+    //     moveDis.x += -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
+    //     // if not moving along z increase the step animation
+    //     if ( !stepApplied )
+    //     {
+    //         stepAnimationRate += moveSpeed * STEP_SPEED;
+    //         stepApplied = true;
+    //     }
+    // }
+    // // right
+    // if ( omi::input::isKeyPressed( global::keyRight ) )
+    // {
+    //     moveDis.z += -util::math::sind( m_camT->rotation.y ) * moveSpeed;
+    //     moveDis.x +=  util::math::cosd( m_camT->rotation.y ) * moveSpeed;
+    //     // if not moving along z decrease the step animation
+    //     if ( !stepApplied )
+    //     {
+    //         stepAnimationRate -= moveSpeed * STEP_SPEED;
+    //     }
+    // }
 
     // TODO: key release shit
 

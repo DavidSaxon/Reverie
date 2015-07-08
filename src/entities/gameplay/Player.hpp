@@ -88,6 +88,12 @@ private:
     // walk animation variables
     float m_stepAnimation;
 
+    // walk accelerations
+    float m_upAccel;
+    float m_downAccel;
+    float m_leftAccel;
+    float m_rightAccel;
+
     // the camera shake amount
     float m_camShake;
     bool m_shakeUp;
