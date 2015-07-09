@@ -14,7 +14,7 @@ namespace {
 // the base speed at which the player moves
 static const float MOVE_BASE_SPEED = 0.03f;
 // move acceleration speed
-static const float MOVE_ACCEL_SPEED = 0.05f;
+static const float MOVE_ACCEL_SPEED = 0.04f;
 // move multiplier when running
 static const float RUN_SPEED_MULTIPLIER = 2.4f;
 // multiplier for debug speed
@@ -328,7 +328,7 @@ void Player::move()
 
     // calculated weighted move
     float moveTotal = fabs( moveDis.x ) + fabs( moveDis.z );
-    if ( moveTotal > 0.0f )
+    if ( moveTotal > 1.0f )
     {
         moveDis.x /= moveTotal;
         moveDis.z /= moveTotal;
