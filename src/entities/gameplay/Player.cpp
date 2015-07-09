@@ -14,7 +14,7 @@ namespace {
 // the base speed at which the player moves
 static const float MOVE_BASE_SPEED = 0.03f;
 // move acceleration speed
-static const float MOVE_ACCEL_SPEED = 0.04f;
+static const float MOVE_ACCEL_SPEED = 0.06f;
 // move multiplier when running
 static const float RUN_SPEED_MULTIPLIER = 2.4f;
 // multiplier for debug speed
@@ -48,6 +48,8 @@ Player::Player()
     m_downAccel    ( 0.0f ),
     m_leftAccel    ( 0.0f ),
     m_rightAccel   ( 0.0f ),
+    m_stepSoundAni ( 0.5f ),
+    m_foot         ( false ),
     m_camShake     ( 0.0f ),
     m_shakeUp      ( true ),
     m_shakeUpTimer ( 0.0f ),
@@ -335,9 +337,8 @@ void Player::move()
     }
 
     // apply step animation
-    float stepAnimationRate =
-            util::math::clamp< float >( moveTotal, 0.0f, 1.0f )
-            * moveSpeed * STEP_SPEED;
+    moveTotal = util::math::clamp< float >( moveTotal, 0.0f, 1.0f );
+    float stepAnimationRate = moveTotal * moveSpeed * STEP_SPEED;
 
     // the multiplier for how animated the player is
     float animationBoost = 1.0f;
@@ -372,78 +373,6 @@ void Player::move()
             ( tempMove.x * -util::math::sind( m_camT->rotation.y ) );
 
 
-
-    // // whether the step animation has been applied yet or not
-    // bool stepApplied = false;
-
-    // // forward
-    // if ( omi::input::isKeyPressed( global::keyForwards ) )
-    // {
-    //     if ( m_zPriority != player::Z_BACKWARD )
-    //     {
-    //         // set priority
-    //         m_zPriority = player::Z_FORWARD;
-    //         // move forwards
-    //         moveDis.z +=
-    //                 -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-    //         moveDis.x +=
-    //                 -util::math::sind( m_camT->rotation.y ) * moveSpeed;
-    //         // increase the step animation
-    //         stepAnimationRate += moveSpeed * STEP_SPEED;
-    //         stepApplied = true;
-    //     }
-    // }
-    // else
-    // {
-    //     m_zPriority = player::Z_NONE;
-    // }
-    // // backwards
-    // if ( omi::input::isKeyPressed( global::keyBackwards ) )
-    // {
-    //     if ( m_zPriority != player::Z_FORWARD )
-    //     {
-    //         // set priority
-    //         m_zPriority = player::Z_BACKWARD;
-    //         // move backwards
-    //         moveDis.z +=
-    //                 util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-    //         moveDis.x +=
-    //                 util::math::sind( m_camT->rotation.y ) * moveSpeed;
-    //         // decrease the step animation
-    //         stepAnimationRate -= moveSpeed * STEP_SPEED;
-    //         stepApplied = true;
-    //     }
-    // }
-    // else
-    // {
-    //     m_zPriority = player::Z_NONE;
-    // }
-    // // left
-    // if ( omi::input::isKeyPressed( global::keyLeft ) )
-    // {
-    //     moveDis.z +=  util::math::sind( m_camT->rotation.y ) * moveSpeed;
-    //     moveDis.x += -util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-    //     // if not moving along z increase the step animation
-    //     if ( !stepApplied )
-    //     {
-    //         stepAnimationRate += moveSpeed * STEP_SPEED;
-    //         stepApplied = true;
-    //     }
-    // }
-    // // right
-    // if ( omi::input::isKeyPressed( global::keyRight ) )
-    // {
-    //     moveDis.z += -util::math::sind( m_camT->rotation.y ) * moveSpeed;
-    //     moveDis.x +=  util::math::cosd( m_camT->rotation.y ) * moveSpeed;
-    //     // if not moving along z decrease the step animation
-    //     if ( !stepApplied )
-    //     {
-    //         stepAnimationRate -= moveSpeed * STEP_SPEED;
-    //     }
-    // }
-
-    // TODO: key release shit
-
     // get the actual move distance based on obstacles
     float orgMoveDis = fabs( moveDis.x ) + fabs( moveDis.z );
     moveDis = m_collisionChecker->forwardBestCheck( moveDis, "wall" );
@@ -468,9 +397,39 @@ void Player::move()
     m_transform->translation.y =
             -util::math::cosd( m_stepAnimation + 180.0f ) *
             STEP_HEIGHT * animationBoost;
-    // m_transform->rotation.z =
-    //         util::math::sind( m_stepAnimation ) *
-    //         STEP_ROT_AMOUNT * animationBoost;
+
+    // step sound
+
+    if ( moveTotal > 0.0f )
+    {
+        m_stepSoundAni += stepAnimationRate * animationBoost * 0.003f;
+        if ( m_stepSoundAni >= 1.0f )
+        {
+            m_stepSoundAni = 0.0f;
+            int r = ( rand() % 3 ) + 1;
+            std::stringstream ss;
+            if ( m_foot )
+            {
+                ss << "intro_foot_left_" << r;
+
+            }
+            else
+            {
+                ss << "intro_foot_right_" << r;
+            }
+            // play sound
+            omi::SoundPool::play(
+                    omi::ResourceManager::getSound( ss.str() ),
+                    false,
+                    1.0f
+            );
+            m_foot = !m_foot;
+        }
+    }
+    else
+    {
+        m_stepSoundAni = 0.5f;
+    }
 }
 
 void Player::initMusic()

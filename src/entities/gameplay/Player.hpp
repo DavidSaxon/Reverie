@@ -94,6 +94,9 @@ private:
     float m_leftAccel;
     float m_rightAccel;
 
+    float m_stepSoundAni;
+    bool m_foot;
+
     // the camera shake amount
     float m_camShake;
     bool m_shakeUp;

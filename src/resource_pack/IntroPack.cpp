@@ -156,6 +156,32 @@ void buildIntroPack()
         "intro_lights_off", resource_group::INTRO,
         "res/sound/fx/intro/lights_off.ogg", 1
     );
+
+    // walk sounds
+    omi::ResourceManager::addSound(
+        "intro_foot_left_1", resource_group::INTRO,
+        "res/sound/fx/intro/foot_left_1.ogg", 2
+    );
+    omi::ResourceManager::addSound(
+        "intro_foot_left_2", resource_group::INTRO,
+        "res/sound/fx/intro/foot_left_2.ogg", 2
+    );
+    omi::ResourceManager::addSound(
+        "intro_foot_left_3", resource_group::INTRO,
+        "res/sound/fx/intro/foot_left_3.ogg", 2
+    );
+    omi::ResourceManager::addSound(
+        "intro_foot_right_1", resource_group::INTRO,
+        "res/sound/fx/intro/foot_right_1.ogg", 2
+    );
+    omi::ResourceManager::addSound(
+        "intro_foot_right_2", resource_group::INTRO,
+        "res/sound/fx/intro/foot_right_2.ogg", 2
+    );
+    omi::ResourceManager::addSound(
+        "intro_foot_right_3", resource_group::INTRO,
+        "res/sound/fx/intro/foot_right_3.ogg", 2
+    );
 };
 
 } // namespace pack

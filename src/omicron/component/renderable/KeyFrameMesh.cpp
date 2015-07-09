@@ -1,5 +1,7 @@
 #include "KeyFrameMesh.hpp"
 
+#include "src/data/Globals.hpp"
+
 namespace omi {
 
 //------------------------------------------------------------------------------
@@ -41,6 +43,12 @@ KeyFrameMesh::KeyFrameMesh(
 
 void KeyFrameMesh::update()
 {
+    // skip if omicron is paused
+    if ( global::pause )
+    {
+        return;
+    }
+
     // super call
     Renderable::update();
 
