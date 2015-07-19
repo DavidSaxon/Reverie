@@ -42,6 +42,7 @@ void IntroCore::init()
     initSection3();
     initSection4();
     initSection5();
+    initSection6();
 }
 
 void IntroCore::update()
@@ -329,7 +330,8 @@ void IntroCore::initSection2()
                     global::TILE_SIZE * 7.0f, 0.0f,
                     -global::TILE_SIZE * 9.0f
             ),
-            global::environment::EAST
+            global::environment::EAST,
+            global::environment::DECOR_PROP_2
     ) );
 
     // trigger
@@ -372,7 +374,9 @@ void IntroCore::initSection3()
                     -global::TILE_SIZE * 9.0f
             ),
             global::environment::WEST,
-            global::environment::DECOR_LIGHT_1
+            global::environment::DECOR_LIGHT_1 |
+            global::environment::DECOR_PROP_1  |
+            global::environment::DECOR_PROP_2
     ) );
     // hunt text
     addToSection( 1, new TutorialText(
@@ -399,7 +403,8 @@ void IntroCore::initSection3()
                     -global::TILE_SIZE * 9.0f
             ),
             global::environment::WEST,
-            global::environment::DECOR_LIGHT_1
+            global::environment::DECOR_LIGHT_1 |
+            global::environment::DECOR_PROP_3
     ) );
 
     // trigger
@@ -449,7 +454,9 @@ void IntroCore::initSection4()
                     global::TILE_SIZE * 2.0f, 0.0f,
                     -global::TILE_SIZE * 13.0f
             ),
-            global::environment::NORTH
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_1  |
+            global::environment::DECOR_PROP_2
     ) );
     addToSection( 4, new StraightTile(
             global::environment::INTRO,
@@ -481,7 +488,8 @@ void IntroCore::initSection4()
                     global::TILE_SIZE * 2.0f, 0.0f,
                     -global::TILE_SIZE * 16.0f
             ),
-            global::environment::NORTH
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_3
     ) );
 
     // trigger
@@ -509,5 +517,103 @@ void IntroCore::initSection5()
             ),
             global::environment::EAST,
             global::environment::DECOR_LIGHT_1
+    ) );
+    addToSection( 5, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 4.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::EAST
+    ) );
+    addToSection( 5, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 5.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::EAST
+    ) );
+    addToSection( 5, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 6.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::EAST,
+            global::environment::DECOR_LIGHT_1 |
+            global::environment::DECOR_PROP_1  |
+            global::environment::DECOR_PROP_2
+    ) );
+    // hunt text
+    addToSection( 5, new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 6.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            -90.0f,
+            "Find the curse room to progress",
+            m_player
+    ) );
+    addToSection( 5, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::EAST
+    ) );
+    addToSection( 5, new CornerTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 8.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            ),
+            global::environment::EAST,
+            global::environment::DECOR_PROP_3
+    ) );
+    // trigger
+    IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
+            glm::vec3(
+                    global::TILE_SIZE * 8.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            )
+    );
+    trigger->sections.push_back( 4 );
+    trigger->sections.push_back( 5 );
+    trigger->sections.push_back( 6 );
+    addEntity( trigger );
+    m_triggers.push_back( trigger );
+}
+
+void IntroCore::initSection6()
+{
+    addToSection( 6, new StraightTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 8.0f, 0.0f,
+                    -global::TILE_SIZE * 15.0f
+            ),
+            global::environment::SOUTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    addToSection( 6, new EndTile(
+            global::environment::INTRO,
+            glm::vec3(
+                    global::TILE_SIZE * 8.0f, 0.0f,
+                    -global::TILE_SIZE * 14.0f
+            ),
+            global::environment::SOUTH,
+            global::environment::DECOR_PROP_3
+
+    ) );
+    addToSection( 5, new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 8.0f, 0.0f,
+                    -global::TILE_SIZE * 14.0f
+            ),
+            -180.0f,
+            "Turn back",
+            m_player
     ) );
 }

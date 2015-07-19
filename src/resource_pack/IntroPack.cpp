@@ -156,6 +156,14 @@ void buildIntroPack()
         "intro_lights_off", resource_group::INTRO,
         "res/sound/fx/intro/lights_off.ogg", 1
     );
+    omi::ResourceManager::addSound(
+        "intro_drone_1", resource_group::INTRO,
+        "res/sound/fx/intro/drone_1.ogg", 1
+    );
+    omi::ResourceManager::addSound(
+        "intro_voices_1", resource_group::INTRO,
+        "res/sound/fx/intro/voices_1.ogg", 1
+    );
 
     // walk sounds
     omi::ResourceManager::addSound(

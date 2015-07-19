@@ -55,6 +55,10 @@ private:
 
     // turn on animation counter
     float m_turnOnAnimation;
+
+    // the id of the drone sound
+    unsigned m_droneId;
+    unsigned m_voicesId;
 };
 
 #endif

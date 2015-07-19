@@ -61,6 +61,12 @@ public:
 
     void setRunDisabled( bool state );
 
+    void setFootStepsDisabled( bool state );
+
+    void playHeartBeatSlow();
+
+    void stopHeartBeatSlow();
+
 private:
 
     //--------------------------------------------------------------------------
@@ -95,7 +101,9 @@ private:
     float m_rightAccel;
 
     float m_stepSoundAni;
-    bool m_foot;
+
+    // the id of the heartbeat sound
+    unsigned m_heartBeatSlowId;
 
     // the camera shake amount
     float m_camShake;
@@ -104,6 +112,8 @@ private:
 
     // if running is disabled
     bool m_runDisabled;
+    // if foot step sounds are disabled
+    bool m_footstepsDisabled;
 
     // TODO: REMOVE ME
     // the right arm of the player which shows active curses

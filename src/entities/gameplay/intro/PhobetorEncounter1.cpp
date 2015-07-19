@@ -25,7 +25,9 @@ PhobetorEncounter1::PhobetorEncounter1( const glm::vec3& basePos, Player* player
     m_player         ( player ),
     m_startFlag      ( false ),
     m_endFlag        ( false ),
-    m_turnOnAnimation( 0.0f )
+    m_turnOnAnimation( 0.0f ),
+    m_droneId        ( 0 ),
+    m_voicesId       ( 0 )
 {
 }
 
@@ -134,6 +136,8 @@ void PhobetorEncounter1::update()
         // shake the camera
         m_player->setCamShake( 1.5f );
         m_player->setRunDisabled( true );
+        // m_player->setFootStepsDisabled( true );
+        m_player->playHeartBeatSlow();
 
         // pause music
         m_player->pauseMusic();
@@ -144,6 +148,10 @@ void PhobetorEncounter1::update()
                 false,
                 1.0f
         );
+        m_droneId = omi::ResourceManager::getSound( "intro_drone_1" );
+        omi::SoundPool::play( m_droneId, true, 1.0f );
+        m_voicesId = omi::ResourceManager::getSound( "intro_voices_1" );
+        omi::SoundPool::play( m_voicesId, true, 1.0f );
     }
 
     if ( !m_startFlag )
@@ -164,9 +172,14 @@ void PhobetorEncounter1::update()
 
         m_player->setCamShake( -1.0f );
         m_player->setRunDisabled( false );
+        // m_player->setFootStepsDisabled( false );
+        m_player->stopHeartBeatSlow();
 
         // resume playing music
         m_player->playMusic();
+
+        omi::SoundPool::stop( m_droneId, 0 );
+        omi::SoundPool::stop( m_voicesId, 0 );
     }
 
     if ( !m_endFlag )

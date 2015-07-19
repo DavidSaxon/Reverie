@@ -65,6 +65,8 @@ private:
     void initSection4();
 
     void initSection5();
+
+    void initSection6();
 };
 
 #endif

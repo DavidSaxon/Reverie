@@ -12,7 +12,7 @@ namespace {
 //------------------------------------------------------------------------------
 
 // the base speed at which the player moves
-static const float MOVE_BASE_SPEED = 0.03f;
+static const float MOVE_BASE_SPEED = 0.035f;
 // move acceleration speed
 static const float MOVE_ACCEL_SPEED = 0.06f;
 // move multiplier when running
@@ -41,19 +41,20 @@ static const float STEP_ROT_AMOUNT = 0.25f;
 
 Player::Player()
     :
-    m_zPriority    ( player::Z_NONE ),
-    m_yPriority    ( player::Y_NONE ),
-    m_stepAnimation( 0.0f ),
-    m_upAccel      ( 0.0f ),
-    m_downAccel    ( 0.0f ),
-    m_leftAccel    ( 0.0f ),
-    m_rightAccel   ( 0.0f ),
-    m_stepSoundAni ( 0.5f ),
-    m_foot         ( false ),
-    m_camShake     ( 0.0f ),
-    m_shakeUp      ( true ),
-    m_shakeUpTimer ( 0.0f ),
-    m_runDisabled  ( false )
+    m_zPriority        ( player::Z_NONE ),
+    m_yPriority        ( player::Y_NONE ),
+    m_stepAnimation    ( 0.0f ),
+    m_upAccel          ( 0.0f ),
+    m_downAccel        ( 0.0f ),
+    m_leftAccel        ( 0.0f ),
+    m_rightAccel       ( 0.0f ),
+    m_stepSoundAni     ( 0.5f ),
+    m_heartBeatSlowId  ( 0 ),
+    m_camShake         ( 0.0f ),
+    m_shakeUp          ( true ),
+    m_shakeUpTimer     ( 0.0f ),
+    m_runDisabled      ( false ),
+    m_footstepsDisabled( false )
 {
 }
 
@@ -160,6 +161,26 @@ void Player::setCamShake( float camShake )
 void Player::setRunDisabled( bool state )
 {
     m_runDisabled = state;
+}
+
+void Player::setFootStepsDisabled( bool state )
+{
+    m_footstepsDisabled = state;
+}
+
+void Player::playHeartBeatSlow()
+{
+    m_heartBeatSlowId = omi::ResourceManager::getSound( "heart_beat_slow" );
+    omi::SoundPool::play(
+            m_heartBeatSlowId,
+            true,
+            1.0f
+    );
+}
+
+void Player::stopHeartBeatSlow()
+{
+    omi::SoundPool::stop( m_heartBeatSlowId, 0 );
 }
 
 //------------------------------------------------------------------------------
@@ -402,28 +423,22 @@ void Player::move()
 
     if ( moveTotal > 0.0f )
     {
-        m_stepSoundAni += stepAnimationRate * animationBoost * 0.003f;
+        m_stepSoundAni += stepAnimationRate * animationBoost * 0.0035f;
         if ( m_stepSoundAni >= 1.0f )
         {
             m_stepSoundAni = 0.0f;
-            int r = ( rand() % 3 ) + 1;
+            int r = ( rand() % 8 ) + 1;
             std::stringstream ss;
-            if ( m_foot )
-            {
-                ss << "intro_foot_left_" << r;
-
-            }
-            else
-            {
-                ss << "intro_foot_right_" << r;
-            }
+            ss << "footsteps_soft_" << r;
             // play sound
-            omi::SoundPool::play(
-                    omi::ResourceManager::getSound( ss.str() ),
-                    false,
-                    1.0f
-            );
-            m_foot = !m_foot;
+            if ( !m_footstepsDisabled )
+            {
+                omi::SoundPool::play(
+                        omi::ResourceManager::getSound( ss.str() ),
+                        false,
+                        0.6f
+                );
+            }
         }
     }
     else
@@ -435,7 +450,7 @@ void Player::move()
 void Player::initMusic()
 {
     m_introMusic = new omi::Music(
-            "", "res/sound/music/welcome_to_the_reverie.ogg", 0.95f, true
+            "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
     );
     m_components.add( m_introMusic );
 

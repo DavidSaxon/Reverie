@@ -65,6 +65,7 @@ void EndTile::init()
             global::environment::EAST
     );
     m_meshComp.push_back( mesh );
+    m_components.add( mesh );
 
     m_components.add( vendor::vendWallCollider(
             this,
@@ -89,6 +90,7 @@ void EndTile::init()
             global::environment::WEST
     );
     m_meshComp.push_back( mesh );
+    m_components.add( mesh );
 
     m_components.add( vendor::vendWallCollider(
             this,
