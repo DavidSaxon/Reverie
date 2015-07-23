@@ -27,6 +27,7 @@ bool LoadingScene::update()
         omi::ResourceManager::load( resource_group::MENU );
         omi::ResourceManager::load( resource_group::PLAYER );
         omi::ResourceManager::load( resource_group::PHOBETOR );
+        omi::ResourceManager::load( resource_group::CURSE_ROOM );
         omi::ResourceManager::load( resource_group::INTRO );
         omi::ResourceManager::load( resource_group::FACILITY );
         m_loadingDone = true;

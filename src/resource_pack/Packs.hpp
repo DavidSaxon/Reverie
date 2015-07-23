@@ -30,6 +30,8 @@ void buildPlayerPack();
 
 void buildPhobetorPack();
 
+void buildCurseRoomPack();
+
 void buildIntroPack();
 
 void buildFacilityPack();
@@ -48,6 +50,7 @@ inline void build()
     buildMenuPack();
     buildPlayerPack();
     buildPhobetorPack();
+    buildCurseRoomPack();
     buildIntroPack();
     buildFacilityPack();
 }

@@ -1,5 +1,6 @@
 #include "src/entities/gameplay/layout/IntroCore.hpp"
 
+#include "src/entities/gameplay/CurseRoom.hpp"
 #include "src/entities/gameplay/Player.hpp"
 #include "src/entities/gameplay/ProcedualEntity.hpp"
 
@@ -37,12 +38,12 @@ void IntroCore::init()
 
     // build the initial sections
     initSection0();
-    initSection1();
-    initSection2();
-    initSection3();
-    initSection4();
-    initSection5();
-    initSection6();
+    // initSection1();
+    // initSection2();
+    // initSection3();
+    // initSection4();
+    // initSection5();
+    // initSection6();
 }
 
 void IntroCore::update()
@@ -153,19 +154,25 @@ void IntroCore::initSection0()
             global::environment::NORTH,
             global::environment::DECOR_PROP_2
     ) );
-    addToSection( 0, new CornerTile(
-            global::environment::INTRO,
-            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
-            global::environment::NORTH,
-            global::environment::DECOR_LIGHT_1
+    // addToSection( 0, new CornerTile(
+    //         global::environment::INTRO,
+    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+    //         global::environment::NORTH,
+    //         global::environment::DECOR_LIGHT_1
+    // ) );
+    // // look text
+    // addToSection( 0, new TutorialText(
+    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+    //         0.0f,
+    //         "Move the mouse to look around",
+    //         m_player
+    // ) );
+
+    // TESTING CURSE ROOM
+    addEntity( new CurseRoom(
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f )
     ) );
-    // look text
-    addToSection( 0, new TutorialText(
-            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
-            0.0f,
-            "Move the mouse to look around",
-            m_player
-    ) );
+
     // trigger
     IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ) );

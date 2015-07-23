@@ -77,7 +77,7 @@ void Player::init()
     m_camT = new omi::Transform(
             "",
             m_transform,
-            glm::vec3( 0.0f, 1.7f, 0.0f ),
+            glm::vec3( 0.0f, 1.85f, 0.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -112,6 +112,20 @@ void Player::init()
     // flare->overlay = true;
     // flare->castShadow = false;
     // m_components.add( flare );
+
+    // TESTING
+    omi::Transform* cursePos = new omi::Transform(
+            "",
+            glm::vec3( 0.0f, 0.0f, -12.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    omi::Mesh* curseGiverBody =
+            omi::ResourceManager::getMesh( "curse_giver_body", "", cursePos );
+    m_components.add( curseGiverBody );
+    omi::Mesh* curseGiverPants =
+            omi::ResourceManager::getMesh( "curse_giver_pants", "", cursePos );
+    m_components.add( curseGiverPants );
 
     // initialize music
     initMusic();
@@ -423,7 +437,7 @@ void Player::move()
 
     if ( moveTotal > 0.0f )
     {
-        m_stepSoundAni += stepAnimationRate * animationBoost * 0.0035f;
+        m_stepSoundAni += stepAnimationRate * animationBoost * 0.003f;
         if ( m_stepSoundAni >= 1.0f )
         {
             m_stepSoundAni = 0.0f;

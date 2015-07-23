@@ -12,6 +12,7 @@ enum ResourceGroup {
     MENU,
     PLAYER,
     PHOBETOR,
+    CURSE_ROOM,
     INTRO,
     FACILITY
 };
