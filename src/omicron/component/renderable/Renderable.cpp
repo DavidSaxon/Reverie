@@ -34,7 +34,7 @@ Renderable::Renderable(
     :
     Component     ( id ),
     visible       ( true ),
-    castShadow    ( true ),
+    castShadow    ( false ),
     overlay       ( false ),
     gui           ( false ),
     selectable    ( false ),

@@ -27,11 +27,11 @@ omi::Scene* init()
     omi::renderSettings.setClearColour( glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f ) );
     omi::renderSettings.setColourPicking( true );
     omi::renderSettings.setVisibilityChecking( false );
-    omi::renderSettings.setShadowFrustumSize( 20.0f );
+    omi::renderSettings.setShadowFrustumSize( 15.0f );
 
     //audio settings
-    omi::audioSettings.setSoundDisabled( false );
-    omi::audioSettings.setMusicDisabled( false );
+    omi::audioSettings.setSoundDisabled( true );
+    omi::audioSettings.setMusicDisabled( true );
 
     // apply settings from disk
     settings::config::applySettingsFromConfig();

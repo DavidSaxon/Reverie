@@ -122,9 +122,11 @@ void Player::init()
     );
     omi::Mesh* curseGiverBody =
             omi::ResourceManager::getMesh( "curse_giver_body", "", cursePos );
+    curseGiverBody->castShadow = true;
     m_components.add( curseGiverBody );
     omi::Mesh* curseGiverPants =
             omi::ResourceManager::getMesh( "curse_giver_pants", "", cursePos );
+    curseGiverPants->castShadow = true;
     m_components.add( curseGiverPants );
 
     // initialize music

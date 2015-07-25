@@ -15,25 +15,6 @@ void buildPlayerPack()
         0
     );
 
-    // TODO: REMOVE ME
-
-    omi::ResourceManager::addTextureMaterialGeometryMesh(
-        "curse_giver_body",
-        resource_group::PLAYER,
-        "default_shader",
-        "res/gfx/texture/player/curse_giver_skin.png",
-        "res/gfx/geometry/player/curse_giver.obj",
-        0
-    );
-    omi::ResourceManager::addTextureMaterialGeometryMesh(
-        "curse_giver_pants",
-        resource_group::PLAYER,
-        "default_shader",
-        "res/gfx/texture/player/curse_giver_pants.png",
-        "res/gfx/geometry/player/curse_giver_pants.obj",
-        0
-    );
-
     //----------------------------------SOUNDS----------------------------------
 
     // heart beats

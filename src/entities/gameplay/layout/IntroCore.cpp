@@ -36,6 +36,21 @@ void IntroCore::init()
     // set up collision groups
     omi::CollisionDetect::checkGroup( "intro_trigger", "player" );
 
+    // shadow light
+    omi::Transform* lightT = new omi::Transform(
+            "",
+            glm::vec3( 0.0f, 0.75f, 0.75f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( lightT );
+    omi::DirectionalLight* light =
+    light =  new omi::DirectionalLight(
+        "", lightT, 0.5f, glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    light->setCastShadow( true );
+    m_components.add( light );
+
     // build the initial sections
     initSection0();
     // initSection1();

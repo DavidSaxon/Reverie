@@ -28,12 +28,15 @@ void CurseRoom::init()
     // room walls
     omi::Mesh* floorMesh =
             omi::ResourceManager::getMesh( "curse_room_floor", "", baseT );
+    floorMesh->castShadow = false;
     m_components.add( floorMesh );
     omi::Mesh* ceilingMesh =
             omi::ResourceManager::getMesh( "curse_room_ceiling", "", baseT );
+    ceilingMesh->castShadow = false;
     m_components.add( ceilingMesh );
     omi::Mesh* wallBackMesh =
             omi::ResourceManager::getMesh( "curse_room_wall", "", baseT );
+    wallBackMesh->castShadow = false;
     m_components.add( wallBackMesh );
     omi::Transform* wallLeftT = new omi::Transform(
             "",
@@ -44,6 +47,7 @@ void CurseRoom::init()
     m_components.add( wallLeftT );
     omi::Mesh* wallLeftMesh =
             omi::ResourceManager::getMesh( "curse_room_wall", "", wallLeftT );
+    wallLeftMesh->castShadow = false;
     m_components.add( wallLeftMesh );
     omi::Transform* wallRightT = new omi::Transform(
             "",
@@ -54,6 +58,7 @@ void CurseRoom::init()
     m_components.add( wallRightT );
     omi::Mesh* wallRightMesh =
             omi::ResourceManager::getMesh( "curse_room_wall", "", wallRightT );
+    wallRightMesh->castShadow = false;
     m_components.add( wallRightMesh );
 
 
