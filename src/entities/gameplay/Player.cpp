@@ -113,22 +113,6 @@ void Player::init()
     // flare->castShadow = false;
     // m_components.add( flare );
 
-    // TESTING
-    omi::Transform* cursePos = new omi::Transform(
-            "",
-            glm::vec3( 0.0f, 0.0f, -12.0f ),
-            glm::vec3(),
-            glm::vec3( 1.0f, 1.0f, 1.0f )
-    );
-    omi::Mesh* curseGiverBody =
-            omi::ResourceManager::getMesh( "curse_giver_body", "", cursePos );
-    curseGiverBody->castShadow = true;
-    m_components.add( curseGiverBody );
-    omi::Mesh* curseGiverPants =
-            omi::ResourceManager::getMesh( "curse_giver_pants", "", cursePos );
-    curseGiverPants->castShadow = true;
-    m_components.add( curseGiverPants );
-
     // initialize music
     initMusic();
 }

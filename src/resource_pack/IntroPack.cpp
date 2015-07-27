@@ -132,16 +132,6 @@ void buildIntroPack()
         omi::material::SHADELESS
     );
 
-    // TODO: MOVE TO PHOBETOR PACK
-    omi::ResourceManager::addTextureMaterialGeometryMesh(
-        "phobetor_still",
-        resource_group::INTRO,
-        "default_shader",
-        "res/gfx/texture/phobetor/skin.png",
-        "res/gfx/geometry/phobetor/still.obj",
-        0
-    );
-
     //----------------------------------SOUNDS----------------------------------
 
     omi::ResourceManager::addSound(

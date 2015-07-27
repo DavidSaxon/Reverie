@@ -36,29 +36,29 @@ void IntroCore::init()
     // set up collision groups
     omi::CollisionDetect::checkGroup( "intro_trigger", "player" );
 
-    // shadow light
-    omi::Transform* lightT = new omi::Transform(
+    // set up a shadow caster
+    omi::Transform* casterT = new omi::Transform(
             "",
-            glm::vec3( 0.0f, 0.75f, 0.75f ),
+            glm::vec3( 0.0f, 0.3f, -1.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
-    m_components.add( lightT );
-    omi::DirectionalLight* light =
-    light =  new omi::DirectionalLight(
-        "", lightT, 0.5f, glm::vec3( 1.0f, 1.0f, 1.0f )
+    m_components.add( casterT );
+    omi::DirectionalLight* shadowCaster =
+    shadowCaster =  new omi::DirectionalLight(
+        "", casterT, 0.0f, glm::vec3( 1.0f, 1.0f, 1.0f )
     );
-    light->setCastShadow( true );
-    m_components.add( light );
+    shadowCaster->setCastShadow( true );
+    m_components.add( shadowCaster );
 
     // build the initial sections
     initSection0();
-    // initSection1();
-    // initSection2();
-    // initSection3();
-    // initSection4();
-    // initSection5();
-    // initSection6();
+    initSection1();
+    initSection2();
+    initSection3();
+    initSection4();
+    initSection5();
+    initSection6();
 }
 
 void IntroCore::update()
@@ -185,7 +185,9 @@ void IntroCore::initSection0()
 
     // TESTING CURSE ROOM
     addEntity( new CurseRoom(
-            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f )
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+            global::environment::NORTH,
+            m_player
     ) );
 
     // trigger
@@ -563,7 +565,6 @@ void IntroCore::initSection5()
                     -global::TILE_SIZE * 16.0f
             ),
             global::environment::EAST,
-            global::environment::DECOR_LIGHT_1 |
             global::environment::DECOR_PROP_1  |
             global::environment::DECOR_PROP_2
     ) );

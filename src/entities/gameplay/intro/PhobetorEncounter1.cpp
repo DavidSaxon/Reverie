@@ -87,6 +87,8 @@ void PhobetorEncounter1::init()
     m_phobetorMesh = omi::ResourceManager::getKeyFrameMesh(
                 "phobetor_basic", "", m_pos );
     m_phobetorMesh->visible = false;
+    m_phobetorMesh->castShadow = true;
+    m_phobetorMesh->receiveShadows = false;
     m_components.add( m_phobetorMesh );
 
     // start detector

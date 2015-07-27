@@ -3,6 +3,10 @@
 
 #include "src/omicron/entity/Entity.hpp"
 
+#include "src/data/Globals.hpp"
+
+class Player;
+
 class CurseRoom : public omi::Entity
 {
 public:
@@ -11,7 +15,10 @@ public:
     //                                CONSTRUCTOR
     //--------------------------------------------------------------------------
 
-    CurseRoom( const glm::vec3& pos );
+    CurseRoom(
+        const glm::vec3& pos,
+        global::environment::Direction direction,
+        Player* player );
 
     //--------------------------------------------------------------------------
     //                          PUBLIC MEMBER FUNCTIONS
@@ -27,7 +34,23 @@ private:
     //                                 VARIABLES
     //--------------------------------------------------------------------------
 
+    // the position of the curse room
     glm::vec3 m_position;
+    // the direction of the curse room
+    global::environment::Direction m_direction;
+
+    // pointer to the player
+    Player* m_player;
+
+    // the curse giver model
+    omi::KeyFrameMesh* m_curseGiverBody;
+    omi::Mesh* m_curseGiverPants;
+
+    //--------------------------------------------------------------------------
+    //                          PRIVATE MEMBER FUNCTIONS
+    //--------------------------------------------------------------------------
+
+    void initComponents();
 };
 
 #endif

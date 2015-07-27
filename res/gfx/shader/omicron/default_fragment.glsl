@@ -30,6 +30,9 @@ uniform sampler2D u_specMap;
 // if the material is shadeless
 uniform int u_shadeless;
 
+// whether the material recieves shadows
+uniform int u_recieve;
+
 // the shadow map
 uniform sampler2D u_shadowMap;
 // the light casting shadows
@@ -44,21 +47,21 @@ uniform vec3 u_ambientLight;
 // the number of lights
 uniform int u_lightCount;
 // the light types
-uniform int u_lightType[8];
+uniform int u_lightType[16];
 // the light positions
-uniform vec3 u_lightPos[8];
+uniform vec3 u_lightPos[16];
 // the light rotations
-uniform vec3 u_lightRot[8];
+uniform vec3 u_lightRot[16];
 // the light colours
-uniform vec3 u_lightColour[8];
+uniform vec3 u_lightColour[16];
 // the light attenuations
-uniform vec3 u_lightAttenuation[8];
+uniform vec3 u_lightAttenuation[16];
 // the light arcs
-uniform vec2 u_lightArc[8];
+uniform vec2 u_lightArc[16];
 // the lights that are inversed
-uniform int u_lightInverse[8];
+uniform int u_lightInverse[16];
 // the lights that are ignored
-uniform int u_lightIgnore[8];
+uniform int u_lightIgnore[16];
 
 //the texture coords
 varying vec2 v_texCoord;
@@ -112,6 +115,8 @@ void main() {
 
     //---------------------------------LIGHTING---------------------------------
 
+    float visibility = 1.0;
+
     if ( u_shadeless != 0 )
     {
         gl_FragColor = material;
@@ -124,8 +129,7 @@ void main() {
         for ( int i = 0; i < u_lightCount; ++i )
         {
             // calculate shadowing
-            float visibility = 1.0;
-            if ( i == u_shadowCaster )
+            if ( i == u_shadowCaster && u_recieve == 1 )
             {
                 float shadowCosThetha = dot( N, normalize( u_lightPos[i] ) );
                 shadowCosThetha = clamp( shadowCosThetha, 0.0, 1.0 );
@@ -134,10 +138,9 @@ void main() {
                 if ( texture2D( u_shadowMap, v_shadowCoord.xy ).x <
                      v_shadowCoord.z - bias )
                 {
-                    visibility = 0.5;
+                    visibility = 0.75;
                 }
             }
-            vec3 visiblityVec = vec3( visibility, visibility, visibility );
 
             // ignore this light
             if ( u_lightIgnore[i] != 0 )
@@ -154,7 +157,7 @@ void main() {
                 if ( cosThetha > 0.0 )
                 {
                     // compute and add diffuse colour
-                    light += u_lightColour[i] * cosThetha * visiblityVec;
+                    light += u_lightColour[i] * cosThetha;
                     // compute half vector
                     vec3 H =
                         normalize( normalize( v_eyePos ) +
@@ -162,7 +165,7 @@ void main() {
                     // compute specular
                     float cosAlpha = max( dot( N, H ), 0.0 );
                     vec3 specular = u_specularColour * u_lightColour[i] *
-                            pow( cosAlpha, u_shininess ) * visiblityVec;
+                            pow( cosAlpha, u_shininess );
                     if ( u_hasSpecMap > 0 )
                     {
                         specular *= texture2D( u_specMap, v_texCoord ).rgb;
@@ -190,12 +193,12 @@ void main() {
                     if ( u_lightInverse[i] == 1 )
                     {
                         light -= attenuation * u_lightColour[i] *
-                                 cosThetha * visiblityVec;
+                                 cosThetha;
                     }
                     else
                     {
                         light += attenuation * u_lightColour[i] *
-                                 cosThetha * visiblityVec;
+                                 cosThetha;
                     }
                     // compute half vector
                     vec3 H =
@@ -205,7 +208,7 @@ void main() {
                     float cosAlpha = max( dot ( N, H ), 0.0 );
                     vec3 specular = attenuation * u_specularColour *
                                      u_lightColour[i] *
-                                    pow( cosAlpha, u_shininess ) * visiblityVec;
+                                    pow( cosAlpha, u_shininess );
                     if ( u_hasSpecMap > 0 )
                     {
                         specular *= texture2D( u_specMap, v_texCoord ).rgb;
@@ -242,7 +245,7 @@ void main() {
                             ( u_lightAttenuation[i].z * distance * distance ) );
                         // apply diffuse
                         light += attenuation * u_lightColour[i] *
-                                 cosThetha * visiblityVec;
+                                 cosThetha;
                         // compute half vector
                         vec3 H =
                             normalize( normalize( v_eyePos ) +
@@ -251,7 +254,7 @@ void main() {
                         float cosAlpha = max( dot ( N, H ), 0.0 );
                         vec3 specular = attenuation * u_specularColour *
                                 u_lightColour[i] *
-                                pow( cosAlpha, u_shininess ) * visiblityVec;
+                                pow( cosAlpha, u_shininess );
                         {
                             specular *= texture2D( u_specMap, v_texCoord ).rgb;
                         }
@@ -261,11 +264,13 @@ void main() {
             }
         }
 
+        vec4 visibilityVec = vec4( visibility, visibility, visibility, 1.0 );
+
         vec4 finalColour = material * vec4( light, 1.0 );
         finalColour = vec4(
             1.0 - exp( -u_exposure * finalColour.rgb ),
             finalColour.a
-        );
+        ) * visibilityVec;
         gl_FragColor = finalColour;
 
     }

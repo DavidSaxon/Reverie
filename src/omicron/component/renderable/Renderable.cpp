@@ -35,6 +35,7 @@ Renderable::Renderable(
     Component     ( id ),
     visible       ( true ),
     castShadow    ( false ),
+    receiveShadows( true ),
     overlay       ( false ),
     gui           ( false ),
     selectable    ( false ),
@@ -449,6 +450,15 @@ void Renderable::setShader(
     {
         // material is affected by light
         glUniform1i( glGetUniformLocation( program, "u_shadeless" ), 0 );
+
+        if ( receiveShadows )
+        {
+            glUniform1i( glGetUniformLocation( program, "u_recieve" ), 1 );
+        }
+        else
+        {
+            glUniform1i( glGetUniformLocation( program, "u_recieve" ), 0 );
+        }
 
         // shadowing
         if ( shadowCamera != NULL )

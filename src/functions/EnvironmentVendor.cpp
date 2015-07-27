@@ -35,7 +35,6 @@ omi::Mesh* vendFloorTile(
         {
             omi::Mesh* m = omi::ResourceManager::getMesh(
                     "intro_floor", "", baseTransform );
-            m->castShadow = false;
             return m;
         }
         // TODO: other stages
@@ -56,7 +55,6 @@ omi::Mesh* vendCeilingTile(
         {
             omi::Mesh* m = omi::ResourceManager::getMesh(
                     "intro_ceiling", "", baseTransform );
-            m->castShadow = false;
             return m;
         }
         // TODO: other stages
@@ -89,7 +87,6 @@ omi::Mesh* vendWallTile(
         {
             m = omi::ResourceManager::getMesh(
                     "intro_wall", "", t );
-            m->castShadow = false;
             return m;
         }
         // TODO: other stages
@@ -122,7 +119,6 @@ omi::Mesh* vendSkirting(
         {
             m = omi::ResourceManager::getMesh(
                     "intro_skirting", "", t );
-            m->castShadow = false;
             return m;
         }
         // TODO: other stages
@@ -155,7 +151,6 @@ omi::Mesh* vendSkirtingCorner(
         {
             m = omi::ResourceManager::getMesh(
                     "intro_skirting_corner", "", t );
-            m->castShadow = false;
             return m;
         }
         // TODO: other stages
