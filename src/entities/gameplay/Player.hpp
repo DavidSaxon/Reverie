@@ -67,6 +67,10 @@ public:
 
     void stopHeartBeatSlow();
 
+    void autoMoveToPosition( const glm::vec3& position );
+
+    void disableAutoMove();
+
 private:
 
     //--------------------------------------------------------------------------
@@ -114,6 +118,11 @@ private:
     bool m_runDisabled;
     // if foot step sounds are disabled
     bool m_footstepsDisabled;
+
+    // whether the player has a position to move to automatically
+    bool m_autoMove;
+    glm::vec3 m_autoMovePos;
+    float m_autoMoveAngle;
 
     // TODO: REMOVE ME
     // the right arm of the player which shows active curses

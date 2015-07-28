@@ -16,7 +16,34 @@ CurseRoom::CurseRoom( const glm::vec3& pos,
     m_direction( direction ),
     m_player   ( player )
 {
-    initComponents();
+    switch( m_direction )
+    {
+        case global::environment::NORTH:
+        {
+            m_autoMovePos = glm::vec3(
+                    m_position + glm::vec3( 0.0F, 0.0F, 1.0F ) );
+            break;
+        }
+        case global::environment::SOUTH:
+        {
+            m_autoMovePos = glm::vec3(
+                    m_position + glm::vec3( 0.0F, 0.0F, -1.0F ) );
+            break;
+        }
+        case global::environment::EAST:
+        {
+            m_autoMovePos = glm::vec3(
+                    m_position + glm::vec3( 1.0F, 0.0F, 0.0F ) );
+            break;
+        }
+        case global::environment::WEST:
+        {
+            m_autoMovePos = glm::vec3(
+                    m_position + glm::vec3( -1.0F, 0.0F, 0.0F ) );
+            break;
+        }
+
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -25,12 +52,18 @@ CurseRoom::CurseRoom( const glm::vec3& pos,
 
 void CurseRoom::init()
 {
-
+    initComponents();
 }
 
 void CurseRoom::update()
 {
-
+    // check trigger
+    if ( !m_triggered && m_trigger->getCollisionData().size() > 0 )
+    {
+        m_triggered = true;
+        // Request that the player move
+        m_player->autoMoveToPosition( m_autoMovePos );
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -170,6 +203,15 @@ void CurseRoom::initComponents()
             0.02f
     );
     m_components.add( highLight );
+
+    //---------------------------------TRIGGER----------------------------------
+
+    m_trigger = new omi::CollisionDetector( "", "curse_room_trigger", this );
+    m_trigger->addBounding( new omi::BoundingRect(
+            glm::vec2( global::TILE_SIZE, global::TILE_SIZE ),
+            baseT
+    ) );
+    m_components.add( m_trigger );
 
     //-------------------------------CURSE GIVER--------------------------------
 

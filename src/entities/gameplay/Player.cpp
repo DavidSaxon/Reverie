@@ -54,7 +54,9 @@ Player::Player()
     m_shakeUp          ( true ),
     m_shakeUpTimer     ( 0.0f ),
     m_runDisabled      ( false ),
-    m_footstepsDisabled( false )
+    m_footstepsDisabled( false ),
+    m_autoMove         ( false ),
+    m_autoMoveAngle    ( 0.0F )
 {
 }
 
@@ -181,6 +183,23 @@ void Player::playHeartBeatSlow()
 void Player::stopHeartBeatSlow()
 {
     omi::SoundPool::stop( m_heartBeatSlowId, 0 );
+}
+
+void Player::autoMoveToPosition( const glm::vec3& position )
+{
+    m_autoMove = true;
+    m_autoMovePos = position;
+
+    // calculate the angle to auto-move at
+    m_autoMoveAngle = omi::vecutil::angleBetween(
+            m_autoMovePos.xz(),
+            m_transform->translation.xz()
+    );
+}
+
+void Player::disableAutoMove()
+{
+    m_autoMove = false;
 }
 
 //------------------------------------------------------------------------------
@@ -349,6 +368,13 @@ void Player::move()
             omi::fpsManager.getTimeScale() *
             global::timeScale;
 
+    // override with auto-move
+    if ( m_autoMove )
+    {
+        moveDis.x = util::math::cosd( m_autoMoveAngle );
+        moveDis.z = util::math::sind( m_autoMoveAngle );
+    }
+
     // calculated weighted move
     float moveTotal = fabs( moveDis.x ) + fabs( moveDis.z );
     if ( moveTotal > 1.0f )
@@ -366,7 +392,7 @@ void Player::move()
 
     // run key
     if ( omi::input::isKeyPressed( omi::input::key::LEFT_SHIFT ) &&
-         !m_runDisabled )
+         !m_runDisabled && !m_autoMove )
     {
         moveSpeed         *= RUN_SPEED_MULTIPLIER;
         // TODO: apply based on move speed?
@@ -374,7 +400,7 @@ void Player::move()
         animationBoost    *= RUN_STEP_MULTIPLIER;
     }
     // TODO: REMOVE ME
-    if ( omi::input::isKeyPressed( omi::input::key::LEFT_ALT ) )
+    if ( omi::input::isKeyPressed( omi::input::key::LEFT_ALT ) && !m_autoMove )
     {
         moveSpeed         *= DEBUG_SPEED_MULTIPLIER;
         stepAnimationRate *= 0.0f;
@@ -385,18 +411,23 @@ void Player::move()
     moveDis.z *= moveSpeed;
 
     // direct the move based on the look direction
-    glm::vec3 tempMove( moveDis );
-    moveDis.x =
-            ( tempMove.z * util::math::sind( m_camT->rotation.y ) ) +
-            ( tempMove.x * util::math::cosd( m_camT->rotation.y ) );
-    moveDis.z =
-            ( tempMove.z * util::math::cosd( m_camT->rotation.y ) ) +
-            ( tempMove.x * -util::math::sind( m_camT->rotation.y ) );
-
+    if ( !m_autoMove )
+    {
+        glm::vec3 tempMove( moveDis );
+        moveDis.x =
+                ( tempMove.z * util::math::sind( m_camT->rotation.y ) ) +
+                ( tempMove.x * util::math::cosd( m_camT->rotation.y ) );
+        moveDis.z =
+                ( tempMove.z * util::math::cosd( m_camT->rotation.y ) ) +
+                ( tempMove.x * -util::math::sind( m_camT->rotation.y ) );
+    }
 
     // get the actual move distance based on obstacles
     float orgMoveDis = fabs( moveDis.x ) + fabs( moveDis.z );
-    moveDis = m_collisionChecker->forwardBestCheck( moveDis, "wall" );
+    if ( !m_autoMove )
+    {
+        moveDis = m_collisionChecker->forwardBestCheck( moveDis, "wall" );
+    }
 
     // slow animation based on how far the player has actually moved
     float slowPercent = 1.0f;
@@ -406,6 +437,28 @@ void Player::move()
         slowPercent = fabs( newMoveDis ) / fabs( orgMoveDis );
     }
     stepAnimationRate *= slowPercent;
+
+    // TODO: this needs fixing
+    // resolve and clamp auto move
+    if ( m_autoMove )
+    {
+        if ( m_autoMoveAngle > 180.0F )
+        {
+            if ( ( m_transform->translation.z + moveDis.z ) < m_autoMovePos.z )
+            {
+                moveDis = glm::vec3( 0.0F );
+                stepAnimationRate = 0.0F;
+            }
+        }
+        else
+        {
+            if ( ( m_transform->translation.z + moveDis.z ) > m_autoMovePos.z )
+            {
+                moveDis = glm::vec3( 0.0F );
+                stepAnimationRate = 0.0F;
+            }
+        }
+    }
 
     // final shift the transformation
     m_transform->translation += moveDis;
@@ -420,7 +473,6 @@ void Player::move()
             STEP_HEIGHT * animationBoost;
 
     // step sound
-
     if ( moveTotal > 0.0f )
     {
         m_stepSoundAni += stepAnimationRate * animationBoost * 0.003f;

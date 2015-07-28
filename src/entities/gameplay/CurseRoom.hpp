@@ -46,6 +46,13 @@ private:
     omi::KeyFrameMesh* m_curseGiverBody;
     omi::Mesh* m_curseGiverPants;
 
+    // player collision trigger
+    omi::CollisionDetector* m_trigger;
+    bool m_triggered;
+
+    // the position for the player to auto-move to
+    glm::vec3 m_autoMovePos;
+
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS
     //--------------------------------------------------------------------------

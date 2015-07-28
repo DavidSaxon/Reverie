@@ -19,10 +19,12 @@ void GameplayScene::init()
     omi::systemSettings.setCursorLockPosition(
             omi::displaySettings.getCentre() );
 
-    // TODO:
+    // collision check groups
+    omi::CollisionDetect::checkGroup( "curse_room_trigger", "player" );
+
+    // TODO: MOVE?
     // ambient lighting
     omi::renderSettings.setAmbientStrength( 0.05f );
-    // omi::renderSettings.setAmbientStrength( 0.4f );
     omi::renderSettings.setAmbientColour( glm::vec3( 1.0f, 1.0f, 1.0f ) );
     omi::renderSettings.setFilmGrain( 0.04f );
 
