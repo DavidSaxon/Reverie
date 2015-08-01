@@ -14,32 +14,39 @@ CurseRoom::CurseRoom( const glm::vec3& pos,
     :
     m_position ( pos ),
     m_direction( direction ),
-    m_player   ( player )
+    m_player   ( player ),
+    m_triggered( false )
 {
+    const float xAutoLook = -17.0F;
+
     switch( m_direction )
     {
         case global::environment::NORTH:
         {
             m_autoMovePos = glm::vec3(
                     m_position + glm::vec3( 0.0F, 0.0F, 1.0F ) );
+            m_autoLookAngle = glm::vec2( xAutoLook, 0.0F );
             break;
         }
         case global::environment::SOUTH:
         {
             m_autoMovePos = glm::vec3(
                     m_position + glm::vec3( 0.0F, 0.0F, -1.0F ) );
+            m_autoLookAngle = glm::vec2( xAutoLook, 180.0F );
             break;
         }
         case global::environment::EAST:
         {
             m_autoMovePos = glm::vec3(
-                    m_position + glm::vec3( 1.0F, 0.0F, 0.0F ) );
+                    m_position + glm::vec3( -1.0F, 0.0F, 0.0F ) );
+            m_autoLookAngle = glm::vec2( xAutoLook, 270.0F );
             break;
         }
         case global::environment::WEST:
         {
             m_autoMovePos = glm::vec3(
-                    m_position + glm::vec3( -1.0F, 0.0F, 0.0F ) );
+                    m_position + glm::vec3( 1.0F, 0.0F, 0.0F ) );
+            m_autoLookAngle = glm::vec2( xAutoLook, 90.0F );
             break;
         }
 
@@ -61,8 +68,9 @@ void CurseRoom::update()
     if ( !m_triggered && m_trigger->getCollisionData().size() > 0 )
     {
         m_triggered = true;
-        // Request that the player move
+        // Request that the player look and move
         m_player->autoMoveToPosition( m_autoMovePos );
+        m_player->autoLookAtAngle( m_autoLookAngle );
     }
 }
 

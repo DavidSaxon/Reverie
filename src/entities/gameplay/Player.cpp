@@ -56,7 +56,11 @@ Player::Player()
     m_runDisabled      ( false ),
     m_footstepsDisabled( false ),
     m_autoMove         ( false ),
-    m_autoMoveAngle    ( 0.0F )
+    m_autoMoveAngle    ( 0.0F ),
+    m_autoLook         ( false ),
+    m_autoLookLow      ( 0.0F ),
+    m_autoLookHigh     ( 0.0F ),
+    m_autoLookDone     ( false )
 {
 }
 
@@ -69,7 +73,7 @@ void Player::init()
     // main player transform
     m_transform = new omi::Transform(
             "",
-            glm::vec3( 0.0f, 0.0f, 2.0f ),
+            glm::vec3( 0.0f, 0.0f, -5.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -202,6 +206,28 @@ void Player::disableAutoMove()
     m_autoMove = false;
 }
 
+void Player::autoLookAtAngle( const glm::vec2& angle )
+{
+    m_autoLook = true;
+    m_autoLookDone = false;
+    m_autoLookAngle = angle;
+
+    m_autoLookLow = m_autoLookAngle.y;
+    m_autoLookHigh = m_autoLookLow + 180.0F;
+
+    m_autoLookInverseCheck = false;
+    if ( m_autoLookAngle.y > 180.0F )
+    {
+        m_autoLookInverseCheck = true;
+        m_autoLookHigh = m_autoLookLow - 180.0F;
+    }
+}
+
+void Player::disableAutoLook()
+{
+    m_autoLook = false;
+}
+
 //------------------------------------------------------------------------------
 //                            PRIVATE MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
@@ -209,12 +235,17 @@ void Player::disableAutoMove()
 void Player::look()
 {
     // rotate the camera based on how far the mouse has moved
-    m_camT->rotation.x +=
-        ( omi::displaySettings.getCentre().y - omi::input::getMousePos().y ) *
-        LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
-    m_camT->rotation.y +=
-        ( omi::displaySettings.getCentre().x - omi::input::getMousePos().x ) *
-        LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
+    if ( !m_autoLook )
+    {
+        m_camT->rotation.x +=
+            ( omi::displaySettings.getCentre().y -
+              omi::input::getMousePos().y          ) *
+            LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
+        m_camT->rotation.y +=
+            ( omi::displaySettings.getCentre().x -
+              omi::input::getMousePos().x          ) *
+            LOOK_BASE_SPEED * global::lookSensitivity * global::timeScale;
+    }
 
     // apply camera shake
     if ( m_camShake > 0.0f )
@@ -244,6 +275,97 @@ void Player::look()
             -LOOK_CLAMP,
             LOOK_CLAMP
     );
+
+    // apply auto look
+    bool lookLow = false;
+    if ( m_autoLook )
+    {
+
+        const float autoLookSpeed = 1.55F;
+
+        if ( m_camT->rotation.x < m_autoLookAngle.x )
+        {
+            m_camT->rotation.x +=
+                    autoLookSpeed * omi::fpsManager.getTimeScale();
+            if ( m_camT->rotation.x > m_autoLookAngle.x )
+            {
+                m_camT->rotation.x = m_autoLookAngle.x;
+            }
+        }
+        else if ( m_camT->rotation.x > m_autoLookAngle.x )
+        {
+            m_camT->rotation.x -=
+                    autoLookSpeed * omi::fpsManager.getTimeScale();
+            if ( m_camT->rotation.x < m_autoLookAngle.x )
+            {
+                m_camT->rotation.x = m_autoLookAngle.x;
+            }
+        }
+
+        if ( !m_autoLookDone )
+        {
+            bool lookCheck = false;
+            if ( !m_autoLookInverseCheck )
+            {
+                lookCheck = m_camT->rotation.y >= m_autoLookLow &&
+                            m_camT->rotation.y <  m_autoLookHigh;
+            }
+            else
+            {
+                lookCheck = !( m_camT->rotation.y <= m_autoLookLow &&
+                               m_camT->rotation.y >  m_autoLookHigh   );
+            }
+
+            if ( lookCheck )
+            {
+                m_camT->rotation.y -=
+                        autoLookSpeed * omi::fpsManager.getTimeScale();
+                lookLow = true;
+            }
+            else
+            {
+                m_camT->rotation.y +=
+                        autoLookSpeed * omi::fpsManager.getTimeScale();
+            }
+        }
+    }
+
+    // wrap around y angle
+    if ( m_camT->rotation.y < 0.0F )
+    {
+        m_camT->rotation.y += 360.0F;
+    }
+    else if ( m_camT->rotation.y >= 360.0F )
+    {
+        m_camT->rotation.y -= 360.0F;
+    }
+
+    // check for the end of auto look
+    if ( m_autoLook && !m_autoLookDone )
+    {
+        bool lookCheck = false;
+        if ( !m_autoLookInverseCheck )
+        {
+            lookCheck = m_camT->rotation.y >= m_autoLookLow &&
+                        m_camT->rotation.y <  m_autoLookHigh;
+        }
+        else
+        {
+            lookCheck = !( m_camT->rotation.y <= m_autoLookLow &&
+                           m_camT->rotation.y >  m_autoLookHigh   );
+        }
+
+        if ( lookCheck && !lookLow )
+        {
+            m_camT->rotation.y = m_camT->rotation.y;
+            m_autoLookDone = true;
+        }
+        else if ( !lookCheck && lookLow )
+        {
+            m_camT->rotation.y = m_camT->rotation.y;
+            m_autoLookDone = true;
+        }
+    }
 }
 
 void Player::move()

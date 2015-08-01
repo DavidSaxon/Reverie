@@ -52,6 +52,7 @@ private:
 
     // the position for the player to auto-move to
     glm::vec3 m_autoMovePos;
+    glm::vec2 m_autoLookAngle;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS

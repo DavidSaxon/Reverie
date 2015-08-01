@@ -40,7 +40,7 @@ void IntroCore::init()
     // set up a shadow caster
     omi::Transform* casterT = new omi::Transform(
             "",
-            glm::vec3( 0.0f, 0.3f, -1.0f ),
+            glm::vec3( 0.3f, 0.3f, -1.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -170,24 +170,17 @@ void IntroCore::initSection0()
             global::environment::NORTH,
             global::environment::DECOR_PROP_2
     ) );
-    // addToSection( 0, new CornerTile(
-    //         global::environment::INTRO,
-    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
-    //         global::environment::NORTH,
-    //         global::environment::DECOR_LIGHT_1
-    // ) );
-    // // look text
-    // addToSection( 0, new TutorialText(
-    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
-    //         0.0f,
-    //         "Move the mouse to look around",
-    //         m_player
-    // ) );
-
-    // TESTING CURSE ROOM
-    addEntity( new CurseRoom(
+    addToSection( 0, new CornerTile(
+            global::environment::INTRO,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
             global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    // look text
+    addToSection( 0, new TutorialText(
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+            0.0f,
+            "Move the mouse to look around",
             m_player
     ) );
 
@@ -279,6 +272,7 @@ void IntroCore::initSection1()
             "Hold the shift key to run",
             m_player
     ) );
+
     // trigger
     IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
             glm::vec3(
@@ -421,15 +415,24 @@ void IntroCore::initSection3()
             ),
             global::environment::WEST
     ) );
-    addToSection( 3, new CornerTile(
-            global::environment::INTRO,
+    // addToSection( 3, new CornerTile(
+    //         global::environment::INTRO,
+    //         glm::vec3(
+    //                 global::TILE_SIZE * 2.0f, 0.0f,
+    //                 -global::TILE_SIZE * 9.0f
+    //         ),
+    //         global::environment::WEST,
+    //         global::environment::DECOR_LIGHT_1 |
+    //         global::environment::DECOR_PROP_3
+    // ) );
+
+    addEntity( new CurseRoom(
             glm::vec3(
                     global::TILE_SIZE * 2.0f, 0.0f,
                     -global::TILE_SIZE * 9.0f
             ),
             global::environment::WEST,
-            global::environment::DECOR_LIGHT_1 |
-            global::environment::DECOR_PROP_3
+            m_player
     ) );
 
     // trigger

@@ -71,6 +71,10 @@ public:
 
     void disableAutoMove();
 
+    void autoLookAtAngle( const glm::vec2& angle );
+
+    void disableAutoLook();
+
 private:
 
     //--------------------------------------------------------------------------
@@ -123,6 +127,14 @@ private:
     bool m_autoMove;
     glm::vec3 m_autoMovePos;
     float m_autoMoveAngle;
+
+    // whether the player has a position to automatically look
+    bool m_autoLook;
+    glm::vec2 m_autoLookAngle;
+    float m_autoLookLow;
+    float m_autoLookHigh;
+    bool m_autoLookInverseCheck;
+    bool m_autoLookDone;
 
     // TODO: REMOVE ME
     // the right arm of the player which shows active curses
