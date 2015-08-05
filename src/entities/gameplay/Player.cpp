@@ -57,11 +57,13 @@ Player::Player()
     m_footstepsDisabled( false ),
     m_autoMove         ( false ),
     m_autoMoveAngle    ( 0.0F ),
+    m_autoMoveDone     ( true ),
     m_autoLook         ( false ),
     m_autoLookLow      ( 0.0F ),
     m_autoLookHigh     ( 0.0F ),
-    m_autoLookDone     ( false )
+    m_autoLookDone     ( true )
 {
+    initCurses();
 }
 
 //------------------------------------------------------------------------------
@@ -73,7 +75,7 @@ void Player::init()
     // main player transform
     m_transform = new omi::Transform(
             "",
-            glm::vec3( 0.0f, 0.0f, -5.0f ),
+            glm::vec3( 0.0f, 0.0f, 2.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -144,6 +146,11 @@ omi::Transform* Player::getTransform()
     return m_transform;
 }
 
+std::map< curse::Type, Curse >& Player::getCurses()
+{
+    return m_curses;
+}
+
 void Player::setMusic( player::Music music )
 {
     // TODO:
@@ -192,6 +199,7 @@ void Player::stopHeartBeatSlow()
 void Player::autoMoveToPosition( const glm::vec3& position )
 {
     m_autoMove = true;
+    m_autoMoveDone = false;
     m_autoMovePos = position;
 
     // calculate the angle to auto-move at
@@ -204,6 +212,12 @@ void Player::autoMoveToPosition( const glm::vec3& position )
 void Player::disableAutoMove()
 {
     m_autoMove = false;
+    m_autoMoveDone = true;
+}
+
+bool Player::autoMoveDone() const
+{
+    return m_autoMoveDone;
 }
 
 void Player::autoLookAtAngle( const glm::vec2& angle )
@@ -226,6 +240,12 @@ void Player::autoLookAtAngle( const glm::vec2& angle )
 void Player::disableAutoLook()
 {
     m_autoLook = false;
+    m_autoLookDone = true;
+}
+
+bool Player::autoLookDone() const
+{
+    return m_autoLookDone;
 }
 
 //------------------------------------------------------------------------------
@@ -570,6 +590,7 @@ void Player::move()
             {
                 moveDis = glm::vec3( 0.0F );
                 stepAnimationRate = 0.0F;
+                m_autoMoveDone = true;
             }
         }
         else
@@ -578,6 +599,7 @@ void Player::move()
             {
                 moveDis = glm::vec3( 0.0F );
                 stepAnimationRate = 0.0F;
+                m_autoMoveDone = true;
             }
         }
     }
@@ -631,4 +653,100 @@ void Player::initMusic()
     // set and play the current music
     m_currentMusic = m_introMusic;
     m_currentMusic->play();
+}
+
+void Player::initCurses()
+{
+    //-----------------------------------LOST-----------------------------------
+    Curse lost;
+    // dummy level 0
+    lost.addLevel( "", "" );
+    // always on -- levels randomly generate and will re-generate when going
+    // far enough out of site
+    lost.addLevel(
+            "Curse of the Lost",
+            "May you never walk the same path twice"
+    );
+    // may your feel fail you?
+    // may you lose your way
+    // add
+    m_curses[ curse::LOST ] = lost;
+
+    //---------------------------------DARKNESS---------------------------------
+    Curse darkness;
+    // dummy level 0
+    darkness.addLevel( "", "" );
+    // levels are dark and the player gets a flash light
+    darkness.addLevel(
+        "Curse of Darkness I",
+        "May your eyes fail you"
+    );
+    // levels are very dark and the player gets a flash light
+    darkness.addLevel(
+        "Curse of Darkness II",
+        "May the shadows swallow you"
+    );
+    // levels are very dark and the player gets a flare
+    darkness.addLevel(
+        "Curse of Darkness III",
+        "May darkness be all you know"
+    );
+    // levels are very dark and the player gets no light source
+    darkness.addLevel(
+        "Curse of Darkness IV",
+        "May the black engulf you"
+
+    );
+    // add
+    m_curses[ curse::DARKNESS ] = darkness;
+
+    //----------------------------------HUNTED----------------------------------
+    Curse hunted;
+    // dummy level 0
+    hunted.addLevel( "", "" );
+    // always on -- phobetor is hunting you
+    hunted.addLevel(
+        "Curse of the Hunted I",
+        "May you never rest"
+    );
+    // phobetor walks quicker / crawls?
+    hunted.addLevel(
+        "Curse of the Hunted II",
+        "May you tire swiftly"
+    );
+    // phobetor glitches
+    hunted.addLevel(
+        "Curse of the Hunted III",
+        "May you know fear"
+    );
+    // phobetor runs
+    hunted.addLevel(
+        "Curse of the Hunted IV",
+        "May he find you"
+    );
+
+    //---------------------------------MADNESS----------------------------------
+    Curse madness;
+    // dummy level 0
+    madness.addLevel( "", "" );
+    // noise
+    madness.addLevel(
+        "Curse of Madness I",
+        "May you lose your mind"
+    );
+    // black and white
+    madness.addLevel(
+        "Curse of Madness II",
+        "May your senses fail"
+    );
+    // geometry
+    madness.addLevel(
+        "Curse of Madness III",
+        "May you lose hope"
+    );
+    // tearing
+    madness.addLevel(
+        "Curse of Madness IV",
+        "hist si het den"
+    );
 }

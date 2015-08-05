@@ -114,7 +114,7 @@ void buildIntroPack()
         "default_shader",
         glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
         1,
-        "title_font", // TODO:
+        "title_font",
         "REVERIE",
         0.24f,
         omi::material::SHADELESS
@@ -126,7 +126,7 @@ void buildIntroPack()
         "default_shader",
         glm::vec4( 1.0f, 1.0f, 1.0f, 1.0f ),
         1,
-        "title_font", // TODO:
+        "title_font",
         "Tutorial text",
         0.12f,
         omi::material::SHADELESS

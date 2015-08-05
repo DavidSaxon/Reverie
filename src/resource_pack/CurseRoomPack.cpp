@@ -85,6 +85,31 @@ void buildCurseRoomPack()
         0,
         "res/gfx/geometry/curse_room/hook/hook.key"
     );
+
+    // curse text
+    omi::ResourceManager::addMaterialText(
+        "curse_text_title",
+        resource_group::CURSE_ROOM,
+        "default_shader",
+        glm::vec4( 1.0F, 0.0F, 0.0F, 1.0F ),
+        1,
+        "title_font",
+        "Curse of the Lost",
+        0.1f,
+        omi::material::SHADELESS
+    );
+    // curse text
+    omi::ResourceManager::addMaterialText(
+        "curse_text_description",
+        resource_group::CURSE_ROOM,
+        "default_shader",
+        glm::vec4( 1.0F, 1.0F, 1.0F, 1.0F ),
+        1,
+        "title_font",
+        "May you never walk the same path twice",
+        0.04f,
+        omi::material::SHADELESS
+    );
 }
 
 } // namespace pack

@@ -54,6 +54,14 @@ private:
     glm::vec3 m_autoMovePos;
     glm::vec2 m_autoLookAngle;
 
+    // curse text
+    omi::Text* m_curse1Title;
+    omi::Text* m_curse1Description;
+    omi::Text* m_curse2Title;
+    omi::Text* m_curse2Description;
+    omi::Text* m_curse3Title;
+    omi::Text* m_curse3Description;
+
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS
     //--------------------------------------------------------------------------

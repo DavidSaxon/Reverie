@@ -1,6 +1,9 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_PLAYER_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_PLAYER_HPP_
 
+#include <map>
+
+#include "src/entities/gameplay/Curse.hpp"
 #include "src/omicron/entity/Entity.hpp"
 
 namespace player
@@ -50,6 +53,8 @@ public:
     /** Return's the player's transform */
     omi::Transform* getTransform();
 
+    std::map< curse::Type, Curse >& getCurses();
+
     /** Sets the current music */
     void setMusic( player::Music music );
 
@@ -71,9 +76,13 @@ public:
 
     void disableAutoMove();
 
+    bool autoMoveDone() const;
+
     void autoLookAtAngle( const glm::vec2& angle );
 
     void disableAutoLook();
+
+    bool autoLookDone() const;
 
 private:
 
@@ -127,6 +136,7 @@ private:
     bool m_autoMove;
     glm::vec3 m_autoMovePos;
     float m_autoMoveAngle;
+    bool m_autoMoveDone;
 
     // whether the player has a position to automatically look
     bool m_autoLook;
@@ -135,6 +145,9 @@ private:
     float m_autoLookHigh;
     bool m_autoLookInverseCheck;
     bool m_autoLookDone;
+
+    // the mapping of possible curses
+    std::map< curse::Type, Curse > m_curses;
 
     // TODO: REMOVE ME
     // the right arm of the player which shows active curses
@@ -152,6 +165,9 @@ private:
 
     /** Initialise music components */
     void initMusic();
+
+    /** Initialises the curses */
+    void initCurses();
 };
 
 #endif

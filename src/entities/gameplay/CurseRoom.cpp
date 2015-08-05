@@ -323,4 +323,98 @@ void CurseRoom::initComponents()
             omi::ResourceManager::getTexture( "curse_room_hook_spec" )
     );
     m_components.add( hook4Mesh );
+
+    //--------------------------------CURSE TEXT--------------------------------
+
+    // curse 1 title
+    omi::Transform* curse1TitleT = new omi::Transform(
+            "",
+            baseT,
+            glm::vec3( 0.0F, 1.8F, 0.5F ),
+            glm::vec3(),
+            glm::vec3( 0.6F, 0.6F, 0.6F )
+    );
+    m_curse1Title = omi::ResourceManager::getText(
+            "curse_text_title", "", curse1TitleT );
+    // m_curse1Title->setString( m_str );
+    m_curse1Title->setHorCentred ( true );
+    m_curse1Title->setVertCentred( true );
+    m_components.add( m_curse1Title );
+
+    // curse 1 description
+    omi::Transform* curse1DescT = new omi::Transform(
+            "",
+            curse1TitleT,
+            glm::vec3( 0.0F, -0.075F, 0.0F ),
+            glm::vec3(),
+            glm::vec3( 1.0F, 1.0F, 1.0F )
+    );
+    m_curse1Description = omi::ResourceManager::getText(
+            "curse_text_description", "", curse1DescT );
+    // m_curse1Description->setString( m_str );
+    m_curse1Description->setHorCentred ( true );
+    m_curse1Description->setVertCentred( true );
+    m_components.add( m_curse1Description );
+
+    // curse 2 title
+    omi::Transform* curse2TitleT = new omi::Transform(
+            "",
+            curse1TitleT,
+            glm::vec3( 0.0F, -0.2F, 0.0F ),
+            glm::vec3(),
+            glm::vec3( 1.0F, 1.0F, 1.0F )
+    );
+
+    m_curse2Title = omi::ResourceManager::getText(
+            "curse_text_title", "", curse2TitleT );
+    m_curse2Title->setString( "Curse of Darkness" );
+    m_curse2Title->setHorCentred ( true );
+    m_curse2Title->setVertCentred( true );
+    m_components.add( m_curse2Title );
+
+    // curse 2 description
+    omi::Transform* curse2DescT = new omi::Transform(
+            "",
+            curse2TitleT,
+            glm::vec3( 0.0F, -0.075F, 0.0F ),
+            glm::vec3(),
+            glm::vec3( 1.0F, 1.0F, 1.0F )
+    );
+    m_curse2Description = omi::ResourceManager::getText(
+            "curse_text_description", "", curse2DescT );
+    m_curse2Description->setString( "May the light fail you" );
+    m_curse2Description->setHorCentred ( true );
+    m_curse2Description->setVertCentred( true );
+    m_components.add( m_curse2Description );
+
+    // curse 3 title
+    omi::Transform* curse3TitleT = new omi::Transform(
+            "",
+            curse2TitleT,
+            glm::vec3( 0.0F, -0.2F, 0.0F ),
+            glm::vec3(),
+            glm::vec3( 1.0F, 1.0F, 1.0F )
+    );
+
+    m_curse3Title = omi::ResourceManager::getText(
+            "curse_text_title", "", curse3TitleT );
+    m_curse3Title->setString( "Curse of the Hunted" );
+    m_curse3Title->setHorCentred ( true );
+    m_curse3Title->setVertCentred( true );
+    m_components.add( m_curse3Title );
+
+    // curse 3 description
+    omi::Transform* curse3DescT = new omi::Transform(
+            "",
+            curse3TitleT,
+            glm::vec3( 0.0F, -0.075F, 0.0F ),
+            glm::vec3(),
+            glm::vec3( 1.0F, 1.0F, 1.0F )
+    );
+    m_curse3Description = omi::ResourceManager::getText(
+            "curse_text_description", "", curse3DescT );
+    m_curse3Description->setString( "May you never rest" );
+    m_curse3Description->setHorCentred ( true );
+    m_curse3Description->setVertCentred( true );
+    m_components.add( m_curse3Description );
 }

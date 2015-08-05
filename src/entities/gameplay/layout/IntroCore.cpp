@@ -170,17 +170,23 @@ void IntroCore::initSection0()
             global::environment::NORTH,
             global::environment::DECOR_PROP_2
     ) );
-    addToSection( 0, new CornerTile(
-            global::environment::INTRO,
+    // addToSection( 0, new CornerTile(
+    //         global::environment::INTRO,
+    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+    //         global::environment::NORTH,
+    //         global::environment::DECOR_LIGHT_1
+    // ) );
+    // // look text
+    // addToSection( 0, new TutorialText(
+    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
+    //         0.0f,
+    //         "Move the mouse to look around",
+    //         m_player
+    // ) );
+
+    addEntity( new CurseRoom(
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
             global::environment::NORTH,
-            global::environment::DECOR_LIGHT_1
-    ) );
-    // look text
-    addToSection( 0, new TutorialText(
-            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0f ),
-            0.0f,
-            "Move the mouse to look around",
             m_player
     ) );
 
@@ -415,24 +421,15 @@ void IntroCore::initSection3()
             ),
             global::environment::WEST
     ) );
-    // addToSection( 3, new CornerTile(
-    //         global::environment::INTRO,
-    //         glm::vec3(
-    //                 global::TILE_SIZE * 2.0f, 0.0f,
-    //                 -global::TILE_SIZE * 9.0f
-    //         ),
-    //         global::environment::WEST,
-    //         global::environment::DECOR_LIGHT_1 |
-    //         global::environment::DECOR_PROP_3
-    // ) );
-
-    addEntity( new CurseRoom(
+    addToSection( 3, new CornerTile(
+            global::environment::INTRO,
             glm::vec3(
                     global::TILE_SIZE * 2.0f, 0.0f,
                     -global::TILE_SIZE * 9.0f
             ),
             global::environment::WEST,
-            m_player
+            global::environment::DECOR_LIGHT_1 |
+            global::environment::DECOR_PROP_3
     ) );
 
     // trigger
