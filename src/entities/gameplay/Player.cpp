@@ -146,6 +146,11 @@ omi::Transform* Player::getTransform()
     return m_transform;
 }
 
+omi::Transform* Player::getCamT()
+{
+    return m_camT;
+}
+
 std::map< curse::Type, Curse >& Player::getCurses()
 {
     return m_curses;
@@ -153,7 +158,21 @@ std::map< curse::Type, Curse >& Player::getCurses()
 
 void Player::setMusic( player::Music music )
 {
-    // TODO:
+    m_currentMusic->stop();
+    switch( music )
+    {
+        case player::MUSIC_INTRO:
+        {
+            m_currentMusic = m_introMusic;
+            break;
+        }
+        case player::MUSIC_CURSE:
+        {
+            m_currentMusic = m_curseMusic;
+            break;
+        }
+    }
+    m_currentMusic->play();
 }
 
 void Player::playMusic()
@@ -649,6 +668,10 @@ void Player::initMusic()
             "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
     );
     m_components.add( m_introMusic );
+    m_curseMusic = new omi::Music(
+            "", "res/sound/music/death_drone.ogg", 1.0f, true
+    );
+    m_components.add( m_curseMusic );
 
     // set and play the current music
     m_currentMusic = m_introMusic;

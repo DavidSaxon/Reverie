@@ -42,9 +42,15 @@ private:
     // pointer to the player
     Player* m_player;
 
+    // the transition pane mesh
+    omi::Mesh* m_transitionPane;
+
     // the curse giver model
     omi::KeyFrameMesh* m_curseGiverBody;
     omi::Mesh* m_curseGiverPants;
+
+    // curse room found?
+    bool m_found;
 
     // player collision trigger
     omi::CollisionDetector* m_trigger;
@@ -54,17 +60,23 @@ private:
     glm::vec3 m_autoMovePos;
     glm::vec2 m_autoLookAngle;
 
+    // in show curses mode?
+    bool m_showCurses;
+    // show curses timer
+    float m_curseTimer1;
+    float m_curseTimer2;
+
     // curse text
     omi::Text* m_curse1Title;
     omi::Text* m_curse1Description;
     omi::Text* m_curse2Title;
     omi::Text* m_curse2Description;
-    omi::Text* m_curse3Title;
-    omi::Text* m_curse3Description;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS
     //--------------------------------------------------------------------------
+
+    void showCurses();
 
     void initComponents();
 };

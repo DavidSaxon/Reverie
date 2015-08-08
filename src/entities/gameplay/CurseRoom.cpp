@@ -5,6 +5,18 @@
 #include "src/functions/EnvironmentVendor.hpp"
 
 //------------------------------------------------------------------------------
+//                                   CONSTANTS
+//------------------------------------------------------------------------------
+
+namespace
+{
+
+static const float CURSE1_TIME = 0.4F;
+static const float CURSE2_TIME = 1.6F;
+
+} // namespace anonymous
+
+//------------------------------------------------------------------------------
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
 
@@ -12,10 +24,14 @@ CurseRoom::CurseRoom( const glm::vec3& pos,
                       global::environment::Direction direction,
                       Player* player )
     :
-    m_position ( pos ),
-    m_direction( direction ),
-    m_player   ( player ),
-    m_triggered( false )
+    m_position   ( pos ),
+    m_direction  ( direction ),
+    m_player     ( player ),
+    m_found      ( false ),
+    m_triggered  ( false ),
+    m_showCurses ( false ),
+    m_curseTimer1( 0.0F ),
+    m_curseTimer2( 0.0F )
 {
     const float xAutoLook = -17.0F;
 
@@ -64,6 +80,58 @@ void CurseRoom::init()
 
 void CurseRoom::update()
 {
+    // skip if omicron is paused
+    if ( global::pause )
+    {
+        return;
+    }
+
+    // check if found?
+    if ( !m_found )
+    {
+        switch( m_direction )
+        {
+            case global::environment::NORTH:
+            {
+                glm::vec3 pPos = m_player->getTransform()->translation;
+                float pRot = m_player->getCamT()->rotation.y;
+                if ( pPos.x > ( m_position.x - global::TILE_SIZE / 1.8F ) &&
+                     pPos.x < ( m_position.x + global::TILE_SIZE / 1.8F ) &&
+                     ( ( pRot >= 0.0F   && pRot < 45.0F  ) ||
+                       ( pRot >= 315.0F && pRot < 361.0F )    )              )
+                {
+                    m_found = true;
+                }
+                break;
+            }
+            case global::environment::SOUTH:
+            {
+                break;
+            }
+            case global::environment::EAST:
+            {
+                break;
+            }
+            case global::environment::WEST:
+            {
+                break;
+            }
+        }
+
+        if ( m_found )
+        {
+            // play sound
+            omi::SoundPool::play(
+                    omi::ResourceManager::getSound( "curse_find" ),
+                    false,
+                    1.0f
+            );
+            // change music
+            m_player->setMusic( player::MUSIC_CURSE );
+        }
+    }
+
+
     // check trigger
     if ( !m_triggered && m_trigger->getCollisionData().size() > 0 )
     {
@@ -72,11 +140,67 @@ void CurseRoom::update()
         m_player->autoMoveToPosition( m_autoMovePos );
         m_player->autoLookAtAngle( m_autoLookAngle );
     }
+    if ( m_triggered && !m_showCurses )
+    {
+        // check if auto-move is done
+        if ( m_player->autoMoveDone() && m_player->autoLookDone() )
+        {
+            m_showCurses = true;
+            m_curseTimer1 = CURSE1_TIME;
+            m_curseTimer2 = CURSE2_TIME;
+        }
+    }
+    if ( m_showCurses )
+    {
+        showCurses();
+    }
 }
 
 //------------------------------------------------------------------------------
 //                            PRIVATE MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
+
+void CurseRoom::showCurses()
+{
+    if ( m_curseTimer1 > -9999.0F )
+    {
+       // decrease first timer
+       m_curseTimer1 -= 0.01F * omi::fpsManager.getTimeScale();
+
+       if ( m_curseTimer1 <= 0.0F  )
+       {
+           m_curseTimer1 = -10000.0F;
+           m_curse1Title->visible = true;
+           m_curse1Description->visible = true;
+
+           // play sound
+           omi::SoundPool::play(
+                   omi::ResourceManager::getSound( "curse_get" ),
+                   false,
+                   1.0f
+           );
+       }
+    }
+    else if ( m_curseTimer2 > -9999.0F )
+    {
+        // decrease second timer
+        m_curseTimer2 -= 0.01F * omi::fpsManager.getTimeScale();
+
+        if ( m_curseTimer2 <= 0.0F )
+        {
+            m_curseTimer2 = -10000.0F;
+            m_curse2Title->visible = true;
+            m_curse2Description->visible = true;
+
+            // play sound
+            omi::SoundPool::play(
+                    omi::ResourceManager::getSound( "curse_get" ),
+                    false,
+                    1.0f
+            );
+        }
+    }
+}
 
 void CurseRoom::initComponents()
 {
@@ -112,14 +236,14 @@ void CurseRoom::initComponents()
     m_components.add( ceilingMesh );
 
     // back wall
-    omi::Mesh* wallBackMesh =
-            omi::ResourceManager::getMesh( "curse_room_wall", "", baseT );
-    wallBackMesh->getMaterial().specular = new omi::Specular(
-            8.0f,
-            glm::vec3( 1.0f, 1.0f, 1.0f ),
-            omi::ResourceManager::getTexture( "curse_room_wall_spec" )
-    );
-    m_components.add( wallBackMesh );
+    // omi::Mesh* wallBackMesh =
+    //         omi::ResourceManager::getMesh( "curse_room_wall", "", baseT );
+    // wallBackMesh->getMaterial().specular = new omi::Specular(
+    //         8.0f,
+    //         glm::vec3( 1.0f, 1.0f, 1.0f ),
+    //         omi::ResourceManager::getTexture( "curse_room_wall_spec" )
+    // );
+    // m_components.add( wallBackMesh );
 
     // TODO: front wall
 
@@ -220,6 +344,15 @@ void CurseRoom::initComponents()
             baseT
     ) );
     m_components.add( m_trigger );
+
+    //-----------------------------TRANSITION PANE------------------------------
+
+    m_transitionPane = omi::ResourceManager::getMesh(
+            "curse_room_transition_pane", "", baseT );
+    m_transitionPane->getMaterial().glow =
+            new omi::Glow( glm::vec3( 1.0F, 1.0F, 1.0F ), 1.0F );
+    m_components.add( m_transitionPane );
+
 
     //-------------------------------CURSE GIVER--------------------------------
 
@@ -339,6 +472,7 @@ void CurseRoom::initComponents()
     // m_curse1Title->setString( m_str );
     m_curse1Title->setHorCentred ( true );
     m_curse1Title->setVertCentred( true );
+    m_curse1Title->visible = false;
     m_components.add( m_curse1Title );
 
     // curse 1 description
@@ -354,13 +488,14 @@ void CurseRoom::initComponents()
     // m_curse1Description->setString( m_str );
     m_curse1Description->setHorCentred ( true );
     m_curse1Description->setVertCentred( true );
+    m_curse1Description->visible = false;
     m_components.add( m_curse1Description );
 
     // curse 2 title
     omi::Transform* curse2TitleT = new omi::Transform(
             "",
             curse1TitleT,
-            glm::vec3( 0.0F, -0.2F, 0.0F ),
+            glm::vec3( 0.0F, -0.25F, 0.0F ),
             glm::vec3(),
             glm::vec3( 1.0F, 1.0F, 1.0F )
     );
@@ -370,6 +505,7 @@ void CurseRoom::initComponents()
     m_curse2Title->setString( "Curse of Darkness" );
     m_curse2Title->setHorCentred ( true );
     m_curse2Title->setVertCentred( true );
+    m_curse2Title->visible = false;
     m_components.add( m_curse2Title );
 
     // curse 2 description
@@ -385,36 +521,6 @@ void CurseRoom::initComponents()
     m_curse2Description->setString( "May the light fail you" );
     m_curse2Description->setHorCentred ( true );
     m_curse2Description->setVertCentred( true );
+    m_curse2Description->visible = false;
     m_components.add( m_curse2Description );
-
-    // curse 3 title
-    omi::Transform* curse3TitleT = new omi::Transform(
-            "",
-            curse2TitleT,
-            glm::vec3( 0.0F, -0.2F, 0.0F ),
-            glm::vec3(),
-            glm::vec3( 1.0F, 1.0F, 1.0F )
-    );
-
-    m_curse3Title = omi::ResourceManager::getText(
-            "curse_text_title", "", curse3TitleT );
-    m_curse3Title->setString( "Curse of the Hunted" );
-    m_curse3Title->setHorCentred ( true );
-    m_curse3Title->setVertCentred( true );
-    m_components.add( m_curse3Title );
-
-    // curse 3 description
-    omi::Transform* curse3DescT = new omi::Transform(
-            "",
-            curse3TitleT,
-            glm::vec3( 0.0F, -0.075F, 0.0F ),
-            glm::vec3(),
-            glm::vec3( 1.0F, 1.0F, 1.0F )
-    );
-    m_curse3Description = omi::ResourceManager::getText(
-            "curse_text_description", "", curse3DescT );
-    m_curse3Description->setString( "May you never rest" );
-    m_curse3Description->setHorCentred ( true );
-    m_curse3Description->setVertCentred( true );
-    m_components.add( m_curse3Description );
 }

@@ -26,7 +26,8 @@ enum XMove
 // enumerators for music
 enum Music
 {
-    INTRO = 0
+    MUSIC_INTRO = 0,
+    MUSIC_CURSE
 };
 
 } // namespace player
@@ -52,6 +53,8 @@ public:
 
     /** Return's the player's transform */
     omi::Transform* getTransform();
+
+    omi::Transform* getCamT();
 
     std::map< curse::Type, Curse >& getCurses();
 
@@ -103,6 +106,7 @@ private:
     // the music components
     omi::Music* m_currentMusic;
     omi::Music* m_introMusic;
+    omi::Music* m_curseMusic;
 
     // move priorities
     player::ZMove m_zPriority;

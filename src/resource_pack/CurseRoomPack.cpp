@@ -50,6 +50,17 @@ void buildCurseRoomPack()
         0
     );
 
+    // transition pane
+    omi::ResourceManager::addMaterialGeometryMesh(
+        "curse_room_transition_pane",
+        resource_group::CURSE_ROOM,
+        "default_shader",
+        glm::vec4( 1.0F, 1.0F, 1.0F, 1.0F ),
+        "res/gfx/geometry/curse_room/transition_pane.obj",
+        0,
+        omi::material::SHADELESS
+    );
+
     // Curse giver
     omi::ResourceManager::addTexture(
         "curse_giver_skin_spec",
@@ -109,6 +120,22 @@ void buildCurseRoomPack()
         "May you never walk the same path twice",
         0.04f,
         omi::material::SHADELESS
+    );
+
+    //----------------------------------SOUNDS----------------------------------
+
+    omi::ResourceManager::addSound(
+        "curse_find",
+        resource_group::CURSE_ROOM,
+        "res/sound/fx/curse_room/curse_find.ogg",
+        1
+    );
+
+    omi::ResourceManager::addSound(
+        "curse_get",
+        resource_group::CURSE_ROOM,
+        "res/sound/fx/curse_room/curse_get.ogg",
+        1
     );
 }
 
