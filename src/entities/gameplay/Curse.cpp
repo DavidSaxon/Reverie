@@ -5,6 +5,8 @@
 //------------------------------------------------------------------------------
 
 Curse::Curse()
+    :
+    m_applied( false )
 {
     level = 0;
 }
@@ -34,4 +36,14 @@ const std::string& Curse::getTitle( size_t index ) const
 const std::string& Curse::getDescription( size_t index ) const
 {
     return m_descriptions[ index ];
+}
+
+void Curse::setApplied()
+{
+    m_applied = true;
+}
+
+bool Curse::isApplied()
+{
+    return m_applied;
 }

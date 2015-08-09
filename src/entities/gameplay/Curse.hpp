@@ -45,6 +45,10 @@ public:
 
     const std::string& getDescription( size_t index ) const;
 
+    void setApplied();
+
+    bool isApplied();
+
 private:
 
     //--------------------------------------------------------------------------
@@ -53,6 +57,8 @@ private:
 
     std::vector< std::string > m_titles;
     std::vector< std::string > m_descriptions;
+
+    bool m_applied;
 };
 
 #endif
