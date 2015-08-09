@@ -104,14 +104,14 @@ private:
 
     // the current music being played
     player::Music m_music;
+    bool m_musicPause;
     // the music components
     omi::Music* m_currentMusic;
+    omi::Music* m_pauseMusic;
     omi::Music* m_introMusic;
     omi::Music* m_curseMusic;
 
-    // move priorities
-    player::ZMove m_zPriority;
-    player::XMove m_yPriority;
+    bool m_pauseToggle;
 
     // walk animation variables
     float m_stepAnimation;

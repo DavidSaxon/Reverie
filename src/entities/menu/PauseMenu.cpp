@@ -46,6 +46,13 @@ void PauseMenu::update()
             global::pause = true;
             m_currentMenu = TYPE_MAIN;
             omi::renderSettings.setBlur( true );
+
+            // play sound
+            omi::SoundPool::play(
+                    omi::ResourceManager::getSound( "pause_sound" ),
+                    false,
+                    1.0f
+            );
         }
         else
         {
@@ -128,6 +135,14 @@ void PauseMenu::back()
         {
             global::pause = false;
             omi::renderSettings.setBlur( false );
+
+            // play sound
+            omi::SoundPool::play(
+                    omi::ResourceManager::getSound( "pause_sound" ),
+                    false,
+                    1.0f
+            );
+
             break;
         }
         case TYPE_EXIT:

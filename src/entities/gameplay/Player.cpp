@@ -41,8 +41,9 @@ static const float STEP_ROT_AMOUNT = 0.25f;
 
 Player::Player()
     :
-    m_zPriority        ( player::Z_NONE ),
-    m_yPriority        ( player::Y_NONE ),
+    m_music            ( player::MUSIC_INTRO ),
+    m_musicPause       ( false ),
+    m_pauseToggle      ( false ),
     m_stepAnimation    ( 0.0f ),
     m_upAccel          ( 0.0f ),
     m_downAccel        ( 0.0f ),
@@ -130,7 +131,28 @@ void Player::update()
     // skip if omicron is paused
     if ( global::pause )
     {
+        if ( !m_pauseToggle )
+        {
+            m_currentMusic->pause();
+            m_pauseMusic->play();
+        }
+
+        m_pauseToggle = true;
         return;
+    }
+    else if ( m_pauseToggle )
+    {
+        m_pauseToggle = false;
+
+        if ( !m_musicPause )
+        {
+            m_pauseMusic->stop();
+
+            if ( m_music != player::MUSIC_NONE )
+            {
+                m_currentMusic->play();
+            }
+        }
     }
 
     // don't perform key presses if omicron doesn't have focus
@@ -158,6 +180,8 @@ std::map< curse::Type, Curse >& Player::getCurses()
 
 void Player::setMusic( player::Music music )
 {
+    m_music = music;
+
     m_currentMusic->stop();
     switch( music )
     {
@@ -183,11 +207,13 @@ void Player::setMusic( player::Music music )
 void Player::playMusic()
 {
     m_currentMusic->play();
+    m_musicPause = false;
 }
 
 void Player::pauseMusic()
 {
     m_currentMusic->pause();
+    m_musicPause = true;
 }
 
 void Player::setCamShake( float camShake )
@@ -669,6 +695,10 @@ void Player::move()
 
 void Player::initMusic()
 {
+    m_pauseMusic = new omi::Music(
+            "", "res/sound/music/pause_drone.ogg", 1.0f, true
+    );
+    m_components.add( m_pauseMusic );
     m_introMusic = new omi::Music(
             "", "res/sound/music/welcome_to_the_reverie.ogg", 1.0f, true
     );

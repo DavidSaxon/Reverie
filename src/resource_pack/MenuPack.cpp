@@ -86,6 +86,16 @@ void buildMenuPack()
         0,
         omi::material::SHADELESS
     );
+
+    //-------------------------------PAUSE SOUND--------------------------------
+
+    omi::ResourceManager::addSound(
+        "pause_sound",
+        resource_group::MENU,
+        "res/sound/fx/menu/pause.ogg",
+        2
+    );
+
 }
 
 } // namespace pack
