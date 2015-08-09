@@ -42,6 +42,15 @@ private:
     // pointer to the player
     Player* m_player;
 
+    // lights
+    omi::PointLight* m_lowLight;
+    omi::PointLight* m_highLight;
+    omi::PointLight* m_blastLight;
+
+    // the back wall mesh
+    omi::Mesh* m_wallBackMesh;
+    omi::Mesh* m_wallFrontMesh;
+
     // the transition pane mesh
     omi::Mesh* m_transitionPane;
 
@@ -65,6 +74,9 @@ private:
     // show curses timer
     float m_curseTimer1;
     float m_curseTimer2;
+
+    // end timer
+    float m_endTimer;
 
     // curse text
     omi::Text* m_curse1Title;

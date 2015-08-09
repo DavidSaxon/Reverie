@@ -11,6 +11,8 @@ public:
     //                          PUBLIC MEMBER FUNCTIONS
     //--------------------------------------------------------------------------
 
+    void removeThis();
+
     virtual void setVisibility( bool state );
 
 protected:

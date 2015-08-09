@@ -13,6 +13,7 @@
 #include "src/entities/gameplay/intro/PhobetorEncounter1.hpp"
 #include "src/entities/gameplay/intro/RattleDoor.hpp"
 #include "src/entities/gameplay/tutorial/TutorialText.hpp"
+#include "src/entities/gameplay/intro/StateTrigger.hpp"
 
 //------------------------------------------------------------------------------
 //                                  CONSTRUCTOR
@@ -20,7 +21,9 @@
 
 IntroCore::IntroCore( Player* player )
     :
-    AbstractLayoutCore( player )
+    AbstractLayoutCore( player ),
+    m_end             ( false ),
+    m_curseRoom       ( NULL )
 {
     m_initalVis.push_back( 0 );
     m_initalVis.push_back( 1 );
@@ -36,6 +39,9 @@ void IntroCore::init()
     // TODO: remove group on clean up?
     // set up collision groups
     omi::CollisionDetect::checkGroup( "intro_trigger", "player" );
+
+    // set music
+    // player->setMusic( player::MUSIC_INTRO );
 
     // set up a shadow caster
     omi::Transform* casterT = new omi::Transform(
@@ -70,6 +76,50 @@ void IntroCore::update()
     {
         setSectionsVisible( m_initalVis );
         ++tripleShot;
+        return;
+    }
+
+    // check end trigger
+    if ( m_endTrigger->isTriggered() && !m_end )
+    {
+        m_end = true;
+
+        // create the curse room
+        m_curseRoom = new CurseRoom(
+                glm::vec3(
+                        global::TILE_SIZE * 2.0f, 0.0f,
+                        -global::TILE_SIZE * 8.0f
+                ),
+                global::environment::SOUTH,
+                m_player
+        );
+        addEntity( m_curseRoom );
+
+        // replace tile
+        addEntity( new StraightTile(
+                global::environment::INTRO,
+                glm::vec3(
+                        global::TILE_SIZE * 2.0f, 0.0f,
+                        -global::TILE_SIZE * 9.0f
+                ),
+                global::environment::NORTH,
+                global::environment::DECOR_LIGHT_1 |
+                global::environment::DECOR_PROP_2
+        ) );
+        m_replaceTile->removeThis();
+
+        setSectionVisibility( 0, false );
+        setSectionVisibility( 1, false );
+        setSectionVisibility( 2, false );
+        setSectionVisibility( 3, false );
+        setSectionVisibility( 4, true );
+        setSectionVisibility( 5, true );
+        setSectionVisibility( 6, true );
+
+        return;
+    }
+    else if ( m_end )
+    {
         return;
     }
 
@@ -333,33 +383,24 @@ void IntroCore::initSection2()
             global::environment::NORTH,
             global::environment::DECOR_LIGHT_1
     ) );
-    // // pause text
-    // addToSection( 2, new TutorialText(
-    //         glm::vec3(
-    //                 global::TILE_SIZE * 7.0f, 0.0f,
-    //                 -global::TILE_SIZE * 8.0f
-    //         ),
-    //         0.0f,
-    //         "Press ESC to access the menu",
-    //         m_player
-    // ) );
-    // addToSection( 2, new CornerTile(
-    //         global::environment::INTRO,
-    //         glm::vec3(
-    //                 global::TILE_SIZE * 7.0f, 0.0f,
-    //                 -global::TILE_SIZE * 9.0f
-    //         ),
-    //         global::environment::EAST,
-    //         global::environment::DECOR_PROP_2
-    // ) );
-
-    addEntity( new CurseRoom(
+    // pause text
+    addToSection( 2, new TutorialText(
+            glm::vec3(
+                    global::TILE_SIZE * 7.0f, 0.0f,
+                    -global::TILE_SIZE * 8.0f
+            ),
+            0.0f,
+            "Press ESC to access the menu",
+            m_player
+    ) );
+    addToSection( 2, new CornerTile(
+            global::environment::INTRO,
             glm::vec3(
                     global::TILE_SIZE * 7.0f, 0.0f,
                     -global::TILE_SIZE * 9.0f
             ),
-            global::environment::NORTH,
-            m_player
+            global::environment::EAST,
+            global::environment::DECOR_PROP_2
     ) );
 
     // trigger
@@ -424,7 +465,7 @@ void IntroCore::initSection3()
             ),
             global::environment::WEST
     ) );
-    addToSection( 3, new CornerTile(
+    m_replaceTile = new CornerTile(
             global::environment::INTRO,
             glm::vec3(
                     global::TILE_SIZE * 2.0f, 0.0f,
@@ -433,7 +474,8 @@ void IntroCore::initSection3()
             global::environment::WEST,
             global::environment::DECOR_LIGHT_1 |
             global::environment::DECOR_PROP_3
-    ) );
+    );
+    addToSection( 3, m_replaceTile );
 
     // trigger
     IntroLayoutTrigger* trigger = new IntroLayoutTrigger(
@@ -634,7 +676,7 @@ void IntroCore::initSection6()
             global::environment::DECOR_PROP_3
 
     ) );
-    addToSection( 5, new TutorialText(
+    addToSection( 6, new TutorialText(
             glm::vec3(
                     global::TILE_SIZE * 8.0f, 0.0f,
                     -global::TILE_SIZE * 14.0f
@@ -643,4 +685,13 @@ void IntroCore::initSection6()
             "Turn back",
             m_player
     ) );
+
+    // trigger
+    m_endTrigger = new StateTrigger(
+            glm::vec3(
+                    global::TILE_SIZE * 8.0f, 0.0f,
+                    -global::TILE_SIZE * 16.0f
+            )
+    );
+    addEntity( m_endTrigger );
 }

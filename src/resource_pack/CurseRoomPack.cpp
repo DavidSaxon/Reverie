@@ -137,6 +137,13 @@ void buildCurseRoomPack()
         "res/sound/fx/curse_room/curse_get.ogg",
         1
     );
+
+    omi::ResourceManager::addSound(
+        "curse_end",
+        resource_group::CURSE_ROOM,
+        "res/sound/fx/curse_room/curse_end.ogg",
+        1
+    );
 }
 
 } // namespace pack

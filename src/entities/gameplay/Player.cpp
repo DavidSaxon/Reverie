@@ -161,6 +161,11 @@ void Player::setMusic( player::Music music )
     m_currentMusic->stop();
     switch( music )
     {
+        case player::MUSIC_NONE:
+        {
+            // don't play
+            return;
+        }
         case player::MUSIC_INTRO:
         {
             m_currentMusic = m_introMusic;
@@ -673,7 +678,7 @@ void Player::initMusic()
     );
     m_components.add( m_curseMusic );
 
-    // set and play the current music
+    // set the current music
     m_currentMusic = m_introMusic;
     m_currentMusic->play();
 }
@@ -690,8 +695,6 @@ void Player::initCurses()
             "Curse of the Lost",
             "May you never walk the same path twice"
     );
-    // may your feel fail you?
-    // may you lose your way
     // add
     m_curses[ curse::LOST ] = lost;
 

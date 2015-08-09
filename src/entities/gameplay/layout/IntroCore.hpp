@@ -7,9 +7,11 @@
 //                              FORWARD DECLARATIONS
 //------------------------------------------------------------------------------
 
+class CurseRoom;
 class IntroLayoutTrigger;
 class Player;
 class ProcedualEntity;
+class StateTrigger;
 
 class IntroCore : public AbstractLayoutCore
 {
@@ -43,6 +45,17 @@ private:
     std::vector< size_t > m_initalVis;
     // layout triggers
     std::vector< IntroLayoutTrigger* > m_triggers;
+
+    // player reference
+    Player* player;
+
+    // end trigger
+    StateTrigger* m_endTrigger;
+    bool m_end;
+
+    // curse room
+    CurseRoom* m_curseRoom;
+    ProcedualEntity* m_replaceTile;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS

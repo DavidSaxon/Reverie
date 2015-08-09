@@ -13,6 +13,7 @@ namespace
 
 static const float CURSE1_TIME = 0.4F;
 static const float CURSE2_TIME = 1.6F;
+static const float END_TIME    = 2.0F;
 
 } // namespace anonymous
 
@@ -31,7 +32,8 @@ CurseRoom::CurseRoom( const glm::vec3& pos,
     m_triggered  ( false ),
     m_showCurses ( false ),
     m_curseTimer1( 0.0F ),
-    m_curseTimer2( 0.0F )
+    m_curseTimer2( 0.0F ),
+    m_endTimer   ( 0.0F )
 {
     const float xAutoLook = -17.0F;
 
@@ -106,6 +108,14 @@ void CurseRoom::update()
             }
             case global::environment::SOUTH:
             {
+                glm::vec3 pPos = m_player->getTransform()->translation;
+                float pRot = m_player->getCamT()->rotation.y;
+                if ( pPos.x > ( m_position.x - global::TILE_SIZE / 1.8F ) &&
+                     pPos.x < ( m_position.x + global::TILE_SIZE / 1.8F ) &&
+                     pRot >= 135.0F && pRot < 225.0F                         )
+                {
+                    m_found = true;
+                }
                 break;
             }
             case global::environment::EAST:
@@ -148,6 +158,7 @@ void CurseRoom::update()
             m_showCurses = true;
             m_curseTimer1 = CURSE1_TIME;
             m_curseTimer2 = CURSE2_TIME;
+            m_endTimer    = END_TIME;
         }
     }
     if ( m_showCurses )
@@ -200,6 +211,46 @@ void CurseRoom::showCurses()
             );
         }
     }
+    else if ( m_endTimer > -9999.0F )
+    {
+        // decrease end timer
+        m_endTimer -= 0.01F * omi::fpsManager.getTimeScale();
+
+        if ( m_endTimer < 0.0F )
+        {
+            m_endTimer = -10000.0F;
+
+            // change visibility
+            m_curse1Title->visible = false;
+            m_curse1Description->visible = false;
+            m_curse2Title->visible = false;
+            m_curse2Description->visible = false;
+            m_wallBackMesh->visible = false;
+            m_curseGiverBody->visible = false;
+            m_curseGiverPants->visible = false;
+            m_transitionPane->visible = true;
+            m_wallFrontMesh->visible = true;
+
+            // change lights
+            m_lowLight->active   = false;
+            m_highLight->active  = false;
+            m_blastLight->active = true;
+
+            // unlock player
+            m_player->disableAutoMove();
+            m_player->disableAutoLook();
+
+            // play sound
+            omi::SoundPool::play(
+                    omi::ResourceManager::getSound( "curse_end" ),
+                    false,
+                    1.0f
+            );
+
+            // stop music
+            m_player->setMusic( player::MUSIC_NONE );
+        }
+    }
 }
 
 void CurseRoom::initComponents()
@@ -236,16 +287,33 @@ void CurseRoom::initComponents()
     m_components.add( ceilingMesh );
 
     // back wall
-    // omi::Mesh* wallBackMesh =
-    //         omi::ResourceManager::getMesh( "curse_room_wall", "", baseT );
-    // wallBackMesh->getMaterial().specular = new omi::Specular(
-    //         8.0f,
-    //         glm::vec3( 1.0f, 1.0f, 1.0f ),
-    //         omi::ResourceManager::getTexture( "curse_room_wall_spec" )
-    // );
-    // m_components.add( wallBackMesh );
+    m_wallBackMesh =
+            omi::ResourceManager::getMesh( "curse_room_wall", "", baseT );
+    m_wallBackMesh->getMaterial().specular = new omi::Specular(
+            8.0f,
+            glm::vec3( 1.0f, 1.0f, 1.0f ),
+            omi::ResourceManager::getTexture( "curse_room_wall_spec" )
+    );
+    m_components.add( m_wallBackMesh );
 
-    // TODO: front wall
+    // front wall
+    omi::Transform* wallFrontT = new omi::Transform(
+            "",
+            baseT,
+            glm::vec3(),
+            glm::vec3( 0.0f, 180.0f, 0.0f ),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( wallFrontT );
+    m_wallFrontMesh =
+            omi::ResourceManager::getMesh( "curse_room_wall", "", wallFrontT );
+    m_wallFrontMesh->getMaterial().specular = new omi::Specular(
+            8.0f,
+            glm::vec3( 1.0f, 1.0f, 1.0f ),
+            omi::ResourceManager::getTexture( "curse_room_wall_spec" )
+    );
+    m_wallFrontMesh->visible = false;
+    m_components.add( m_wallFrontMesh );
 
     // left wall
     omi::Transform* wallLeftT = new omi::Transform(
@@ -306,7 +374,7 @@ void CurseRoom::initComponents()
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
     m_components.add( lowLightT );
-    omi::PointLight* lowLight = new omi::PointLight(
+    omi::PointLight* m_lowLight = new omi::PointLight(
             "",
             lowLightT,
             0.15F,
@@ -315,7 +383,7 @@ void CurseRoom::initComponents()
             0.1f,
             0.02f
     );
-    m_components.add( lowLight );
+    m_components.add( m_lowLight );
 
     omi::Transform* highLightT = new omi::Transform(
             "",
@@ -325,7 +393,7 @@ void CurseRoom::initComponents()
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
     m_components.add( highLightT );
-    omi::PointLight* highLight = new omi::PointLight(
+    omi::PointLight* m_highLight = new omi::PointLight(
             "",
             highLightT,
             0.1F,
@@ -334,7 +402,28 @@ void CurseRoom::initComponents()
             0.1f,
             0.02f
     );
-    m_components.add( highLight );
+    m_components.add( m_highLight );
+
+    // set up a shadow caster
+    omi::Transform* blastT = new omi::Transform(
+            "",
+            baseT,
+            glm::vec3( 0.0f, 1.5f, -1.5f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( blastT );
+    m_blastLight = new omi::PointLight(
+            "",
+            blastT,
+            1.0F,
+            glm::vec3( 1.0f, 1.0f, 1.0f ),
+            0.0f,
+            0.1f,
+            0.02f
+    );
+    m_blastLight->active = false;
+    m_components.add( m_blastLight );
 
     //---------------------------------TRIGGER----------------------------------
 
@@ -351,6 +440,7 @@ void CurseRoom::initComponents()
             "curse_room_transition_pane", "", baseT );
     m_transitionPane->getMaterial().glow =
             new omi::Glow( glm::vec3( 1.0F, 1.0F, 1.0F ), 1.0F );
+    m_transitionPane->visible = false;
     m_components.add( m_transitionPane );
 
 

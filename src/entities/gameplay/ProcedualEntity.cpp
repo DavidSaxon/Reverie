@@ -4,6 +4,12 @@
 //                            PUBLIC MEMBER FUNCTIONS
 //------------------------------------------------------------------------------
 
+void ProcedualEntity::removeThis()
+{
+    remove();
+}
+
+
 void ProcedualEntity::setVisibility( bool state )
 {
     // set mesh visibility

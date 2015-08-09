@@ -26,7 +26,8 @@ enum XMove
 // enumerators for music
 enum Music
 {
-    MUSIC_INTRO = 0,
+    MUSIC_NONE = 0,
+    MUSIC_INTRO,
     MUSIC_CURSE
 };
 
