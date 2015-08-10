@@ -1,6 +1,7 @@
 #include "src/entities/gameplay/layout/LayoutManager.hpp"
 
 #include "src/entities/gameplay/Player.hpp"
+#include "src/entities/gameplay/layout/GenCore.hpp"
 #include "src/entities/gameplay/layout/IntroCore.hpp"
 
 //------------------------------------------------------------------------------
@@ -20,7 +21,7 @@ LayoutManager::LayoutManager( Player* player )
 
 void LayoutManager::init()
 {
-    m_stage = global::environment::INTRO;
+    m_stage = global::environment::FACILITY;
 
     // create the core matching the state
     if ( m_stage == global::environment::INTRO )
@@ -30,6 +31,8 @@ void LayoutManager::init()
     }
     else
     {
+        m_layoutCore = new GenCore( m_stage, m_player );
+        addEntity( m_layoutCore );
     }
 }
 

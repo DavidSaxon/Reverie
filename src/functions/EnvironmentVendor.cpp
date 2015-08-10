@@ -21,6 +21,11 @@ void vendDecorIntro(
         unsigned long mask,
         std::vector<Decor*>& decor );
 
+void vendDecorFacility(
+        omi::Transform* transform,
+        unsigned long mask,
+        std::vector<Decor*>& decor );
+
 //------------------------------------------------------------------------------
 //                                PUBLIC FUNCTIONS
 //------------------------------------------------------------------------------
@@ -35,6 +40,17 @@ omi::Mesh* vendFloorTile(
         {
             omi::Mesh* m = omi::ResourceManager::getMesh(
                     "intro_floor", "", baseTransform );
+            return m;
+        }
+        case global::environment::FACILITY:
+        {
+            omi::Mesh* m = omi::ResourceManager::getMesh(
+                    "facility_floor", "", baseTransform );
+            m->getMaterial().specular = new omi::Specular(
+                    128.0f,
+                    glm::vec3( 1.0f, 1.0f, 1.0f ),
+                    omi::ResourceManager::getTexture( "facility_floor_spec" )
+            );
             return m;
         }
         // TODO: other stages
@@ -55,6 +71,17 @@ omi::Mesh* vendCeilingTile(
         {
             omi::Mesh* m = omi::ResourceManager::getMesh(
                     "intro_ceiling", "", baseTransform );
+            return m;
+        }
+        case global::environment::FACILITY:
+        {
+            omi::Mesh* m = omi::ResourceManager::getMesh(
+                    "facility_ceiling", "", baseTransform );
+            m->getMaterial().specular = new omi::Specular(
+                    128.0f,
+                    glm::vec3( 1.0f, 1.0f, 1.0f ),
+                    omi::ResourceManager::getTexture( "facility_floor_spec" )
+            );
             return m;
         }
         // TODO: other stages
@@ -89,6 +116,17 @@ omi::Mesh* vendWallTile(
                     "intro_wall", "", t );
             return m;
         }
+        case global::environment::FACILITY:
+        {
+            omi::Mesh* m = omi::ResourceManager::getMesh(
+                    "facility_wall", "", t );
+            m->getMaterial().specular = new omi::Specular(
+                    128.0f,
+                    glm::vec3( 1.0f, 1.0f, 1.0f ),
+                    omi::ResourceManager::getTexture( "facility_wall_spec" )
+            );
+            return m;
+        }
         // TODO: other stages
         default:
         {
@@ -121,6 +159,17 @@ omi::Mesh* vendSkirting(
                     "intro_skirting", "", t );
             return m;
         }
+        case global::environment::FACILITY:
+        {
+            m = omi::ResourceManager::getMesh(
+                    "facility_skirting", "", t );
+            m->getMaterial().specular = new omi::Specular(
+                    128.0f,
+                    glm::vec3( 1.0f, 1.0f, 1.0f ),
+                    omi::ResourceManager::getTexture( "facility_skirting_spec" )
+            );
+            return m;
+        }
         // TODO: other stages
         default:
         {
@@ -151,6 +200,17 @@ omi::Mesh* vendSkirtingCorner(
         {
             m = omi::ResourceManager::getMesh(
                     "intro_skirting_corner", "", t );
+            return m;
+        }
+        case global::environment::FACILITY:
+        {
+            m = omi::ResourceManager::getMesh(
+                    "facility_skirting_corner", "", t );
+            m->getMaterial().specular = new omi::Specular(
+                    128.0f,
+                    glm::vec3( 1.0f, 1.0f, 1.0f ),
+                    omi::ResourceManager::getTexture( "facility_skirting_spec" )
+            );
             return m;
         }
         // TODO: other stages
@@ -259,6 +319,11 @@ void vendDecor(
             vendDecorIntro( t, mask, decor );
             break;
         }
+        case global::environment::FACILITY:
+        {
+            vendDecorFacility( t, mask, decor );
+            break;
+        }
         // TODO: other stages
         default:
         {
@@ -307,6 +372,18 @@ void vendDecorIntro(
     }
 
     // TODO: other
+}
+
+void vendDecorFacility(
+        omi::Transform* transform,
+        unsigned long mask,
+        std::vector<Decor*>& decor )
+{
+    if ( mask & global::environment::DECOR_LIGHT_1 )
+    {
+        // TODO:!
+        decor.push_back( new IntroLight1( transform ) );
+    }
 }
 
 } // namespace vendor

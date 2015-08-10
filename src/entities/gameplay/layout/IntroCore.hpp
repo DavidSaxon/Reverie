@@ -46,9 +46,6 @@ private:
     // layout triggers
     std::vector< IntroLayoutTrigger* > m_triggers;
 
-    // player reference
-    Player* player;
-
     // end trigger
     StateTrigger* m_endTrigger;
     bool m_end;

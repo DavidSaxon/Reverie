@@ -52,8 +52,8 @@ namespace environment
 enum Stage
 {
     INTRO = 0,
-    CLINIC,
     FACILITY,
+    CLINIC,
     CELLAR,
     TUNNELS
 };
