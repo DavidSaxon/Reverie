@@ -36,8 +36,6 @@ private:
     omi::PointLight* m_lightSource;
     // the light pane mesh
     omi::Mesh* m_paneMesh;
-    // the phobetor mesh
-    omi::Mesh* m_phobetorMesh;
 
     // whether the light is flicker or not
     bool m_flicker;

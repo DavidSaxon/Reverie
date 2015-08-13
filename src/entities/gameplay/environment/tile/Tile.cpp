@@ -42,12 +42,32 @@ void Tile::init()
     );
     m_components.add( m_baseT );
 
+    // calculate random floor angle
+    int r = static_cast< unsigned >( rand() ) % 2;
+
     // vend and add the floor and ceiling since it's there on every tile
-    omi::Mesh* mesh = vendor::vendFloorTile( m_stage, m_baseT );
+    omi::Transform* floorT = new omi::Transform(
+            "",
+            m_baseT,
+            glm::vec3(),
+            glm::vec3( 0.0F, 180.0F * r, 0.0F ),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( floorT );
+    omi::Mesh* mesh = vendor::vendFloorTile( m_stage, floorT );
     m_meshComp.push_back( mesh );
     m_components.add( mesh );
 
-    mesh = vendor::vendCeilingTile( m_stage, m_baseT );
+    r = static_cast< unsigned >( rand() ) % 4;
+    omi::Transform* cielT = new omi::Transform(
+            "",
+            m_baseT,
+            glm::vec3(),
+            glm::vec3( 0.0F, 180.0F * r, 0.0F ),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_components.add( cielT );
+    mesh = vendor::vendCeilingTile( m_stage, cielT );
     m_meshComp.push_back( mesh );
     m_components.add( mesh );
 

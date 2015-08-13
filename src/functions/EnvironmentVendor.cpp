@@ -1,13 +1,18 @@
 #include "EnvironmentVendor.hpp"
 
 #include "src/data/Intro.hpp"
+#include "src/functions/Direction.hpp"
+
 #include "src/entities/gameplay/environment/decor/intro/IntroDoorDown.hpp"
 #include "src/entities/gameplay/environment/decor/intro/IntroDoorLeft.hpp"
 #include "src/entities/gameplay/environment/decor/intro/IntroDoorRight.hpp"
 #include "src/entities/gameplay/environment/decor/intro/IntroDoorUp.hpp"
 #include "src/entities/gameplay/environment/decor/intro/IntroLight1.hpp"
-#include "src/functions/Direction.hpp"
 
+#include "src/entities/gameplay/environment/decor/facility/FacilityDoorRight.hpp"
+#include "src/entities/gameplay/environment/decor/facility/FacilityLight1.hpp"
+#include "src/entities/gameplay/environment/decor/facility/FacilityPipe.hpp"
+#include "src/entities/gameplay/environment/decor/facility/FacilitySupport.hpp"
 
 namespace vendor
 {
@@ -34,6 +39,8 @@ omi::Mesh* vendFloorTile(
         global::environment::Stage stage,
         omi::Transform* baseTransform )
 {
+    unsigned r = static_cast< unsigned >( rand() ) % 100;
+
     switch ( stage )
     {
         case global::environment::INTRO:
@@ -51,6 +58,24 @@ omi::Mesh* vendFloorTile(
                     glm::vec3( 1.0f, 1.0f, 1.0f ),
                     omi::ResourceManager::getTexture( "facility_floor_spec" )
             );
+
+            // assign random textures
+            if ( r >= 80 )
+            {
+                m->getMaterial().texture = omi::ResourceManager::getTexture(
+                        "facility_floor_rust_1" );
+            }
+            else if ( r >= 60 )
+            {
+                m->getMaterial().texture = omi::ResourceManager::getTexture(
+                        "facility_floor_rust_2" );
+            }
+            else if ( r >= 40 )
+            {
+                m->getMaterial().texture = omi::ResourceManager::getTexture(
+                        "facility_floor_blood_1" );
+            }
+
             return m;
         }
         // TODO: other stages
@@ -65,6 +90,8 @@ omi::Mesh* vendCeilingTile(
         global::environment::Stage stage,
         omi::Transform* baseTransform )
 {
+    unsigned r = static_cast< unsigned >( rand() ) % 100;
+
     switch ( stage )
     {
         case global::environment::INTRO:
@@ -82,6 +109,24 @@ omi::Mesh* vendCeilingTile(
                     glm::vec3( 1.0f, 1.0f, 1.0f ),
                     omi::ResourceManager::getTexture( "facility_floor_spec" )
             );
+
+            // assign random textures
+            if ( r >= 80 )
+            {
+                m->getMaterial().texture = omi::ResourceManager::getTexture(
+                        "facility_floor_rust_1" );
+            }
+            else if ( r >= 60 )
+            {
+                m->getMaterial().texture = omi::ResourceManager::getTexture(
+                        "facility_floor_rust_2" );
+            }
+            else if ( r >= 40 )
+            {
+                m->getMaterial().texture = omi::ResourceManager::getTexture(
+                        "facility_floor_blood_1" );
+            }
+
             return m;
         }
         // TODO: other stages
@@ -381,8 +426,24 @@ void vendDecorFacility(
 {
     if ( mask & global::environment::DECOR_LIGHT_1 )
     {
-        // TODO:!
-        decor.push_back( new IntroLight1( transform ) );
+        decor.push_back( new FacilityLight1( transform ) );
+    }
+    if ( mask & global::environment::DECOR_LIGHT_2 )
+    {
+        decor.push_back( new FacilityLight1( transform, true ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_1 )
+    {
+        decor.push_back( new FacilitySupport( transform ) );
+        decor.push_back( new FacilityDoorRight( transform ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_2 )
+    {
+        decor.push_back( new FacilitySupport( transform ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_3 )
+    {
+        decor.push_back( new FacilityPipe( transform ) );
     }
 }
 

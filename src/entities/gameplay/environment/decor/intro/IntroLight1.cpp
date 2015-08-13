@@ -80,24 +80,6 @@ void IntroLight1::init()
         new omi::Specular( 64.0f, glm::vec3( 1.0f, 1.0f, 1.0f ) );
     m_meshComp.push_back( fittingMesh );
     m_components.add( fittingMesh );
-
-    // TODO: REMOVE
-    // phobetor
-    if ( m_phobetor )
-    {
-        omi::Transform* pt = new omi::Transform(
-                "",
-                m_baseTransform,
-                glm::vec3( 0.0f, 0.0f, -1.0f ),
-                glm::vec3(),
-                glm::vec3( 1.0f, 1.0f, 1.0f )
-        );
-        m_components.add( pt );
-        m_phobetorMesh = omi::ResourceManager::getMesh(
-                "phobetor_still", "", pt );
-        m_meshComp.push_back( m_phobetorMesh );
-        m_components.add( m_phobetorMesh );
-    }
 }
 
 void IntroLight1::update()

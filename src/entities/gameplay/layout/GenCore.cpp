@@ -1,6 +1,7 @@
 #include "src/entities/gameplay/layout/GenCore.hpp"
 
 #include "src/entities/gameplay/CurseRoom.hpp"
+#include "src/entities/gameplay/Phobetor.hpp"
 #include "src/entities/gameplay/Player.hpp"
 #include "src/entities/gameplay/ProcedualEntity.hpp"
 
@@ -46,6 +47,14 @@ void GenCore::init()
 
     //---------------------------------TESTING----------------------------------
 
+    addEntity( new Phobetor() );
+
+    addEntity( new StraightTile(
+            m_stage,
+            glm::vec3( 0.0f, 0.0f, global::TILE_SIZE ),
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_1
+    ) );
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, 0.0f ),
@@ -55,22 +64,36 @@ void GenCore::init()
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE ),
-            global::environment::NORTH
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_1
     ) );
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 2.0F ),
-            global::environment::NORTH
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_2
     ) );
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 3.0F ),
-            global::environment::NORTH
+            global::environment::NORTH,
+            global::environment::DECOR_PROP_2
     ) );
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 4.0F ),
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    addEntity( new CornerTile(
+            m_stage,
+            glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 5.0F ),
             global::environment::NORTH
+    ) );
+    addEntity( new StraightTile(
+            m_stage,
+            glm::vec3( global::TILE_SIZE, 0.0f, -global::TILE_SIZE * 5.0F ),
+            global::environment::EAST
     ) );
 
 }
