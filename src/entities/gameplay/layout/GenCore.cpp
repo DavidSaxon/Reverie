@@ -47,7 +47,7 @@ void GenCore::init()
 
     //---------------------------------TESTING----------------------------------
 
-    addEntity( new Phobetor() );
+    // addEntity( new Phobetor() );
 
     addEntity( new StraightTile(
             m_stage,
@@ -65,7 +65,7 @@ void GenCore::init()
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE ),
             global::environment::NORTH,
-            global::environment::DECOR_PROP_1
+            global::environment::DECOR_PROP_3
     ) );
     addEntity( new StraightTile(
             m_stage,
@@ -77,7 +77,8 @@ void GenCore::init()
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 3.0F ),
             global::environment::NORTH,
-            global::environment::DECOR_PROP_2
+            global::environment::DECOR_PROP_2 |
+            global::environment::DECOR_PROP_4
     ) );
     addEntity( new StraightTile(
             m_stage,

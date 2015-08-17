@@ -80,6 +80,7 @@ set(SRCS
     src/functions/settings/Config.cpp
 
     src/resource_pack/AllPack.cpp
+    src/resource_pack/CurseRoomPack.cpp
     src/resource_pack/DebugPack.cpp
     src/resource_pack/StartUpPack.cpp
     src/resource_pack/LoadingPack.cpp
@@ -99,20 +100,28 @@ set(SRCS
 
     src/entities/loading/LoadingSplash.cpp
 
+    src/entities/gameplay/Curse.cpp
+    src/entities/gameplay/CurseRoom.cpp
     src/entities/gameplay/Player.cpp
     src/entities/gameplay/ProcedualEntity.cpp
     src/entities/gameplay/layout/AbstractLayoutCore.cpp
+    src/entities/gameplay/layout/GenCore.cpp
     src/entities/gameplay/layout/IntroCore.cpp
     src/entities/gameplay/layout/LayoutManager.cpp
+
     src/entities/gameplay/environment/tile/CornerTile.cpp
     src/entities/gameplay/environment/tile/EndTile.cpp
     src/entities/gameplay/environment/tile/StraightTile.cpp
     src/entities/gameplay/environment/tile/Tile.cpp
+
     src/entities/gameplay/environment/decor/intro/IntroDoorDown.cpp
     src/entities/gameplay/environment/decor/intro/IntroDoorLeft.cpp
     src/entities/gameplay/environment/decor/intro/IntroDoorRight.cpp
     src/entities/gameplay/environment/decor/intro/IntroDoorUp.cpp
     src/entities/gameplay/environment/decor/intro/IntroLight1.cpp
+
+    src/entities/gameplay/environment/decor/facility/FacilityPipe.cpp
+    src/entities/gameplay/environment/decor/facility/FacilitySupport.cpp
 
     src/entities/gameplay/tutorial/TutorialText.cpp
 
@@ -120,6 +129,7 @@ set(SRCS
     src/entities/gameplay/intro/KnockDoor.cpp
     src/entities/gameplay/intro/PhobetorEncounter1.cpp
     src/entities/gameplay/intro/RattleDoor.cpp
+    src/entities/gameplay/intro/StateTrigger.cpp
 
     src/entities/menu/PauseMenu.cpp
     src/entities/menu/setting_widget/EnumWidget.cpp

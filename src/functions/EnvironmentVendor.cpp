@@ -9,7 +9,7 @@
 #include "src/entities/gameplay/environment/decor/intro/IntroDoorUp.hpp"
 #include "src/entities/gameplay/environment/decor/intro/IntroLight1.hpp"
 
-#include "src/entities/gameplay/environment/decor/facility/FacilityDoorRight.hpp"
+#include "src/entities/gameplay/environment/decor/facility/FacilityDoor.hpp"
 #include "src/entities/gameplay/environment/decor/facility/FacilityLight1.hpp"
 #include "src/entities/gameplay/environment/decor/facility/FacilityPipe.hpp"
 #include "src/entities/gameplay/environment/decor/facility/FacilitySupport.hpp"
@@ -434,17 +434,28 @@ void vendDecorFacility(
     }
     if ( mask & global::environment::DECOR_PROP_1 )
     {
-        decor.push_back( new FacilitySupport( transform ) );
-        decor.push_back( new FacilityDoorRight( transform ) );
+        decor.push_back( new FacilityDoor( transform, 0.0F ) );
     }
     if ( mask & global::environment::DECOR_PROP_2 )
     {
-        decor.push_back( new FacilitySupport( transform ) );
+        decor.push_back( new FacilityDoor( transform, 180.0F ) );
     }
     if ( mask & global::environment::DECOR_PROP_3 )
     {
-        decor.push_back( new FacilityPipe( transform ) );
+        decor.push_back( new FacilityDoor( transform, 90.0F ) );
     }
+    if ( mask & global::environment::DECOR_PROP_4 )
+    {
+        decor.push_back( new FacilityDoor( transform, -90.0F ) );
+    }
+    // if ( mask & global::environment::DECOR_PROP_2 )
+    // {
+    //     decor.push_back( new FacilitySupport( transform ) );
+    // }
+    // if ( mask & global::environment::DECOR_PROP_3 )
+    // {
+    //     decor.push_back( new FacilityPipe( transform ) );
+    // }
 }
 
 } // namespace vendor
