@@ -41,6 +41,8 @@ static const float STEP_ROT_AMOUNT = 0.25f;
 
 Player::Player()
     :
+    m_transform        ( NULL ),
+    m_camT             ( NULL ),
     m_music            ( player::MUSIC_INTRO ),
     m_musicPause       ( false ),
     m_pauseToggle      ( false ),
@@ -65,6 +67,21 @@ Player::Player()
     m_autoLookDone     ( true )
 {
     initCurses();
+
+    // create components that need to exist from construction time
+    m_transform = new omi::Transform(
+            "",
+            glm::vec3( 0.0f, 0.0f, 2.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
+    m_camT = new omi::Transform(
+            "",
+            m_transform,
+            glm::vec3( 0.0f, 1.85f, 0.0f ),
+            glm::vec3(),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
 }
 
 //------------------------------------------------------------------------------
@@ -73,24 +90,11 @@ Player::Player()
 
 void Player::init()
 {
-    // main player transform
-    m_transform = new omi::Transform(
-            "",
-            glm::vec3( 0.0f, 0.0f, 2.0f ),
-            glm::vec3(),
-            glm::vec3( 1.0f, 1.0f, 1.0f )
-    );
+    // add components built within the constructor
     m_components.add( m_transform );
+    m_components.add( m_camT );
 
     // create the camera
-    m_camT = new omi::Transform(
-            "",
-            m_transform,
-            glm::vec3( 0.0f, 1.85f, 0.0f ),
-            glm::vec3(),
-            glm::vec3( 1.0f, 1.0f, 1.0f )
-    );
-    m_components.add( m_camT );
     omi::Camera* camera = new omi::Camera(
             "",
             omi::cam::PERSPECTIVE,

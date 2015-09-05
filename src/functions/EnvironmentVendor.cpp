@@ -448,14 +448,14 @@ void vendDecorFacility(
     {
         decor.push_back( new FacilityDoor( transform, -90.0F ) );
     }
-    // if ( mask & global::environment::DECOR_PROP_2 )
-    // {
-    //     decor.push_back( new FacilitySupport( transform ) );
-    // }
-    // if ( mask & global::environment::DECOR_PROP_3 )
-    // {
-    //     decor.push_back( new FacilityPipe( transform ) );
-    // }
+    if ( mask & global::environment::DECOR_PROP_5 )
+    {
+        decor.push_back( new FacilitySupport( transform ) );
+    }
+    if ( mask & global::environment::DECOR_PROP_6 )
+    {
+        decor.push_back( new FacilityPipe( transform ) );
+    }
 }
 
 } // namespace vendor

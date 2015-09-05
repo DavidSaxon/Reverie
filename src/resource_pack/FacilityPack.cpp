@@ -122,6 +122,7 @@ void buildFacilityPack()
         "res/gfx/geometry/environment/facility/door_panel.obj",
         0
     );
+    // TODO: THIS IS CURRENTLY UNUSED
     omi::ResourceManager::addTextureMaterialGeometryMesh(
         "facility_door_1_handle",
         resource_group::FACILITY,

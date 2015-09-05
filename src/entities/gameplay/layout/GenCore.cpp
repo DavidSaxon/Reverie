@@ -26,14 +26,18 @@ GenCore::GenCore( global::environment::Stage stage, Player* player )
 
 void GenCore::init()
 {
+    // TODO: this needs uncommenting at the end, but it very badly break
+    // when this is the first scene...
+    //--------------------------------------------------------------------------
     // zero the player
     // m_player->getTransform()->translation = glm::vec3( 0.0F, 0.0F, 0.0F );
     // m_player->getCamT()->rotation = glm::vec3( 0.0F, 0.0F, 0.0F );
+    //--------------------------------------------------------------------------
 
     // TODO: take into account curses
     omi::Transform* casterT = new omi::Transform(
             "",
-            glm::vec3( 0.3f, 0.3f, -1.0f ),
+            glm::vec3( 0.0f, -0.5f, -1.0f ),
             glm::vec3(),
             glm::vec3( 1.0f, 1.0f, 1.0f )
     );
@@ -65,7 +69,7 @@ void GenCore::init()
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE ),
             global::environment::NORTH,
-            global::environment::DECOR_PROP_3
+            global::environment::DECOR_PROP_5
     ) );
     addEntity( new StraightTile(
             m_stage,
@@ -77,8 +81,7 @@ void GenCore::init()
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 3.0F ),
             global::environment::NORTH,
-            global::environment::DECOR_PROP_2 |
-            global::environment::DECOR_PROP_4
+            global::environment::DECOR_PROP_6
     ) );
     addEntity( new StraightTile(
             m_stage,

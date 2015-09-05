@@ -125,6 +125,13 @@ void Camera::apply()
              camSize,
             -SHADOW_RANGE,
              SHADOW_RANGE );
+        // m_projectionMatrix =
+        //     glm::perspective(
+        //         m_fov * util::math::DEGREES_TO_RADIANS,
+        //         aspectRatio,
+        //         m_nearClip,
+        //         m_farClip
+        //     );
         // set up view matrix
         m_viewMatrix = glm::lookAt(
             m_transform->translation,

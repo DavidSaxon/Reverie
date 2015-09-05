@@ -34,6 +34,8 @@ void FacilityPipe::init()
             glm::vec3( 1.0f, 1.0f, 1.0f ),
             omi::ResourceManager::getTexture( "facility_support_spec" )
     );
+    mesh->castShadow = true;
+    mesh->receiveShadows = false;
     m_meshComp.push_back( mesh );
     m_components.add( mesh );
 }

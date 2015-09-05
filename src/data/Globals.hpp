@@ -78,6 +78,8 @@ enum Decor
     DECOR_PROP_2  = 1L << 4,
     DECOR_PROP_3  = 1L << 5,
     DECOR_PROP_4  = 1L << 6,
+    DECOR_PROP_5  = 1L << 7,
+    DECOR_PROP_6  = 1L << 8
 };
 
 } // namespace environment
