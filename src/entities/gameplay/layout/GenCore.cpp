@@ -16,7 +16,8 @@
 GenCore::GenCore( global::environment::Stage stage, Player* player )
     :
     AbstractLayoutCore( player ),
-    m_stage( stage )
+    m_stage           ( stage ),
+    m_levelGrid       ( new LevelGrid() )
 {
 }
 
@@ -26,13 +27,9 @@ GenCore::GenCore( global::environment::Stage stage, Player* player )
 
 void GenCore::init()
 {
-    // TODO: this needs uncommenting at the end, but it very badly break
-    // when this is the first scene...
-    //--------------------------------------------------------------------------
     // zero the player
-    // m_player->getTransform()->translation = glm::vec3( 0.0F, 0.0F, 0.0F );
-    // m_player->getCamT()->rotation = glm::vec3( 0.0F, 0.0F, 0.0F );
-    //--------------------------------------------------------------------------
+    m_player->getTransform()->translation = glm::vec3( 0.0F, 0.0F, 0.0F );
+    m_player->getCamT()->rotation = glm::vec3( 0.0F, 0.0F, 0.0F );
 
     // TODO: take into account curses
     omi::Transform* casterT = new omi::Transform(
@@ -104,4 +101,13 @@ void GenCore::init()
 
 void GenCore::update()
 {
+}
+
+//------------------------------------------------------------------------------
+//                            PRIVATE MEMBER FUNCTIONS
+//------------------------------------------------------------------------------
+
+void GenCore::genInitial()
+{
+    // TODO:
 }

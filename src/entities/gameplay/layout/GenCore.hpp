@@ -1,8 +1,12 @@
 #ifndef REVERIE_ENTITIES_GAMEPLAY_LAYOUT_GENCORE_HPP_
 #   define REVERIE_ENTITIES_GAMEPLAY_LAYOUT_GENCORE_HPP_
 
+#include <memory>
+
 #include "src/data/Globals.hpp"
 #include "src/entities/gameplay/layout/AbstractLayoutCore.hpp"
+#include "src/entities/gameplay/layout/LevelGrid.hpp"
+
 
 //------------------------------------------------------------------------------
 //                              FORWARD DECLARATIONS
@@ -40,8 +44,15 @@ private:
     // stage
     global::environment::Stage m_stage;
 
-    // reference to the player
-    Player* m_player;
+    // the level grid
+    std::unique_ptr< LevelGrid > m_levelGrid;
+
+    //--------------------------------------------------------------------------
+    //                          PRIVATE MEMBER FUNCTIONS
+    //--------------------------------------------------------------------------
+
+    /** Generates the initial layout when empty */
+    void genInitial();
 };
 
 #endif
