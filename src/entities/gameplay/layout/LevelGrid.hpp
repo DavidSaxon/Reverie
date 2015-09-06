@@ -38,7 +38,7 @@ private:
     //                                 VARIABLES
     //--------------------------------------------------------------------------
 
-    std::map< util::int64, Tile* > m_lookUpTable;
+    std::map< unsigned, Tile* > m_lookUpTable;
 
     //--------------------------------------------------------------------------
     //                          PRIVATE MEMBER FUNCTIONS

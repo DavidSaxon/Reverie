@@ -53,9 +53,6 @@ protected:
     global::environment::Direction m_direction;
     unsigned long m_decor;
 
-    // a mapping from direction to adjacent tiles
-    std::map<global::environment::Direction, Tile*> m_adjacent;
-
     // the base transform of the tile
     omi::Transform* m_baseT;
 

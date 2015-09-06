@@ -20,11 +20,13 @@ Tile::Tile(
     m_direction( direction ),
     m_decor    ( decor )
 {
-    // initialise the adjacent map
-    m_adjacent[ global::environment::NORTH ] = NULL;
-    m_adjacent[ global::environment::EAST  ] = NULL;
-    m_adjacent[ global::environment::SOUTH ] = NULL;
-    m_adjacent[ global::environment::WEST  ] = NULL;
+    // create the base transform
+    m_baseT = new omi::Transform(
+            "",
+            m_position,
+            glm::vec3( 0.0f, dir::toAngle( m_direction ), 0.0f ),
+            glm::vec3( 1.0f, 1.0f, 1.0f )
+    );
 }
 
 //------------------------------------------------------------------------------
@@ -33,13 +35,7 @@ Tile::Tile(
 
 void Tile::init()
 {
-    // create the base transform
-    m_baseT = new omi::Transform(
-            "",
-            m_position,
-            glm::vec3( 0.0f, dir::toAngle( m_direction ), 0.0f ),
-            glm::vec3( 1.0f, 1.0f, 1.0f )
-    );
+    // add the base transform
     m_components.add( m_baseT );
 
     // calculate random floor angle

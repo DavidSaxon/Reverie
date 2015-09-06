@@ -53,6 +53,12 @@ private:
 
     /** Generates the initial layout when empty */
     void genInitial();
+
+    /** Generates a passage going in the given direction, with the given
+    number of exits */
+    void genPassage(
+            global::environment::Direction direction,
+            unsigned exits );
 };
 
 #endif

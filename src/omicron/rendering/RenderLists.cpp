@@ -5,7 +5,7 @@ namespace omi {
 namespace {
 
 // the maximum number of point lights
-static const unsigned MAX_LIGHTS = 16;
+static const unsigned MAX_LIGHTS = 24;
 
 } // namespace anonymous
 

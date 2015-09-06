@@ -47,21 +47,21 @@ uniform vec3 u_ambientLight;
 // the number of lights
 uniform int u_lightCount;
 // the light types
-uniform int u_lightType[16];
+uniform int u_lightType[24];
 // the light positions
-uniform vec3 u_lightPos[16];
+uniform vec3 u_lightPos[24];
 // the light rotations
-uniform vec3 u_lightRot[16];
+uniform vec3 u_lightRot[24];
 // the light colours
-uniform vec3 u_lightColour[16];
+uniform vec3 u_lightColour[24];
 // the light attenuations
-uniform vec3 u_lightAttenuation[16];
+uniform vec3 u_lightAttenuation[24];
 // the light arcs
-uniform vec2 u_lightArc[16];
+uniform vec2 u_lightArc[24];
 // the lights that are inversed
-uniform int u_lightInverse[16];
+uniform int u_lightInverse[24];
 // the lights that are ignored
-uniform int u_lightIgnore[16];
+uniform int u_lightIgnore[24];
 
 //the texture coords
 varying vec2 v_texCoord;
