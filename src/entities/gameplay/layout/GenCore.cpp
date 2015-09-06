@@ -7,7 +7,9 @@
 
 #include "src/entities/gameplay/environment/tile/CornerTile.hpp"
 #include "src/entities/gameplay/environment/tile/EndTile.hpp"
+#include "src/entities/gameplay/environment/tile/IntersectionTile.hpp"
 #include "src/entities/gameplay/environment/tile/StraightTile.hpp"
+#include "src/entities/gameplay/environment/tile/TIntersectTile.hpp"
 
 //------------------------------------------------------------------------------
 //                                  CONSTRUCTOR
@@ -46,6 +48,11 @@ void GenCore::init()
     shadowCaster->setCastShadow( true );
     m_components.add( shadowCaster );
 
+
+    // generate the initial level tiles
+    genInitial();
+
+
     //---------------------------------TESTING----------------------------------
 
     // addEntity( new Phobetor() );
@@ -53,8 +60,7 @@ void GenCore::init()
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, global::TILE_SIZE ),
-            global::environment::NORTH,
-            global::environment::DECOR_PROP_1
+            global::environment::NORTH
     ) );
     addEntity( new StraightTile(
             m_stage,
@@ -86,15 +92,46 @@ void GenCore::init()
             global::environment::NORTH,
             global::environment::DECOR_LIGHT_1
     ) );
-    addEntity( new CornerTile(
+
+
+    // addEntity( new CornerTile(
+    //         m_stage,
+    //         glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 5.0F ),
+    //         global::environment::NORTH
+    // ) );
+
+    addEntity( new IntersectionTile(
             m_stage,
             glm::vec3( 0.0f, 0.0f, -global::TILE_SIZE * 5.0F ),
             global::environment::NORTH
     ) );
+
+
+
     addEntity( new StraightTile(
             m_stage,
             glm::vec3( global::TILE_SIZE, 0.0f, -global::TILE_SIZE * 5.0F ),
-            global::environment::EAST
+            global::environment::EAST,
+            global::environment::DECOR_LIGHT_1
+    ) );
+
+    addEntity( new StraightTile(
+            m_stage,
+            glm::vec3( -global::TILE_SIZE, 0.0f, -global::TILE_SIZE * 5.0F ),
+            global::environment::WEST,
+            global::environment::DECOR_LIGHT_1
+    ) );
+
+    addEntity( new StraightTile(
+            m_stage,
+            glm::vec3( 0.0F, 0.0f, -global::TILE_SIZE * 6.0F ),
+            global::environment::NORTH,
+            global::environment::DECOR_LIGHT_1
+    ) );
+    addEntity( new EndTile(
+            m_stage,
+            glm::vec3( 0.0F, 0.0f, -global::TILE_SIZE * 7.0F ),
+            global::environment::NORTH
     ) );
 
 }
@@ -109,5 +146,8 @@ void GenCore::update()
 
 void GenCore::genInitial()
 {
-    // TODO:
+    // decide on the initial number of exits
+    unsigned exitCount = ( rand() % 3 ) + 2;
+
+    // generate the first tile based on how many exits there are
 }

@@ -3,8 +3,6 @@
 
 #include <map>
 
-#include "lib/Utilitron/TypeUtil.hpp"
-
 #include "src/entities/gameplay/environment/tile/Tile.hpp"
 
 /***********************************************************\
@@ -48,7 +46,7 @@ private:
 
     /** Evaluates and returns the look up table address for the given
     position */
-    util::int64 evaulateAddress( const glm::vec3& position );
+    unsigned evaulateAddress( const glm::vec3& position );
 };
 
 #endif
