@@ -57,8 +57,10 @@ private:
     /** Generates a passage going in the given direction, with the given
     number of exits */
     void genPassage(
+            const glm::vec3& pos,
             global::environment::Direction direction,
-            unsigned exits );
+            unsigned exits,
+            bool hard = false );
 };
 
 #endif

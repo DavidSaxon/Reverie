@@ -150,8 +150,7 @@ void GenCore::genInitial()
 {
     // TODO: uncomment
     // decide on the initial number of exits
-    // unsigned exitCount = ( rand() % 2 ) + 3;
-    unsigned exitCount = 4;
+    unsigned exitCount = ( rand() % 2 ) + 3;
 
     // pick a direction
     global::environment::Direction direction =
@@ -180,8 +179,24 @@ void GenCore::genInitial()
                 direction,
                 global::environment::DECOR_LIGHT_1 // TODO:?
         );
-        genPassage( north, 0 );
-        genPassage( south, 0 );
+
+        // assign exits counts
+        unsigned p1d = rand() % 10;
+        unsigned p2d = rand() % 10;
+
+        float pTotal = static_cast< float >( p1d + p2d );
+
+        float exitTotal = static_cast< float >( ( rand() % 3 ) + 3 );
+
+        p1d = static_cast< unsigned > ( util::math::round(
+                ( static_cast< float >( p1d ) / pTotal ) * exitTotal
+        ) );
+        p2d = static_cast< unsigned > ( util::math::round(
+                ( static_cast< float >( p2d ) / pTotal ) * exitTotal
+        ) );
+
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), north, p1d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p2d, true );
     }
     else if ( exitCount == 3 )
     {
@@ -191,9 +206,29 @@ void GenCore::genInitial()
                 direction,
                 global::environment::DECOR_LIGHT_1 // TODO:?
         );
-        genPassage( east, 0 );
-        genPassage( west, 0 );
-        genPassage( south, 0 );
+
+        // there are 2-6 passages to distribute
+        unsigned p1d = rand() % 10;
+        unsigned p2d = rand() % 10;
+        unsigned p3d = rand() % 10;
+
+        float pTotal = static_cast< float >( p1d + p2d + p3d );
+
+        float exitTotal = static_cast< float >( ( rand() % 3 ) + 4 );
+
+        p1d = static_cast< unsigned > ( util::math::round(
+                ( static_cast< float >( p1d ) / pTotal ) * exitTotal
+        ) );
+        p2d = static_cast< unsigned > ( util::math::round(
+                ( static_cast< float >( p2d ) / pTotal ) * exitTotal
+        ) );
+        p3d = static_cast< unsigned > ( util::math::round(
+                ( static_cast< float >( p3d ) / pTotal ) * exitTotal
+        ) );
+
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), east,  p1d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), west,  p2d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p3d, true );
     }
     else
     {
@@ -204,7 +239,7 @@ void GenCore::genInitial()
                 global::environment::DECOR_LIGHT_1 // TODO:?
         );
 
-        // there are 6 passages to distribute
+        // there are 2-6 passages to distribute
         unsigned p1d = rand() % 10;
         unsigned p2d = rand() % 10;
         unsigned p3d = rand() % 10;
@@ -227,15 +262,10 @@ void GenCore::genInitial()
                 ( static_cast< float >( p4d ) / pTotal ) * exitTotal
         ) );
 
-        // TODO: REMOVE ME
-        std::cout << "EXIT TOTAL: " << exitTotal << std::endl;
-        std::cout << "ASSIGNED TOTAL: " << ( p1d + p2d + p3d + p4d )
-                  << std::endl;
-
-        genPassage( north, p1d );
-        genPassage( east,  p2d );
-        genPassage( west,  p3d );
-        genPassage( south, p4d );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), north, p1d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), east,  p2d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), west,  p3d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p4d, true );
     }
 
     // add the tile
@@ -244,11 +274,15 @@ void GenCore::genInitial()
 }
 
 void GenCore::genPassage(
+        const glm::vec3& p,
         global::environment::Direction direction,
-        unsigned exits )
+        unsigned exits,
+        bool hard )
 {
+    glm::vec3 pos( p );
+
     // generate a length for the passage between 2 and 8
-    unsigned length = ( rand() % 7 ) + 1;
+    unsigned length = ( rand() % 7 ) + 2;
 
     // should we place a light in the wall way
     bool addLight = false;
@@ -265,22 +299,22 @@ void GenCore::genPassage(
     if ( addLight )
     {
         lightPosition = ( length + 1 ) / 2;
-        int lightRand = rand() % 5;
-        if ( lightRand == 0 )
-        {
-            --lightPosition;
-        }
-        else if ( lightRand == 1 )
-        {
-            ++lightPosition;
-        }
+        // int lightRand = rand() % 5;
+        // if ( lightRand == 0 )
+        // {
+        //     --lightPosition;
+        // }
+        // else if ( lightRand == 1 )
+        // {
+        //     ++lightPosition;
+        // }
     }
 
     // where will the exits be placed
     unsigned endExitCount = 0;
     if ( length > 4 )
     {
-        unsigned exitRand = rand() % 40;
+        unsigned exitRand = rand() % 45;
         if ( exitRand < 15 )
         {
             endExitCount = 1;
@@ -288,6 +322,11 @@ void GenCore::genPassage(
         else if ( exitRand < 30 )
         {
             endExitCount = 2;
+        }
+        // clamp exits
+        if ( endExitCount > exits )
+        {
+            endExitCount = exits;
         }
     }
     else
@@ -305,6 +344,27 @@ void GenCore::genPassage(
     for ( unsigned i = 0; i < passageExitCount; ++i )
     {
         unsigned exitPos = ( rand() % ( length - 4 ) ) + 2;
+
+        bool abortExitAssign = false;
+        // check if the exit is too near
+        std::vector< unsigned >::const_iterator existingExit =
+                passageExits.begin();
+        for ( ; existingExit != passageExits.end(); ++existingExit )
+        {
+            if ( exitPos         == *existingExit ||
+                 ( exitPos - 1 ) == *existingExit ||
+                 ( exitPos + 1 ) == *existingExit    )
+            {
+                abortExitAssign = true;
+                break;
+            }
+        }
+
+        if ( abortExitAssign )
+        {
+            continue;
+        }
+
         passageExits.push_back( exitPos );
         if ( rand() % 2 == 0 )
         {
@@ -317,7 +377,6 @@ void GenCore::genPassage(
     }
 
     // create tiles for the length
-    glm::vec3 pos( 0.0F, 0.0F, 0.0F );
     for ( unsigned i = 1; i <= length; ++i )
     {
         // calculate the position
@@ -360,6 +419,7 @@ void GenCore::genPassage(
 
         // direct for t intersections
         global::environment::Direction finalDirection = direction;
+        global::environment::Direction midDirExit = direction;
         if ( isExit && !isDoubleExit )
         {
             if ( rand() % 2 == 0 )
@@ -367,11 +427,17 @@ void GenCore::genPassage(
                 finalDirection = static_cast< global::environment::Direction >(
                         ( finalDirection + 1 ) % 4
                 );
+                midDirExit = static_cast< global::environment::Direction >(
+                        ( direction + 3 ) % 4
+                );
             }
             else
             {
                 finalDirection = static_cast< global::environment::Direction >(
                         ( finalDirection + 3 ) % 4
+                );
+                midDirExit = static_cast< global::environment::Direction >(
+                        ( direction + 1 ) % 4
                 );
             }
         }
@@ -389,11 +455,30 @@ void GenCore::genPassage(
         {
             tile = new IntersectionTile( m_stage, pos, finalDirection, decor );
             // TODO: gen passages
+
+            if ( hard )
+            {
+                global::environment::Direction d1 =
+                        static_cast< global::environment::Direction >(
+                                ( finalDirection + 1 ) % 4
+                        );
+                global::environment::Direction d2 =
+                        static_cast< global::environment::Direction >(
+                                ( finalDirection + 3 ) % 4
+                        );
+                // TODO: ASSIGN EXITS
+                genPassage( pos, d1, 0, false );
+                genPassage( pos, d2, 0, false );
+            }
         }
         else if ( isExit && !isDoubleExit )
         {
             tile = new TIntersectTile( m_stage, pos, finalDirection, decor );
-            // TODO: gen passages
+            if ( hard )
+            {
+                // TODO: ASSIGN EXITS
+                genPassage( pos, midDirExit, 0, false );
+            }
         }
         else
         {
@@ -403,63 +488,93 @@ void GenCore::genPassage(
         // add the tile
         m_levelGrid->addTile( tile );
         addEntity( tile );
-
-        // TODO: SOMETHING KEEPS CRASHING
     }
 
     // add the final tile
-    // Tile* tile = NULL;
+    Tile* tile = NULL;
 
     // calculate the position
-    // switch ( direction )
-    // {
-    //     case global::environment::NORTH:
-    //     {
-    //         pos.z -= global::TILE_SIZE;
-    //         break;
-    //     }
-    //     case global::environment::EAST:
-    //     {
-    //         pos.x += global::TILE_SIZE;
-    //         break;
-    //     }
-    //     case global::environment::SOUTH:
-    //     {
-    //         pos.z += global::TILE_SIZE;
-    //         break;
-    //     }
-    //     case global::environment::WEST:
-    //     {
-    //         pos.x -= global::TILE_SIZE;
-    //         break;
-    //     }
-    // }
+    switch ( direction )
+    {
+        case global::environment::NORTH:
+        {
+            pos.z -= global::TILE_SIZE;
+            break;
+        }
+        case global::environment::EAST:
+        {
+            pos.x += global::TILE_SIZE;
+            break;
+        }
+        case global::environment::SOUTH:
+        {
+            pos.z += global::TILE_SIZE;
+            break;
+        }
+        case global::environment::WEST:
+        {
+            pos.x -= global::TILE_SIZE;
+            break;
+        }
+    }
 
-    // // decor
-    // unsigned long decor = 0;
-    // if ( !addLight || ( addLight && ( ( rand() % 5 ) != 0 ) ) )
-    // {
-    //     decor |= global::environment::DECOR_LIGHT_1;
-    // }
+    // decor
+    unsigned long decor = 0;
+    if ( !addLight || length >= 6 || ( addLight && ( ( rand() % 5 ) != 0 ) ) )
+    {
+        decor |= global::environment::DECOR_LIGHT_1;
+    }
 
-    // std::cout << "END EXIT COUNT: " << endExitCount << std::endl;
-    // if ( endExitCount == 0 )
-    // {
-    //     tile = new EndTile( m_stage, pos, direction, decor );
-    // }
-    // else if ( endExitCount == 1 )
-    // {
-    //     // TODO: flip?
-    //     tile = new CornerTile( m_stage, pos, direction, decor );
-    //     // TODO: gen passages
+    if ( endExitCount == 0 )
+    {
+        tile = new EndTile( m_stage, pos, direction, decor );
+    }
+    else if ( endExitCount == 1 )
+    {
+        // should we flip the final corner?
+        global::environment::Direction endDirection = direction;
+        global::environment::Direction d =
+                static_cast< global::environment::Direction >(
+                        ( direction + 1 ) % 4
+                );
+        if ( rand() % 2 == 1 )
+        {
+            endDirection = static_cast< global::environment::Direction >(
+                    ( endDirection + 1 ) % 4 );
+            d = static_cast< global::environment::Direction >(
+                    ( direction + 3 ) % 4 );
+        }
+        // create the tile
+        tile = new CornerTile( m_stage, pos, endDirection, decor );
 
-    // }
-    // else
-    // {
-    //     tile = new TIntersectTile( m_stage, pos, direction, decor );
-    //     // TODO: gen passages
-    // }
+        // generate other exits
+        if ( hard )
+        {
+            // TODO: ASSIGN EXIT COUNTS
+            genPassage( pos, d, 0, false );
+        }
+    }
+    else
+    {
+        tile = new TIntersectTile( m_stage, pos, direction, decor );
 
-    // m_levelGrid->addTile( tile );
-    // addEntity( tile );
+        // generate other exits
+        if ( hard )
+        {
+            global::environment::Direction d1 =
+                    static_cast< global::environment::Direction >(
+                            ( direction + 1 ) % 4
+                    );
+            global::environment::Direction d2 =
+                    static_cast< global::environment::Direction >(
+                            ( direction + 3 ) % 4
+                    );
+            // TODO: ASSIGN EXIT COUNTS
+            genPassage( pos, d1, 0, false );
+            genPassage( pos, d2, 0, false );
+        }
+    }
+
+    m_levelGrid->addTile( tile );
+    addEntity( tile );
 }

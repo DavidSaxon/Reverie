@@ -55,8 +55,8 @@ void FacilityLight1::init()
             LIGHT_POWER,
             glm::vec3( 1.0f, 1.0f, 1.0f ),
             0.0f,
-            0.1f,
-            0.02f
+            0.07f,
+            0.009f
     );
     m_lightComp.push_back( m_lightSource );
     m_components.add( m_lightSource );
