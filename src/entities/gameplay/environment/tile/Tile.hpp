@@ -65,6 +65,8 @@ protected:
 
     /** #Override */
     virtual void remove();
+
+    void applySoftVisibiltiy();
 };
 
 #endif

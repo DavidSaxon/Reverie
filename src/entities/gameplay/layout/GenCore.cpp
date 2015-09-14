@@ -487,6 +487,7 @@ void GenCore::genPassage(
 
         // add the tile
         m_levelGrid->addTile( tile );
+        tile->setSoftVisibility( hard );
         addEntity( tile );
     }
 
@@ -576,5 +577,6 @@ void GenCore::genPassage(
     }
 
     m_levelGrid->addTile( tile );
+    tile->setSoftVisibility( hard );
     addEntity( tile );
 }

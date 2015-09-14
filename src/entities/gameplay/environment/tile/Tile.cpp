@@ -80,6 +80,8 @@ void Tile::init()
 
 void Tile::update()
 {
+    // super call
+    ProcedualEntity::update();
 }
 
 void Tile::setVisibility( bool state )
@@ -116,4 +118,24 @@ void Tile::remove()
 
     // super call
     Entity::remove();
+}
+
+void Tile::applySoftVisibiltiy()
+{
+    // is soft visibility being used?
+    if ( !m_usingSoftVisibilty )
+    {
+        return;
+    }
+
+    // super call
+    ProcedualEntity::applySoftVisibiltiy();
+
+    // set decor visibility
+    for ( std::vector<Decor*>::iterator it = m_decorEntities.begin();
+          it != m_decorEntities.end();
+          ++it )
+    {
+        ( *it )->setVisibility( m_softVisible );
+    }
 }
