@@ -17,7 +17,7 @@ public:
     //                          PUBLIC MEMBER FUNCTIONS
     //--------------------------------------------------------------------------
 
-    void update();
+    virtual void update();
 
     void removeThis();
 

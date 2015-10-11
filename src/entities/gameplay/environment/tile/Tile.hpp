@@ -7,6 +7,7 @@
 #include "src/entities/gameplay/ProcedualEntity.hpp"
 
 class Decor;
+class GenTrigger;
 
 /****************************************************************************\
 | A tile represents a cube segment of the environment. Tiles are sub-classed |
@@ -42,6 +43,10 @@ public:
     /** Returns the base transform of the tile */
     omi::Transform* getBaseTransform();
 
+    void attachTrigger( GenTrigger* trigger );
+
+    GenTrigger* getTrigger();
+
 protected:
 
     //--------------------------------------------------------------------------
@@ -58,6 +63,8 @@ protected:
 
     // the decor entities of the tile
     std::vector<Decor*> m_decorEntities;
+
+    GenTrigger* m_trigger;
 
     //--------------------------------------------------------------------------
     //                         PROTECTED MEMBER FUNCTIONS

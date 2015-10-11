@@ -12,6 +12,7 @@
 //                              FORWARD DECLARATIONS
 //------------------------------------------------------------------------------
 
+class GenTrigger;
 class Player;
 class ProcedualEntity;
 
@@ -60,6 +61,7 @@ private:
             const glm::vec3& pos,
             global::environment::Direction direction,
             unsigned exits,
+            GenTrigger* spawnTrigger,
             bool hard = false );
 };
 

@@ -13,6 +13,8 @@
 #include "src/entities/gameplay/environment/tile/StraightTile.hpp"
 #include "src/entities/gameplay/environment/tile/TIntersectTile.hpp"
 
+#include "src/entities/gameplay/gen/GenTrigger.hpp"
+
 //------------------------------------------------------------------------------
 //                                  CONSTRUCTOR
 //------------------------------------------------------------------------------
@@ -150,11 +152,11 @@ void GenCore::genInitial()
 {
     // TODO: uncomment
     // decide on the initial number of exits
-    unsigned exitCount = ( rand() % 2 ) + 3;
+    // unsigned exitCount = ( rand() % 2 ) + 3;
+    unsigned exitCount = 3;
 
     // pick a direction
-    global::environment::Direction direction =
-            static_cast< global::environment::Direction >( rand() % 4 );
+    global::environment::Direction direction = global::environment::SOUTH;
     // exit directions
     global::environment::Direction north =
             static_cast< global::environment::Direction >(
@@ -171,6 +173,8 @@ void GenCore::genInitial()
 
     // generate the first tile based on how many exits there are
     Tile* tile = NULL;
+    // add the gen trigger
+    GenTrigger* trigger = new GenTrigger( glm::vec3( 0.0F, 0.0F, 0.0F ) );
     if ( exitCount == 2 )
     {
         tile = new StraightTile(
@@ -179,6 +183,8 @@ void GenCore::genInitial()
                 direction,
                 global::environment::DECOR_LIGHT_1 // TODO:?
         );
+        trigger->setBaseTile( tile );
+        addEntity( trigger );
 
         // assign exits counts
         unsigned p1d = rand() % 10;
@@ -195,8 +201,8 @@ void GenCore::genInitial()
                 ( static_cast< float >( p2d ) / pTotal ) * exitTotal
         ) );
 
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), north, p1d, true );
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p2d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), north, p1d, trigger, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p2d, trigger, true );
     }
     else if ( exitCount == 3 )
     {
@@ -206,6 +212,8 @@ void GenCore::genInitial()
                 direction,
                 global::environment::DECOR_LIGHT_1 // TODO:?
         );
+        trigger->setBaseTile( tile );
+        addEntity( trigger );
 
         // there are 2-6 passages to distribute
         unsigned p1d = rand() % 10;
@@ -226,9 +234,9 @@ void GenCore::genInitial()
                 ( static_cast< float >( p3d ) / pTotal ) * exitTotal
         ) );
 
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), east,  p1d, true );
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), west,  p2d, true );
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p3d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), east,  p1d, trigger, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), west,  p2d, trigger, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p3d, trigger, true );
     }
     else
     {
@@ -238,6 +246,8 @@ void GenCore::genInitial()
                 direction,
                 global::environment::DECOR_LIGHT_1 // TODO:?
         );
+        trigger->setBaseTile( tile );
+        addEntity( trigger );
 
         // there are 2-6 passages to distribute
         unsigned p1d = rand() % 10;
@@ -262,10 +272,10 @@ void GenCore::genInitial()
                 ( static_cast< float >( p4d ) / pTotal ) * exitTotal
         ) );
 
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), north, p1d, true );
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), east,  p2d, true );
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), west,  p3d, true );
-        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p4d, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), north, p1d, trigger, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), east,  p2d, trigger, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), west,  p3d, trigger, true );
+        genPassage( glm::vec3( 0.0F, 0.0F, 0.0F ), south, p4d, trigger, true );
     }
 
     // add the tile
@@ -277,9 +287,20 @@ void GenCore::genPassage(
         const glm::vec3& p,
         global::environment::Direction direction,
         unsigned exits,
+        GenTrigger* spawnTrigger,
         bool hard )
 {
     glm::vec3 pos( p );
+
+    global::environment::Direction inverseDir =
+            static_cast< global::environment::Direction >( direction + 2 );
+
+    std::vector< Tile* > passageTiles;
+    // add the base spawn trigger tile to the passage
+    if ( spawnTrigger != NULL )
+    {
+        passageTiles.push_back( spawnTrigger->getBaseTile() );
+    }
 
     // generate a length for the passage between 2 and 8
     unsigned length = ( rand() % 7 ) + 2;
@@ -454,7 +475,8 @@ void GenCore::genPassage(
         if ( isExit && isDoubleExit )
         {
             tile = new IntersectionTile( m_stage, pos, finalDirection, decor );
-            // TODO: gen passages
+            passageTiles.push_back( tile );
+            // TODO: trigger
 
             if ( hard )
             {
@@ -466,28 +488,43 @@ void GenCore::genPassage(
                         static_cast< global::environment::Direction >(
                                 ( finalDirection + 3 ) % 4
                         );
-                // TODO: ASSIGN EXITS
-                genPassage( pos, d1, 0, false );
-                genPassage( pos, d2, 0, false );
+                genPassage( pos, d1, 0, NULL, false );
+                genPassage( pos, d2, 0, NULL, false );
             }
         }
         else if ( isExit && !isDoubleExit )
         {
             tile = new TIntersectTile( m_stage, pos, finalDirection, decor );
+            passageTiles.push_back( tile );
+            // TODO: trigger
+
             if ( hard )
             {
                 // TODO: ASSIGN EXITS
-                genPassage( pos, midDirExit, 0, false );
+                genPassage( pos, midDirExit, 0, NULL, false );
             }
         }
         else
         {
             tile = new StraightTile( m_stage, pos, finalDirection, decor );
+            passageTiles.push_back( tile );
         }
 
         // add the tile
         m_levelGrid->addTile( tile );
-        tile->setSoftVisibility( hard );
+        if ( i <= 2 )
+        {
+            tile->setSoftVisibility( true );
+        }
+        else
+        {
+            tile->setSoftVisibility( hard );
+        }
+        // pass to the trigger
+        if ( spawnTrigger != NULL )
+        {
+            spawnTrigger->appendTile( direction, tile );
+        }
         addEntity( tile );
     }
 
@@ -532,6 +569,12 @@ void GenCore::genPassage(
     }
     else if ( endExitCount == 1 )
     {
+        // create trigger
+        GenTrigger* trigger = new GenTrigger( pos );
+        trigger->setBaseTile( tile );
+        trigger->appendTiles( inverseDir, passageTiles );
+        addEntity( trigger );
+
         // should we flip the final corner?
         global::environment::Direction endDirection = direction;
         global::environment::Direction d =
@@ -551,13 +594,18 @@ void GenCore::genPassage(
         // generate other exits
         if ( hard )
         {
-            // TODO: ASSIGN EXIT COUNTS
-            genPassage( pos, d, 0, false );
+            genPassage( pos, d, 0, trigger, false );
         }
     }
     else
     {
         tile = new TIntersectTile( m_stage, pos, direction, decor );
+
+        // create trigger
+        GenTrigger* trigger = new GenTrigger( pos );
+        trigger->setBaseTile( tile );
+        trigger->appendTiles( inverseDir, passageTiles );
+        addEntity( trigger );
 
         // generate other exits
         if ( hard )
@@ -570,12 +618,16 @@ void GenCore::genPassage(
                     static_cast< global::environment::Direction >(
                             ( direction + 3 ) % 4
                     );
-            // TODO: ASSIGN EXIT COUNTS
-            genPassage( pos, d1, 0, false );
-            genPassage( pos, d2, 0, false );
+            genPassage( pos, d1, 0, trigger, false );
+            genPassage( pos, d2, 0, trigger, false );
         }
     }
 
+    // pass to the trigger
+    if ( spawnTrigger != NULL )
+    {
+        spawnTrigger->appendTile( direction, tile );
+    }
     m_levelGrid->addTile( tile );
     tile->setSoftVisibility( hard );
     addEntity( tile );

@@ -36,6 +36,10 @@ void GameplayScene::init()
     Player* player = new Player();
     addEntity( player );
     addEntity( new LayoutManager( player ) );
+
+    // set up collision groups
+    omi::CollisionDetect::checkGroup( "intro_trigger", "player" );
+    omi::CollisionDetect::checkGroup( "gen_trigger",   "player" );
 }
 
 bool GameplayScene::update()

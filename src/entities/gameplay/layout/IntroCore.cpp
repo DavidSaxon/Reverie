@@ -36,10 +36,6 @@ IntroCore::IntroCore( Player* player )
 
 void IntroCore::init()
 {
-    // TODO: remove group on clean up?
-    // set up collision groups
-    omi::CollisionDetect::checkGroup( "intro_trigger", "player" );
-
     // set music
     // player->setMusic( player::MUSIC_INTRO );
 

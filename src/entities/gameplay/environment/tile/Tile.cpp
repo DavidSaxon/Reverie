@@ -18,7 +18,8 @@ Tile::Tile(
     m_stage    ( stage ),
     m_position ( position ),
     m_direction( direction ),
-    m_decor    ( decor )
+    m_decor    ( decor ),
+    m_trigger  ( NULL )
 {
     // create the base transform
     m_baseT = new omi::Transform(
@@ -100,6 +101,16 @@ void Tile::setVisibility( bool state )
 omi::Transform* Tile::getBaseTransform()
 {
     return m_baseT;
+}
+
+void Tile::attachTrigger( GenTrigger* trigger )
+{
+    m_trigger = trigger;
+}
+
+GenTrigger* Tile::getTrigger()
+{
+    return m_trigger;
 }
 
 //------------------------------------------------------------------------------
